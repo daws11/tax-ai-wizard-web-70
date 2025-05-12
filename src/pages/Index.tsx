@@ -10,12 +10,13 @@ import CTA from "../components/CTA";
 import Footer from "../components/Footer";
 
 const Index = () => {
-  // Add scroll fade-in animation effect
+  // Memperbaiki scroll fade-in animation effect
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('fade-in');
+          entry.target.classList.remove('opacity-0');
         }
       });
     }, { threshold: 0.1 });
