@@ -78,7 +78,11 @@
 
 @layer utilities {
   .glass-effect {
-    @apply bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-white/20 dark:border-gray-800/50 shadow-lg;
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+  
+  .dark .glass-effect {
+    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800/50 shadow-lg;
   }
   
   .section-padding {
@@ -87,7 +91,7 @@
   
   .fade-in {
     animation: fadeIn 1s ease-in-out;
-    opacity: 1 !important; /* Memastikan elemen tetap terlihat setelah animasi */
+    opacity: 1 !important;
   }
   
   /* Entrance animations when scrolling */
@@ -139,4 +143,29 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
+}
+
+/* Dark mode specific styling */
+.dark a {
+  @apply text-blue-300 hover:text-blue-200;
+}
+
+.dark .bg-gray-50 {
+  @apply bg-gray-900;
+}
+
+.dark .text-gray-900 {
+  @apply text-gray-100;
+}
+
+.dark .text-gray-600, .dark .text-gray-500 {
+  @apply text-gray-300;
+}
+
+.dark .border-gray-300 {
+  @apply border-gray-700;
+}
+
+.dark .bg-white {
+  @apply bg-gray-800;
 }
