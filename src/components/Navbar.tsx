@@ -1,10 +1,19 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleScrollTo = (elementId: string) => {
+    setIsMenuOpen(false); // Close mobile menu after clicking
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 glass-effect">
@@ -23,11 +32,11 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#features" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">How It Works</a>
-              <a href="#faq" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</a>
+              <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Features</button>
+              <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">How It Works</button>
+              <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</button>
               <ThemeToggle />
-              <Button className="ml-4 bg-primary hover:bg-primary/90">Get Started</Button>
+              <Button onClick={() => navigate("/login")} className="ml-4 bg-primary hover:bg-primary/90">Get Started</Button>
             </div>
           </div>
           <div className="md:hidden">
@@ -53,14 +62,14 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-effect">
-            <a href="#features" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">How It Works</a>
-            <a href="#faq" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">FAQ</a>
+            <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">Features</button>
+            <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">How It Works</button>
+            <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">FAQ</button>
             <div className="flex items-center px-3 py-2">
               <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
               <ThemeToggle />
             </div>
-            <Button className="mt-2 w-full bg-primary hover:bg-primary/90">Get Started</Button>
+            <Button onClick={() => navigate("/login")} className="mt-2 w-full bg-primary hover:bg-primary/90">Get Started</Button>
           </div>
         </div>
       )}

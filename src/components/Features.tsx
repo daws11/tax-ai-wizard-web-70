@@ -1,4 +1,3 @@
-
 import { Calculator, Bot, ShieldCheck, TrendingUp } from "lucide-react";
 
 const features = [
@@ -26,7 +25,7 @@ const features = [
 
 const Features = () => {
   return (
-    <div id="features" className="section-padding bg-gray-50">
+    <section id="features" className="py-24 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -60,7 +59,7 @@ const Features = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
