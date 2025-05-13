@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,16 +23,17 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#features" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Features</a>
-              <a href="#how-it-works" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">How It Works</a>
-              <a href="#faq" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">FAQ</a>
+              <a href="#features" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Features</a>
+              <a href="#how-it-works" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">How It Works</a>
+              <a href="#faq" className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</a>
+              <ThemeToggle />
               <Button className="ml-4 bg-primary hover:bg-primary/90">Get Started</Button>
             </div>
           </div>
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary dark:hover:bg-gray-800"
             >
               <span className="sr-only">Open main menu</span>
               {!isMenuOpen ? (
@@ -51,9 +53,13 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-effect">
-            <a href="#features" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Features</a>
-            <a href="#how-it-works" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">How It Works</a>
-            <a href="#faq" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">FAQ</a>
+            <a href="#features" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">Features</a>
+            <a href="#how-it-works" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">How It Works</a>
+            <a href="#faq" className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium dark:text-gray-300">FAQ</a>
+            <div className="flex items-center px-3 py-2">
+              <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
+              <ThemeToggle />
+            </div>
             <Button className="mt-2 w-full bg-primary hover:bg-primary/90">Get Started</Button>
           </div>
         </div>
