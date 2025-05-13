@@ -32,7 +32,7 @@ const Process = () => {
   return (
     <div id="how-it-works" className="section-padding">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             How It Works
           </h2>
@@ -43,8 +43,12 @@ const Process = () => {
 
         <div className="mt-16">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {steps.map((step) => (
-              <Card key={step.id} className="glass-effect border-t-4 border-t-primary">
+            {steps.map((step, index) => (
+              <Card 
+                key={step.id} 
+                className={`scale-in glass-effect border-t-4 border-t-primary`}
+                style={{ transitionDelay: `${index * 0.1}s` }}
+              >
                 <CardContent className="p-6">
                   <div className="text-xl font-bold text-primary mb-2">{step.id}</div>
                   <h3 className="text-lg font-medium text-gray-900">{step.name}</h3>

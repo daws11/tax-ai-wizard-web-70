@@ -28,7 +28,7 @@ const Features = () => {
   return (
     <div id="features" className="section-padding bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
+        <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Features That Make Tax Season Easier
           </h2>
@@ -39,8 +39,11 @@ const Features = () => {
 
         <div className="mt-16">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
-            {features.map((feature) => (
-              <div key={feature.name} className="p-6 glass-effect rounded-lg shadow-md transform transition duration-500 hover:scale-105">
+            {features.map((feature, index) => (
+              <div 
+                key={feature.name} 
+                className={`p-6 glass-effect rounded-lg shadow-md transform transition duration-500 hover:scale-105 ${index % 2 === 0 ? 'fade-in-left' : 'fade-in-right'}`}
+              >
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
                     <div className="flex items-center justify-center h-12 w-12 rounded-md bg-primary text-white">
