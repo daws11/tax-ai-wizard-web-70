@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
@@ -33,8 +32,21 @@ const Hero = () => {
           </main>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <div className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full bg-gradient-to-r from-primary to-secondary opacity-80"></div>
+      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3">
+        <div className="hidden md:block relative h-full">
+          {/* GIF Layer */}
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
+            <div className="w-[80%]">
+              <img
+                src="/lovable-uploads/Taxesagain-ezgif.com-gif-maker.gif"
+                alt="Tax calculation animation"
+                className="h-40 w-auto object-contain sm:h-48 md:h-64 lg:h-[350px]"
+              />
+            </div>
+          </div>
+          {/* Gradient Background Layer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/70 opacity-80" />
+        </div>
       </div>
     </div>
   );
