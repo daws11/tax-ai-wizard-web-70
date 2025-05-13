@@ -1,6 +1,3 @@
-
-import { Calculator } from "lucide-react";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
@@ -10,8 +7,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">
             <div className="flex items-center">
-              <Calculator className="h-8 w-8 text-primary mr-2" />
-              <span className="text-xl font-bold">TaxAI</span>
+              <img 
+                src="/lovable-uploads/1fc64543-d2f9-4ea7-9baa-14cf2510e80a.png" 
+                alt="Atto AI Assistant Logo" 
+                className="h-10" 
+              />
             </div>
             <p className="mt-2 text-sm text-gray-300">
               Making taxes simple with artificial intelligence.
@@ -48,8 +48,9 @@ const Footer = () => {
         
         <div className="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-base text-gray-400">
-            &copy; {currentYear} TaxAI, Inc. All rights reserved.
+            &copy; {currentYear} Atto AI Assistant, Inc. All rights reserved.
           </p>
+          
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-gray-300">
               <span className="sr-only">Facebook</span>
@@ -70,6 +71,7 @@ const Footer = () => {
               </svg>
             </a>
           </div>
+          
         </div>
       </div>
     </footer>

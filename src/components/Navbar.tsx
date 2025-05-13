@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Calculator } from "lucide-react";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,8 +12,11 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="flex items-center">
-                <Calculator className="h-8 w-8 text-primary mr-2" />
-                <span className="text-xl font-bold text-primary">TaxAI</span>
+                <img 
+                  src="/lovable-uploads/1fc64543-d2f9-4ea7-9baa-14cf2510e80a.png" 
+                  alt="Atto AI Assistant Logo" 
+                  className="h-10" 
+                />
               </span>
             </div>
           </div>
