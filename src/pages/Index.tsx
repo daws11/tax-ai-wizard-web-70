@@ -12,18 +12,18 @@ import CTA from "../components/CTA";
 import Footer from "../components/Footer";
 
 const Index = () => {
-  // Memperbaiki scroll fade-in animation effect dan menambahkan entrance animations
+  
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Add fade-in for opacity-0 elements (existing animation)
+          
           if (entry.target.classList.contains('opacity-0')) {
             entry.target.classList.add('fade-in');
             entry.target.classList.remove('opacity-0');
           }
           
-          // Add entrance animations based on class
+          
           if (entry.target.classList.contains('slide-up') ||
               entry.target.classList.contains('fade-in-right') ||
               entry.target.classList.contains('fade-in-left') ||
