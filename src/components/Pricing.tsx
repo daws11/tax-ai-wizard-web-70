@@ -105,7 +105,7 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={plan.id}
-              className={`backdrop-blur-sm transition-all border shadow-sm hover:shadow-md dark:bg-gray-800/50 dark:border-gray-700 ${
+              className={`backdrop-blur-sm transition-all border shadow-sm hover:shadow-md dark:bg-gray-800/50 dark:border-gray-700 flex flex-col h-full ${
                 plan.mostPopular ? "ring-2 ring-primary" : ""
               } scale-in`} 
               style={{ transitionDelay: `${index * 0.1}s` }}
@@ -125,7 +125,7 @@ const Pricing = () => {
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 min-h-[60px]">{plan.description}</p>
                 </div>
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className="pt-6 flex-grow">
                 <Separator className="mb-6" />
                 <ul className="space-y-3">
                   {plan.features.map((feature, i) => (
@@ -136,7 +136,7 @@ const Pricing = () => {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="mt-auto">
                 <Button 
                   className="w-full" 
                   variant={plan.id === "enterprise" ? "outline" : "default"}
