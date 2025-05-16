@@ -14,10 +14,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 199 75% 50%; /* Blue from logo */
+    --primary: 210 100% 50%; /* Brighter blue */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 32 100% 50%; /* Orange from logo */
+    --secondary: 32 95% 55%; /* Refined orange */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -31,7 +31,7 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 199 75% 50%; /* Blue from logo */
+    --ring: 199 75% 50%;
 
     --radius: 0.5rem;
   }
@@ -46,10 +46,10 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 199 75% 50%; /* Blue from logo */
+    --primary: 210 100% 50%; /* Brighter blue */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 32 100% 50%; /* Orange from logo */
+    --secondary: 32 95% 55%; /* Refined orange */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -63,7 +63,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 199 75% 50%; /* Blue from logo */
+    --ring: 199 75% 50%;
   }
 }
 
@@ -73,32 +73,39 @@
   }
   body {
     @apply bg-background text-foreground font-sans;
+    letter-spacing: -0.025em;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+  button {
+    @apply transition-all duration-200;
   }
 }
 
 @layer utilities {
   .glass-effect {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
   }
   
   .dark .glass-effect {
-    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800/50 shadow-lg;
+    @apply bg-gray-900/80 backdrop-blur-md border border-gray-800/50 shadow-sm;
   }
   
   .section-padding {
-    @apply py-16 px-4 sm:px-6 md:px-8 lg:px-16;
+    @apply py-20 px-4 sm:px-6 md:px-8 lg:px-16;
   }
   
   .fade-in {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 0.8s ease-out;
     opacity: 1 !important;
   }
   
   /* Entrance animations when scrolling */
   .slide-up {
-    transform: translateY(50px);
+    transform: translateY(30px);
     opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
   }
   
   .slide-up.animated {
@@ -107,9 +114,9 @@
   }
   
   .fade-in-right {
-    transform: translateX(50px);
+    transform: translateX(30px);
     opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
   }
   
   .fade-in-right.animated {
@@ -118,9 +125,9 @@
   }
   
   .fade-in-left {
-    transform: translateX(-50px);
+    transform: translateX(-30px);
     opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
   }
   
   .fade-in-left.animated {
@@ -129,9 +136,9 @@
   }
   
   .scale-in {
-    transform: scale(0.9);
+    transform: scale(0.95);
     opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transition: transform 0.6s ease, opacity 0.6s ease;
   }
   
   .scale-in.animated {
@@ -140,7 +147,7 @@
   }
   
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
 }

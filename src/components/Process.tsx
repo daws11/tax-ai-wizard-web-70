@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 
 const steps = [
@@ -32,10 +33,10 @@ const Process = () => {
     <section id="how-it-works" className="py-24 bg-white dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
             How It Works
           </h2>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
             From signup to filing, our streamlined process makes tax preparation simple.
           </p>
         </div>
@@ -45,13 +46,13 @@ const Process = () => {
             {steps.map((step, index) => (
               <Card 
                 key={step.id} 
-                className={`scale-in glass-effect border-t-4 border-t-primary`}
+                className={`scale-in backdrop-blur-sm transition-all border-t-0 shadow-sm hover:shadow-md dark:bg-gray-800/50 dark:border-gray-700`}
                 style={{ transitionDelay: `${index * 0.1}s` }}
               >
-                <CardContent className="p-6">
-                  <div className="text-xl font-bold text-primary mb-2">{step.id}</div>
-                  <h3 className="text-lg font-medium text-gray-900">{step.name}</h3>
-                  <p className="mt-2 text-base text-gray-500">{step.description}</p>
+                <CardContent className="p-8 flex flex-col items-start">
+                  <span className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-primary/10 text-primary mb-4 text-xl font-bold">{step.id}</span>
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">{step.name}</h3>
+                  <p className="text-base text-gray-500 dark:text-gray-400">{step.description}</p>
                 </CardContent>
               </Card>
             ))}
