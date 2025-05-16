@@ -5,6 +5,7 @@ import Hero from "../components/Hero";
 import Features from "../components/Features";
 import Process from "../components/Process";
 import AIChat from "../components/AIChat";
+import Pricing from "../components/Pricing";
 import FAQ from "../components/FAQ";
 import CTA from "../components/CTA";
 import Footer from "../components/Footer";
@@ -81,6 +82,10 @@ const Index = () => {
       
       <section className="opacity-0">
         <Process />
+      </section>
+      
+      <section className="opacity-0">
+        <Pricing />
       </section>
       
       <section className="opacity-0">

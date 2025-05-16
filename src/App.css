@@ -37,3 +37,12 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Pricing specific styles */
+.pricing-separator {
+  height: 1px;
+  width: 100%;
+  background-color: var(--border);
+  margin: 1.5rem 0;
+}
+
