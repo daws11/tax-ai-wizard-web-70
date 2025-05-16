@@ -46,3 +46,34 @@
   margin: 1.5rem 0;
 }
 
+/* Testimonial logo styles */
+.client-logo {
+  transition: all 0.3s ease;
+  max-height: 80px;
+  max-width: 100%;
+}
+
+.client-logo-container {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 1rem;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.dark .client-logo-container {
+  background: rgba(30, 41, 59, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.client-logo-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.dark .client-logo-container:hover {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
