@@ -1,4 +1,5 @@
 
+import React, { useState } from "react";
 import { Avatar } from "@/components/ui/avatar";
 
 const clientLogos = [
@@ -41,6 +42,8 @@ const clientLogos = [
 ];
 
 const Testimonials = () => {
+  const [hoveredLogo, setHoveredLogo] = useState<number | null>(null);
+  
   return (
     <section className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,14 +61,34 @@ const Testimonials = () => {
             {clientLogos.map((client) => (
               <div 
                 key={client.id}
-                className="p-4 flex items-center justify-center fade-in-right" 
-                style={{ transitionDelay: `${client.id * 0.1}s` }}
+                className="relative p-6 flex items-center justify-center fade-in-right rounded-lg transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white dark:bg-gray-800" 
+                style={{ 
+                  transitionDelay: `${client.id * 0.1}s`,
+                  minHeight: "120px",
+                  width: "100%"
+                }}
+                onMouseEnter={() => setHoveredLogo(client.id)}
+                onMouseLeave={() => setHoveredLogo(null)}
               >
-                <img 
-                  src={client.logo} 
-                  alt={client.alt}
-                  className="max-h-16 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                />
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <img 
+                    src={client.logo} 
+                    alt={client.alt}
+                    className={`max-h-20 max-w-full object-contain transition-all duration-300 ${
+                      hoveredLogo === client.id 
+                        ? "scale-110 filter-none" 
+                        : "filter grayscale hover:grayscale-0"
+                    }`}
+                  />
+                  
+                  {hoveredLogo === client.id && (
+                    <div className="absolute -bottom-2 left-0 right-0 text-center">
+                      <p className="text-xs font-medium text-gray-600 dark:text-gray-300 bg-white/80 dark:bg-gray-800/80 py-1 px-2 rounded-md backdrop-blur-sm inline-block">
+                        {client.name}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
