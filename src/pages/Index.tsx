@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -91,6 +90,9 @@ const Index = () => {
       
       <section className="opacity-0">
         <Pricing />
+      </section>
+      <section className="opacity-0">
+        <Testimonials />
       </section>
       
       <section className="opacity-0">

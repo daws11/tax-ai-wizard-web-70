@@ -22,11 +22,14 @@ const Navbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <span className="flex items-center">
-                <img 
-                  src="/lovable-uploads/1fc64543-d2f9-4ea7-9baa-14cf2510e80a.png" 
-                  alt="Atto AI Assistant Logo" 
-                  className="h-10" 
-                />
+                <picture>
+                  <source srcSet="/lovable-uploads/logo dark.png" media="(prefers-color-scheme: dark)" />
+                  <img 
+                    src="/lovable-uploads/light logo.png" 
+                    alt="Atto AI Assistant Logo" 
+                    className="h-10 transition-all duration-300"
+                  />
+                </picture>
               </span>
             </div>
           </div>
