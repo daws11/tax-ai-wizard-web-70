@@ -1,4 +1,3 @@
-
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -140,6 +139,7 @@ const Pricing = () => {
                 <Button 
                   className="w-full" 
                   variant={plan.id === "enterprise" ? "outline" : "default"}
+                  onClick={plan.id !== "enterprise" ? () => window.open("https://chat-taxai.onrender.com/login", "_blank") : undefined}
                 >
                   {plan.buttonText}
                 </Button>

@@ -36,7 +36,12 @@ const Navbar = () => {
               <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">How It Works</button>
               <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</button>
               <ThemeToggle />
-              <Button onClick={() => navigate("/login")} className="ml-4 bg-primary hover:bg-primary/90">Get Started</Button>
+              <Button
+                onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
+                className="ml-4 bg-primary hover:bg-primary/90"
+              >
+                Get Started
+              </Button>
             </div>
           </div>
           <div className="md:hidden">
@@ -69,7 +74,12 @@ const Navbar = () => {
               <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
               <ThemeToggle />
             </div>
-            <Button onClick={() => navigate("/login")} className="mt-2 w-full bg-primary hover:bg-primary/90">Get Started</Button>
+            <Button
+              onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
+              className="mt-2 w-full bg-primary hover:bg-primary/90"
+            >
+              Get Started
+            </Button>
           </div>
         </div>
       )}

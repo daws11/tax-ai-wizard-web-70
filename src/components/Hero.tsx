@@ -23,7 +23,7 @@ const Hero = () => {
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
                   <Button 
-                    onClick={() => navigate("/login")}
+                    onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
                     className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 md:py-4 md:text-lg md:px-10"
                   >
                     Start Now
