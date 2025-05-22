@@ -40,29 +40,31 @@ const Navbar = () => {
               <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</button>
               <ThemeToggle />
               <Button
-                onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
+                onClick={() => navigate("/agent")}
                 className="ml-4 bg-primary hover:bg-primary/90"
               >
                 Get Started
               </Button>
             </div>
           </div>
-          <div className="md:hidden">
-            <button
+          <div className="-mr-2 flex md:hidden items-center">
+            <ThemeToggle />
+            <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-primary hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary dark:hover:bg-gray-800"
+              variant="ghost"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
             >
               <span className="sr-only">Open main menu</span>
-              {!isMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
+              {isMenuOpen ? (
                 <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
+              ) : (
+                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -78,7 +80,7 @@ const Navbar = () => {
               <ThemeToggle />
             </div>
             <Button
-              onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
+              onClick={() => navigate("/agent")}
               className="mt-2 w-full bg-primary hover:bg-primary/90"
             >
               Get Started

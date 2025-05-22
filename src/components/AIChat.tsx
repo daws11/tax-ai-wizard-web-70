@@ -21,7 +21,7 @@ const AIChat = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Navigate to login for demo purposes
-    navigate("/login");
+    navigate("/agent");
   };
 
   return (

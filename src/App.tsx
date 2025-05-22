@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import Chat from "./pages/Chat";
 import VoiceCall from "./pages/VoiceCall";
+import AgentPage from "./pages/AgentPage";
 
 const queryClient = new QueryClient();
 
@@ -22,10 +23,7 @@ const App = () => (
         <Router>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/chat/call" element={<VoiceCall />} />
+            <Route path="/agent" element={<AgentPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

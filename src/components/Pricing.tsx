@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 interface PlanFeature {
   text: string;
@@ -88,6 +89,7 @@ const plans: PricingPlan[] = [
 ];
 
 const Pricing = () => {
+  const navigate = useNavigate();
   return (
     <section id="pricing" className="py-24 bg-white dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -139,7 +141,7 @@ const Pricing = () => {
                 <Button 
                   className="w-full" 
                   variant={plan.id === "enterprise" ? "outline" : "default"}
-                  onClick={plan.id !== "enterprise" ? () => window.open("https://chat-taxai.onrender.com/login", "_blank") : undefined}
+                  onClick={plan.id !== "enterprise" ? () => navigate("/agent") : undefined}
                 >
                   {plan.buttonText}
                 </Button>

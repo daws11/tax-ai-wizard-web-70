@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const CTA = () => {
+  const navigate = useNavigate();
   return (
     <div className="section-padding bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -14,7 +16,7 @@ const CTA = () => {
           <Button 
             size="lg"
             className="bg-white text-primary hover:bg-gray-100 hover:text-primary/90 font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
-            onClick={() => window.open("https://chat-taxai.onrender.com/login", "_blank")}
+            onClick={() => navigate("/agent")}
           >
             Start Free Trial
           </Button>

@@ -84,16 +84,12 @@ const Index = () => {
         <Process />
       </section>
       
-      {/* <section className="opacity-0">
-        <Testimonials />
-      </section> */}
-      
       <section className="opacity-0">
         <Pricing />
       </section>
-      <section className="opacity-0">
+      {/* <section className="opacity-0">
         <Testimonials />
-      </section>
+      </section> */}
       
       <section className="opacity-0">
         <FAQ />
