@@ -1,11 +1,15 @@
 import { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
 
 const AgentPage = () => {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
@@ -123,7 +127,7 @@ const AgentPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="min-h-screen relative" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="absolute inset-0 -z-10">
         <Particles
           id="tsparticles"
@@ -135,33 +139,43 @@ const AgentPage = () => {
       <Navbar />
       
       <section className="opacity-0 flex flex-col items-center justify-center py-8 md:py-16 bg-transparent">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-900 dark:text-gray-100">Choose Your Agent</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-900 dark:text-gray-100">
+          {t('chooseAgent')}
+        </h1>
         <div className="flex flex-col md:flex-row items-center justify-center w-full px-4 py-4 gap-4 md:gap-8">
           {/* Agent Option 1: ATTO */}
           <Link to="https://chat-taxai.onrender.com/" className="group flex flex-col items-center p-4 md:p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1">
             <div className="w-20 h-20 md:w-32 md:h-32 mb-2 md:mb-4 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
               <img 
                 src="/lovable-uploads/logo atto.png" 
-                alt="ATTO Logo" 
+                alt={t('attoAgentTitle')} 
                 className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105" 
                 style={{ width: 'auto', height: 'auto' }}
               />
             </div>
-            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">ATTO</span>
-            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">Your AI-powered tax consultant, offering instant, chat-based guidance to intelligently optimize your finances for maximum savings and effortless compliance.</p>
+            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {t('attoAgentTitle')}
+            </span>
+            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">
+              {t('attoAgentDesc')}
+            </p>
           </Link>
           {/* Agent Option 2: YOSR */}
           <Link to="/agent/yosr" className="group flex flex-col items-center p-4 md:p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1" style={{ animationDelay: '0.2s' }}>
             <div className="w-20 h-20 md:w-32 md:h-32 mb-2 md:mb-4 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
               <img 
                 src="/lovable-uploads/logo yosr.png" 
-                alt="YOSR Logo" 
+                alt={t('yosrAgentTitle')} 
                 className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
                 style={{ width: 'auto', height: 'auto' }}
               />
             </div>
-            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">YOSR</span>
-            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">Your intelligent AI tax consultant, offering instant, expert advice and seamless filing support right through a natural voice conversation, making tax season effortlessly clear and optimized for you.</p>
+            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">
+              {t('yosrAgentTitle')}
+            </span>
+            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">
+              {t('yosrAgentDesc')}
+            </p>
           </Link>
         </div>
       </section>

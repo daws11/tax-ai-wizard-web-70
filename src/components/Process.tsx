@@ -1,43 +1,42 @@
-
 import { Card, CardContent } from "@/components/ui/card";
-
-const steps = [
-  {
-    id: '01',
-    name: 'Create an account',
-    description:
-      'Sign up in seconds with just your email and basic information to get started.',
-  },
-  {
-    id: '02',
-    name: 'Upload documents',
-    description:
-      'Securely upload your W-2s, 1099s, and other tax documents, or connect to your financial accounts.',
-  },
-  {
-    id: '03',
-    name: 'Chat with AI',
-    description:
-      'Ask questions, get personalized advice, and let our AI guide you through the tax filing process.',
-  },
-  {
-    id: '04',
-    name: 'Review and file',
-    description:
-      'Check the AI-prepared tax return and submit it directly to the IRS with a single click.',
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const Process = () => {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+
+  const steps = [
+    {
+      id: '01',
+      name: t('step1'),
+      description: t('step1Desc'),
+    },
+    {
+      id: '02',
+      name: t('step2'),
+      description: t('step2Desc'),
+    },
+    {
+      id: '03',
+      name: t('step3'),
+      description: t('step3Desc'),
+    },
+    {
+      id: '04',
+      name: t('step4'),
+      description: t('step4Desc'),
+    },
+  ];
+
   return (
-    <section id="how-it-works" className="py-24 bg-white dark:bg-gray-800">
+    <section id="how-it-works" className="py-24 bg-white dark:bg-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
-            How It Works
+            {t('processTitle')}
           </h2>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-            From signup to filing, our streamlined process makes tax preparation simple.
+            {t('processSubtitle')}
           </p>
         </div>
 

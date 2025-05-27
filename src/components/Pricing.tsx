@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface PlanFeature {
   text: string;
@@ -20,85 +21,88 @@ interface PricingPlan {
   buttonText: string;
 }
 
-const plans: PricingPlan[] = [
-  {
-    id: "monthly",
-    name: "Monthly Plan",
-    price: "$99",
-    priceAED: "AED 365",
-    description: "Ideal for business owners, freelancers, tax advisors, accountants, and finance professionals who need accurate and accessible tax guidance.",
-    features: [
-      { text: "1 user" },
-      { text: "1 device" },
-      { text: "100 AI-powered messages per month" },
-      { text: "Coverage of UAE VAT, Corporate Tax, and Excise regulations" },
-      { text: "Answers in both English and Arabic" },
-      { text: "Standard support" },
-      { text: "Access to step-by-step guidance and process explanations" },
-    ],
-    buttonText: "Get Started",
-  },
-  {
-    id: "quarterly",
-    name: "Quarterly Plan",
-    price: "$250",
-    priceAED: "AED 915",
-    description: "Best for professionals who want consistent tax advisory access with savings.",
-    features: [
-      { text: "1 user" },
-      { text: "1 device" },
-      { text: "300 messages total over 3 months" },
-      { text: "All Monthly features" },
-      { text: "Priority email support" },
-      { text: "Access to monthly tax regulation digest" },
-    ],
-    mostPopular: true,
-    buttonText: "Get Started",
-  },
-  {
-    id: "yearly",
-    name: "Yearly Plan",
-    price: "$899",
-    priceAED: "AED 3,300",
-    description: "For users committed to long-term support and deeper features, with the best value.",
-    features: [
-      { text: "1 to 2 users" },
-      { text: "2 devices" },
-      { text: "1,200 messages per year (averaging 100/month)" },
-      { text: "All Quarterly features" },
-      { text: "Early access to new features" },
-      { text: "Onboarding session included" },
-    ],
-    buttonText: "Get Started",
-  },
-  {
-    id: "enterprise",
-    name: "Enterprise Plan",
-    price: "Custom",
-    priceAED: "Quotation",
-    description: "For tax advisors, legal firms, or corporate finance departments managing multiple clients or entities.",
-    features: [
-      { text: "3+ users" },
-      { text: "Volume-based message allocation" },
-      { text: "Dedicated account manager" },
-      { text: "Custom advisory modules" },
-      { text: "SLA-based support and team training" },
-    ],
-    buttonText: "Contact Sales",
-  },
-];
-
 const Pricing = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+
+  const plans: PricingPlan[] = [
+    {
+      id: "monthly",
+      name: t('monthlyPlan'),
+      price: "$99",
+      priceAED: "AED 365",
+      description: t('monthlyPlanDesc'),
+      features: [
+        { text: t('oneUser') },
+        { text: t('oneDevice') },
+        { text: t('monthlyMessages') },
+        { text: t('uaeTaxCoverage') },
+        { text: t('bilingualSupport') },
+        { text: t('standardSupport') },
+        { text: t('stepByStepGuidance') },
+      ],
+      buttonText: t('pricingGetStarted'),
+    },
+    {
+      id: "quarterly",
+      name: t('quarterlyPlan'),
+      price: "$250",
+      priceAED: "AED 915",
+      description: t('quarterlyPlanDesc'),
+      features: [
+        { text: t('oneUser') },
+        { text: t('oneDevice') },
+        { text: t('quarterlyMessages') },
+        { text: t('allMonthlyFeatures') },
+        { text: t('prioritySupport') },
+        { text: t('monthlyTaxDigest') },
+      ],
+      mostPopular: true,
+      buttonText: t('pricingGetStarted'),
+    },
+    {
+      id: "yearly",
+      name: t('yearlyPlan'),
+      price: "$899",
+      priceAED: "AED 3,300",
+      description: t('yearlyPlanDesc'),
+      features: [
+        { text: t('twoUsers') },
+        { text: t('twoDevices') },
+        { text: t('yearlyMessages') },
+        { text: t('allQuarterlyFeatures') },
+        { text: t('earlyAccess') },
+        { text: t('onboardingSession') },
+      ],
+      buttonText: t('pricingGetStarted'),
+    },
+    {
+      id: "enterprise",
+      name: t('enterprisePlan'),
+      price: t('customPrice'),
+      priceAED: t('quotation'),
+      description: t('enterprisePlanDesc'),
+      features: [
+        { text: t('threePlusUsers') },
+        { text: t('volumeBasedMessages') },
+        { text: t('dedicatedManager') },
+        { text: t('customModules') },
+        { text: t('slaSupport') },
+      ],
+      buttonText: t('contactSales'),
+    },
+  ];
+
   return (
-    <section id="pricing" className="py-24 bg-white dark:bg-gray-800">
+    <section id="pricing" className="py-24 bg-white dark:bg-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
-            AI Tax Agent Pricing Plans
+            {t('pricingTitle')}
           </h2>
           <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
-            Choose the plan that's right for your business needs
+            {t('pricingSubtitle')}
           </p>
         </div>
 
@@ -114,14 +118,14 @@ const Pricing = () => {
               <CardHeader className="pb-0">
                 {plan.mostPopular && (
                   <Badge variant="secondary" className="w-fit mb-2">
-                    Most Popular
+                    {t('mostPopular')}
                   </Badge>
                 )}
                 <div className="space-y-1">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{plan.name}</h3>
                   <div className="flex items-baseline mt-2">
                     <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">{plan.price}</span>
-                    <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">{plan.priceAED}</span>
+                    <span className={`${isRTL ? 'mr-1' : 'ml-1'} text-sm text-gray-500 dark:text-gray-400`}>{plan.priceAED}</span>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 min-h-[60px]">{plan.description}</p>
                 </div>
@@ -130,8 +134,8 @@ const Pricing = () => {
                 <Separator className="mb-6" />
                 <ul className="space-y-3">
                   {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-start">
-                      <Check className="h-5 w-5 text-primary shrink-0 mr-2" />
+                    <li key={i} className={`flex items-start ${isRTL ? 'flex-row-reverse' : ''}`}>
+                      <Check className={`h-5 w-5 text-primary shrink-0 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                       <span className="text-sm text-gray-500 dark:text-gray-400">{feature.text}</span>
                     </li>
                   ))}
@@ -151,7 +155,7 @@ const Pricing = () => {
         </div>
         
         <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>All plans include 14-day free trial. No credit card required to start.</p>
+          <p>{t('pricingNote')}</p>
         </div>
       </div>
     </section>

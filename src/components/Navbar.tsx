@@ -2,17 +2,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const handleScrollTo = (elementId: string) => {
-    setIsMenuOpen(false); // Close mobile menu after clicking
+    setIsMenuOpen(false);
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    // Update document direction for RTL languages
+    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
   };
 
   return (
@@ -35,19 +44,43 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Features</button>
-              <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">How It Works</button>
-              <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">FAQ</button>
+              <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('features')}</button>
+              <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('howItWorks')}</button>
+              <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('faq')}</button>
+              <Select
+                value={i18n.language}
+                onValueChange={changeLanguage}
+              >
+                <SelectTrigger className="w-[100px]">
+                  <SelectValue placeholder="Language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="ar">العربية</SelectItem>
+                </SelectContent>
+              </Select>
               <ThemeToggle />
               <Button
                 onClick={() => navigate("/agent")}
                 className="ml-4 bg-primary hover:bg-primary/90"
               >
-                Get Started
+                {t('getStarted')}
               </Button>
             </div>
           </div>
           <div className="-mr-2 flex md:hidden items-center">
+            <Select
+              value={i18n.language}
+              onValueChange={changeLanguage}
+            >
+              <SelectTrigger className="w-[100px] mr-2">
+                <SelectValue placeholder="Language" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="en">English</SelectItem>
+                <SelectItem value="ar">العربية</SelectItem>
+              </SelectContent>
+            </Select>
             <ThemeToggle />
             <Button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -72,9 +105,9 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-effect">
-            <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">Features</button>
-            <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">How It Works</button>
-            <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">FAQ</button>
+            <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('features')}</button>
+            <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('howItWorks')}</button>
+            <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('faq')}</button>
             <div className="flex items-center px-3 py-2">
               <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
               <ThemeToggle />
@@ -83,7 +116,7 @@ const Navbar = () => {
               onClick={() => navigate("/agent")}
               className="mt-2 w-full bg-primary hover:bg-primary/90"
             >
-              Get Started
+              {t('getStarted')}
             </Button>
           </div>
         </div>

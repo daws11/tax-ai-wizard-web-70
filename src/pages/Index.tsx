@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Features from "../components/Features";
@@ -11,7 +12,9 @@ import CTA from "../components/CTA";
 import Footer from "../components/Footer";
 
 const Index = () => {
-  
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -55,7 +58,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
       
       <section className="opacity-0">
@@ -69,9 +72,9 @@ const Index = () => {
       <section className="opacity-0 bg-white section-padding">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 slide-up">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">Experience Our AI Tax Assistant</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">{t('aiDemoTitle')}</h2>
             <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-              Try a demo of our conversational AI that makes taxes simple and stress-free.
+              {t('aiDemoSubtitle')}
             </p>
           </div>
           <div className="scale-in">
