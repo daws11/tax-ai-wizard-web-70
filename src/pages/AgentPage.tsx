@@ -2,6 +2,7 @@ import { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
@@ -179,6 +180,7 @@ const AgentPage = () => {
           </Link>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

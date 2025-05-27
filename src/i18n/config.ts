@@ -149,6 +149,46 @@ const resources = {
       attoAgentDesc: 'Your AI-powered tax consultant, offering instant, chat-based guidance to intelligently optimize your finances for maximum savings and effortless compliance.',
       yosrAgentTitle: 'YOSR',
       yosrAgentDesc: 'Your intelligent AI tax consultant, offering instant, expert advice and seamless filing support right through a natural voice conversation, making tax season effortlessly clear and optimized for you.',
+
+      // Privacy Policy Page
+      privacy_and_policy: 'Privacy & Policy',
+      privacy_policy: 'Privacy Policy',
+      privacy_policy_introduction: 'Introduction',
+      privacy_policy_introduction_text: 'This privacy notice ("Notice") for TAX-AI ("we," "us," or "our") explains how and why we collect, use, and process your personal information when you interact with our services, including through our website, mobile applications, or other channels.',
+      privacy_policy_compliance: 'We are committed to protecting your personal data in accordance with the Abu Dhabi Global Market (ADGM) Data Protection Regulations 2021 and applicable laws of the United Arab Emirates (UAE).',
+      
+      information_collection: 'What Personal Information We Collect',
+      information_collection_text: 'Account Information: Name, email, login credentials.\nUser Inputs: Data you enter into our AI tools or upload as files.\nCommunication Data: Messages, inquiries, or feedback you submit.\nSocial Media Data: Information you provide through interactions on our social media pages.\nSensitive Information: We do not intentionally collect sensitive personal data.\n\nYou are responsible for providing accurate and up-to-date information.',
+      
+      information_usage: 'Why We Process Your Data',
+      information_usage_text: 'To operate and provide the TAX-AI services.\nTo manage user accounts and interactions.\nTo prevent fraud and ensure security.\nTo analyze usage trends and improve the platform.\nTo comply with legal and regulatory obligations.\n\nWe only process your data when it is legally permitted, such as under consent, legal obligation, or legitimate interest.',
+      
+      data_sharing: 'Sharing Your Information',
+      data_sharing_text: 'We may share your personal data with:\nOur group companies.\nService providers and contractors.\nLegal and regulatory authorities within or outside the UAE.\nThird parties involved in transactions or business changes.\nAnalytics or marketing partners (aggregated/anonymized only).\n\nWe ensure all third parties handle your data with appropriate safeguards.',
+      
+      data_security: 'Data Storage & Security',
+      data_security_text: 'We store your data securely on protected servers and use technical and organizational measures to protect it from unauthorized access or misuse. While we take reasonable precautions, no system is fully secure, and you use our services at your own risk.',
+      
+      children_privacy: 'Children\'s Privacy',
+      children_privacy_text: 'TAX-AI is not intended for users under 18. If we learn that personal data from minors has been collected, we will delete it promptly. Parents or guardians can contact us to request deletion.',
+      
+      data_retention: 'Data Retention',
+      data_retention_text: 'We retain your data only as long as necessary for the stated purposes, legal requirements, or until you withdraw consent (if applicable). Typically, this is no longer than 12 months unless required by law.',
+      
+      cookies_links: 'Cookies and External Links',
+      cookies_links_text: 'We use cookies to improve user experience. Please refer to our Cookie Policy for more details. Our website may link to third-party sites. We are not responsible for their privacy practices or content.',
+      
+      user_rights: 'Your Rights',
+      user_rights_text: 'You have rights under applicable laws, including:\nThe right to be informed\nThe right to access\nThe right to rectify\nThe right to erase\nThe right to restrict processing\nThe right to data portability\nThe right to object\nThe right to withdraw consent\nThe right to lodge a complaint with the ADGM Office of Data Protection\n\nTo exercise any of your rights or raise concerns, please contact us.',
+      
+      policy_changes: 'Changes to This Notice',
+      policy_changes_text: 'We may update this Privacy Policy periodically. Continued use of TAX-AI after any updates signifies your acceptance of the revised Notice.',
+      
+      last_updated: 'Last Updated',
+      last_updated_date: '27 May 2025',
+      
+      contact_us: 'Contact Us',
+      contact_us_text: 'If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.',
     }
   },
   ar: {
@@ -296,6 +336,46 @@ const resources = {
       attoAgentDesc: 'مستشار الضرائب الذكي الخاص بك القائم على الدردشة، يقدم توجيهاً فورياً قائماً على الدردشة لتحسين أموالك بذكاء لأقصى توفير وامتثال سهل.',
       yosrAgentTitle: 'يسر',
       yosrAgentDesc: 'مستشار الضرائب الذكي الذكي الخاص بك، يقدم نصائح فورية من الخبراء ودعم تقديم سلس من خلال محادثة صوتية طبيعية، مما يجعل موسم الضرائب واضحاً ومحسناً بسهولة.',
+
+      // Privacy Policy Page
+      privacy_and_policy: 'الخصوصية والسياسة',
+      privacy_policy: 'سياسة الخصوصية',
+      privacy_policy_introduction: 'مقدمة',
+      privacy_policy_introduction_text: 'توضح إشعار الخصوصية هذا ("الإشعار") لـ TAX-AI ("نحن" أو "لنا") كيفية وأسباب جمع معلوماتك الشخصية واستخدامها ومعالجتها عند التفاعل مع خدماتنا، بما في ذلك من خلال موقعنا الإلكتروني أو تطبيقاتنا المحمولة أو القنوات الأخرى.',
+      privacy_policy_compliance: 'نحن ملتزمون بحماية بياناتك الشخصية وفقًا لائحة حماية البيانات في سوق أبوظبي العالمي (ADGM) 2021 والقوانين المعمول بها في دولة الإمارات العربية المتحدة.',
+      
+      information_collection: 'المعلومات الشخصية التي نجمعها',
+      information_collection_text: 'معلومات الحساب: الاسم، البريد الإلكتروني، بيانات تسجيل الدخول.\nالمدخلات: البيانات التي تدخلها في أدوات الذكاء الاصطناعي أو تقوم بتحميلها كملفات.\nبيانات الاتصال: الرسائل والاستفسارات أو الملاحظات التي تقدمها.\nبيانات وسائل التواصل الاجتماعي: المعلومات التي تقدمها من خلال التفاعلات على صفحات وسائل التواصل الاجتماعي الخاصة بنا.\nالمعلومات الحساسة: نحن لا نقوم بجمع البيانات الشخصية الحساسة عن قصد.\n\nأنت مسؤول عن تقديم معلومات دقيقة وحديثة.',
+      
+      information_usage: 'لماذا نقوم بمعالجة بياناتك',
+      information_usage_text: 'لتشغيل وتقديم خدمات TAX-AI.\nلإدارة حسابات المستخدمين والتفاعلات.\nلمنع الاحتيال وضمان الأمان.\nلتحليل اتجاهات الاستخدام وتحسين المنصة.\nللامتثال للالتزامات القانونية والتنظيمية.\n\nنحن نقوم بمعالجة بياناتك فقط عندما يكون ذلك مسموحًا به قانونًا، مثل الموافقة أو الالتزام القانوني أو المصلحة المشروعة.',
+      
+      data_sharing: 'مشاركة معلوماتك',
+      data_sharing_text: 'قد نشارك بياناتك الشخصية مع:\nشركات مجموعتنا.\nمقدمي الخدمات والمقاولين.\nالسلطات القانونية والتنظيمية داخل أو خارج الإمارات العربية المتحدة.\nأطراف ثالثة مشاركة في المعاملات أو التغييرات التجارية.\nشركاء التحليلات أو التسويق (مجمع/مجهول الهوية فقط).\n\nنضمن أن جميع الأطراف الثالثة تتعامل مع بياناتك بضمانات مناسبة.',
+      
+      data_security: 'تخزين وأمن البيانات',
+      data_security_text: 'نحن نخزن بياناتك بشكل آمن على خوادم محمية ونستخدم تدابير تقنية وتنظيمية لحمايتها من الوصول غير المصرح به أو سوء الاستخدام. بينما نتخذ احتياطات معقولة، لا يوجد نظام آمن بالكامل، وأنت تستخدم خدماتنا على مسؤوليتك الخاصة.',
+      
+      children_privacy: 'خصوصية الأطفال',
+      children_privacy_text: 'TAX-AI غير مخصص للمستخدمين دون سن 18. إذا علمنا أنه تم جمع بيانات شخصية من القاصرين، فسنقوم بحذفها على الفور. يمكن للآباء أو الأوصياء الاتصال بنا لطلب الحذف.',
+      
+      data_retention: 'الاحتفاظ بالبيانات',
+      data_retention_text: 'نحتفظ ببياناتك فقط طالما كان ذلك ضروريًا للأغراض المذكورة أو المتطلبات القانونية أو حتى سحب موافقتك (إذا كان ذلك ينطبق). عادةً، لا تزيد هذه المدة عن 12 شهرًا ما لم يكن ذلك مطلوبًا بموجب القانون.',
+      
+      cookies_links: 'ملفات تعريف الارتباط والروابط الخارجية',
+      cookies_links_text: 'نستخدم ملفات تعريف الارتباط لتحسين تجربة المستخدم. يرجى الرجوع إلى سياسة ملفات تعريف الارتباط لمزيد من التفاصيل. قد يحتوي موقعنا على روابط لمواقع خارجية. نحن لسنا مسؤولين عن ممارسات الخصوصية أو المحتوى الخاص بهم.',
+      
+      user_rights: 'حقوقك',
+      user_rights_text: 'لديك حقوق بموجب القوانين المعمول بها، بما في ذلك:\nالحق في الإعلام\nالحق في الوصول\nالحق في التصحيح\nالحق في المحو\nالحق في تقييد المعالجة\nالحق في نقل البيانات\nالحق في الاعتراض\nالحق في سحب الموافقة\nالحق في تقديم شكوى إلى مكتب حماية البيانات في ADGM\n\nلممارسة أي من حقوقك أو رفع المخاوف، يرجى الاتصال بنا.',
+      
+      policy_changes: 'التغييرات على هذا الإشعار',
+      policy_changes_text: 'قد نقوم بتحديث سياسة الخصوصية هذه بشكل دوري. الاستمرار في استخدام TAX-AI بعد أي تحديثات يعني قبولك للإشعار المنقح.',
+      
+      last_updated: 'آخر تحديث',
+      last_updated_date: '27 مايو 2025',
+      
+      contact_us: 'اتصل بنا',
+      contact_us_text: 'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على privacy@taxai.com.',
     }
   }
 };

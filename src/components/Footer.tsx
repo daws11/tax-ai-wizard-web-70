@@ -15,8 +15,7 @@ const Footer = () => {
       { name: t('help'), href: '#' },
     ],
     legal: [
-      { name: t('privacy'), href: '#' },
-      { name: t('terms'), href: '#' },
+      { name: t('privacy_and_policy'), href: '/privacy-policy' },
     ],
   };
 
