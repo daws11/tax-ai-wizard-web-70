@@ -2,14 +2,106 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useNavigate } from "react-router-dom";
+import Particles from 'react-tsparticles';
+import { loadSlim } from 'tsparticles-slim';
+import type { Engine } from 'tsparticles-engine';
+import { useCallback } from 'react';
 
 const Hero = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
   
+  const particlesInit = useCallback(async (engine: Engine) => {
+    await loadSlim(engine);
+  }, []);
+
+  const particlesOptions = {
+    background: {
+      color: {
+        value: "transparent",
+      },
+    },
+    fpsLimit: 120,
+    interactivity: {
+      events: {
+        onClick: {
+          enable: true,
+          mode: "push",
+        },
+        onHover: {
+          enable: true,
+          mode: "grab",
+        },
+        resize: {
+          enable: true
+        }
+      },
+      modes: {
+        push: {
+          quantity: 4,
+        },
+        grab: {
+          distance: 200,
+          links: {
+            opacity: 0.3
+          }
+        }
+      }
+    },
+    particles: {
+      color: {
+        value: "#3b82f6", // blue-500
+      },
+      links: {
+        color: "#3b82f6",
+        distance: 150,
+        enable: true,
+        opacity: 0.2,
+        width: 1,
+      },
+      move: {
+        direction: "none" as const,
+        enable: true,
+        outModes: {
+          default: "bounce" as const,
+        },
+        random: false,
+        speed: 1,
+        straight: false,
+      },
+      number: {
+        density: {
+          enable: true,
+          area: 800,
+        },
+        value: 100,
+      },
+      opacity: {
+        value: 0.3,
+      },
+      shape: {
+        type: ["circle"]
+      },
+      size: {
+        value: { min: 1, max: 3 }
+      }
+    },
+    detectRetina: true,
+  };
+
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto">
+    <div className="relative overflow-hidden bg-white dark:bg-gray-900 min-h-[600px] flex items-center">
+      {/* Particle Background Layer */}
+      <div className="absolute inset-0 -z-0">
+        <Particles
+          id="hero-particles"
+          init={particlesInit}
+          options={particlesOptions as any}
+          className="w-full h-full"
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
           <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="sm:text-center lg:text-left">
@@ -38,22 +130,6 @@ const Hero = () => {
               </div>
             </div>
           </main>
-        </div>
-      </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/3">
-        <div className="hidden lg:block relative h-full">
-          {/* GIF Layer - Only visible on large screens (lg and up) */}
-          <div className="absolute inset-0 z-10 flex items-center justify-center">
-            <div className="w-[80%]">
-              <img
-                src="/lovable-uploads/Taxesagain-ezgif.com-gif-maker.gif"
-                alt="Tax calculation animation"
-                className="h-auto w-auto object-contain max-h-[350px]"
-              />
-            </div>
-          </div>
-          {/* Gradient Background Layer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/70 opacity-80" />
         </div>
       </div>
     </div>
