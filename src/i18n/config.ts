@@ -30,12 +30,32 @@ const resources = {
       documentManagementDesc: 'Secure storage and organization of tax documents',
       realTimeUpdates: 'Real-time Updates',
       realTimeUpdatesDesc: 'Stay informed with the latest tax regulations',
+      enterpriseFeaturesTitle: 'AI Solutions for Enterprises in Taxation (UAE)',
+      enterpriseFeaturesSubtitle: 'Empowering large organizations to manage taxation with confidence, clarity, and control.',
+      feature1Title: 'Smarter Tax Management at Scale',
+      feature1Desc: 'Ensure accurate, real-time tax calculations across your entire organization, no matter how complex or spread out. Stay compliant in multiple countries without manual effort.',
+      feature2Title: 'Clear Tax Insights',
+      feature2Desc: 'Get an executive-level view of your tax landscape—track trends, forecast exposure, and identify risks before they happen. Ideal for CFOs and Tax Leaders who want to stay ahead.',
+      feature3Title: 'Automated Tax Workflows',
+      feature3Desc: 'Eliminate delays in approvals and reduce errors. Ensure the right documents reach the right people on time, and never miss a compliance deadline again.',
+      feature4Title: 'Proactive Risk Management',
+      feature4Desc: 'Stay one step ahead of audits and penalties. Our AI identifies risky transactions and highlights potential non-compliance, helping you act before issues escalate.',
+      feature5Title: 'Instant Tax Law Clarity',
+      feature5Desc: 'No more digging through complex regulations. Instantly access clear interpretations of UAE tax laws to support internal teams and decisions—just ask and get simplified answers.',
+      feature6Title: 'Smarter Corporate Structuring',
+      feature6Desc: 'Explore "what-if" scenarios to optimize your corporate setup. Understand the tax impact of different legal structures and uncover opportunities for savings and efficiencies.',
+      feature7Title: 'Seamless Tax Reconciliation',
+      feature7Desc: 'Effortlessly match data across systems and documents. Reduce reconciliation time, catch discrepancies early, and ensure accuracy in filings.',
+      feature8Title: 'Your AI Tax Assistant',
+      feature8Desc: 'Empower your internal teams with a secure, intelligent assistant trained on your documents and UAE tax regulations. From memos to audit prep—get support instantly.',
+      feature9Title: 'Flexible Integration with Your Operations',
+      feature9Desc: 'Bring AI-driven tax intelligence into your existing systems—supporting procurement, finance, and legal teams with real-time insights that improve accuracy and reduce risk.',
 
       // AI Chat Section
       meetExperts: 'Meet Our AI Tax Experts',
       exploreAssistants: 'Explore our specialized AI tax assistants designed to help you with different aspects of tax preparation and consultation. Choose the expert that best suits your needs.',
       attoTitle: 'ATTO – Your Chat-Based AI Tax Assistant',
-      attoDescription: 'ATTO is your intelligent AI tax consultant available through chat. It delivers instant, text-based answers to your UAE Corporate Tax, VAT, and Excise Tax queries. Whether you’re looking to optimize compliance or uncover eligible deductions, ATTO is always ready to guide you—fast, accurate, and available 24/7.',
+      attoDescription: "ATTO is your intelligent AI tax consultant available through chat. It delivers instant, text-based answers to your UAE Corporate Tax, VAT, and Excise Tax queries. Whether you're looking to optimize compliance or uncover eligible deductions, ATTO is always ready to guide you—fast, accurate, and available 24/7.",
       askAtto: 'Ask Atto!',
       yosrTitle: 'YOSR – Your Voice-Powered AI Tax Assistant',
       yosrDescription: 'Prefer speaking over typing? YOSR is your voice-enabled AI tax assistant, designed for a hands-free, human-like experience. Ask your tax questions out loud—YOSR listens, understands, and replies in real-time, giving you expert insights aligned with the latest UAE tax regulations.',
@@ -55,7 +75,7 @@ const resources = {
 
       // Pricing Section
       pricingTitle: 'AI Tax Agent Pricing Plans',
-      pricingSubtitle: 'Choose the plan that\'s right for your business needs',
+      pricingSubtitle: "Choose the plan that's right for your business needs",
       monthlyPlan: 'Monthly Plan',
       quarterlyPlan: 'Quarterly Plan',
       yearlyPlan: 'Yearly Plan',
@@ -70,7 +90,7 @@ const resources = {
       pricingGetStarted: 'Get Started',
       contactSales: 'Contact Sales',
       pricingNote: 'All plans include 14-day free trial. No credit card required to start.',
-      
+
       // Pricing Features
       oneUser: '1 user',
       twoUsers: '1 to 2 users',
@@ -109,7 +129,7 @@ const resources = {
       faqQuestion5: 'Can TAX-AI be used by tax professionals and legal teams?',
       faqAnswer5: 'Absolutely. TAX-AI is built to support:\n- In-house tax teams\n- Legal counsel\n- Compliance officers\n- Tax consultants and advisors\n\nIt provides quick reference to technical tax language in an easy-to-use conversational format.',
       faqQuestion6: 'Is TAX-AI a replacement for tax advisors?',
-      faqAnswer6: 'No. TAX-AI is an AI-powered assistant designed to augment decision-making. It\'s not a licensed tax advisor. We recommend consulting with qualified tax professionals for complex or high-risk matters.',
+      faqAnswer6: "No. TAX-AI is an AI-powered assistant designed to augment decision-making. It's not a licensed tax advisor. We recommend consulting with qualified tax professionals for complex or high-risk matters.",
       faqQuestion7: 'What makes TAX-AI different from general AI tools like ChatGPT?',
       faqAnswer7: 'TAX-AI is built specifically for UAE tax compliance and is:\n- Tuned to FTA-compliant answers only\n- Updated regularly with tax circulars, decisions, and bulletins\n- Trained to avoid speculation or outdated practices\n\nUnlike generic AI, TAX-AI is focused and domain-specific.',
       faqQuestion8: 'Is TAX-AI compliant with UAE and international data privacy regulations?',
@@ -126,7 +146,7 @@ const resources = {
       testimonialsSubtitle: 'Trusted by thousands of users worldwide',
       testimonial1: 'This AI tax assistant has revolutionized how I handle my taxes. Highly recommended!',
       testimonial2: 'The automated calculations save me hours of work. Incredible tool!',
-      testimonial3: 'Best tax software I\'ve ever used. The AI support is exceptional.',
+      testimonial3: "Best tax software I've ever used. The AI support is exceptional.",
 
       // CTA Section
       ctaTitle: 'Ready to make taxes stress-free?',
@@ -183,7 +203,7 @@ const resources = {
       data_security: 'Data Storage & Security',
       data_security_text: 'We store your data securely on protected servers and use technical and organizational measures to protect it from unauthorized access or misuse. While we take reasonable precautions, no system is fully secure, and you use our services at your own risk.',
       
-      children_privacy: 'Children\'s Privacy',
+      children_privacy: "Children's Privacy",
       children_privacy_text: 'TAX-AI is not intended for users under 18. If we learn that personal data from minors has been collected, we will delete it promptly. Parents or guardians can contact us to request deletion.',
       
       data_retention: 'Data Retention',
@@ -202,7 +222,7 @@ const resources = {
       last_updated_date: '27 May 2025',
       
       contact_us: 'Contact Us',
-      contact_us_text: 'If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.',
+      contact_us_text: 'If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.'
     }
   },
   ar: {
@@ -231,6 +251,26 @@ const resources = {
       documentManagementDesc: 'تخزين وتنظيم آمن للمستندات الضريبية',
       realTimeUpdates: 'تحديثات فورية',
       realTimeUpdatesDesc: 'ابق على اطلاع بأحدث اللوائح الضريبية',
+      enterpriseFeaturesTitle: 'حلول الذكاء الاصطناعي للمؤسسات في مجال الضرائب (الإمارات)',
+      enterpriseFeaturesSubtitle: 'تمكين المؤسسات الكبيرة من إدارة الضرائب بثقة ووضوح وسيطرة.',
+      feature1Title: 'إدارة ضريبية ذكية على نطاق واسع',
+      feature1Desc: 'ضمان حسابات ضريبية دقيقة وفورية في جميع أنحاء مؤسستك، بغض النظر عن مدى تعقيدها أو انتشارها. ابق متوافقاً مع متطلبات عدة دول دون جهد يدوي.',
+      feature2Title: 'رؤى ضريبية واضحة لاتخاذ قرارات واثقة',
+      feature2Desc: 'احصل على نظرة تنفيذية للمشهد الضريبي الخاص بك — تتبع الاتجاهات، وتوقع التعرض، وتحديد المخاطر قبل حدوثها. مثالي لمديري المالية وقادة الضرائب الذين يرغبون في البقاء في المقدمة.',
+      feature3Title: 'سير العمل الضريبي الآلي',
+      feature3Desc: 'القضاء على التأخير في الموافقات وتقليل الأخطاء. تأكد من وصول المستندات الصحيحة إلى الأشخاص المناسبين في الوقت المحدد، وعدم تفويت مواعيد الامتثال مرة أخرى.',
+      feature4Title: 'إدارة المخاطر الاستباقية',
+      feature4Desc: 'ابق متقدماً بخطوة على عمليات التدقيق والغرامات. يحدد الذكاء الاصطناعي لدينا المعاملات المحفوفة بالمخاطر ويسلط الضوء على عدم الامتثال المحتمل، مما يساعدك على التصرف قبل تصاعد المشكلات.',
+      feature5Title: 'وضوح فوري لقانون الضرائب',
+      feature5Desc: 'لا مزيد من البحث في اللوائح المعقدة. احصل على تفسيرات واضحة لقوانين الضرائب الإماراتية لدعم الفرق الداخلية والقرارات — فقط اسأل واحصل على إجابات مبسطة.',
+      feature6Title: 'هيكلة مؤسسية ذكية',
+      feature6Desc: 'استكشف سيناريوهات "ماذا لو" لتحسين الإعداد المؤسسي الخاص بك. فهم التأثير الضريبي للهياكل القانونية المختلفة واكتشف فرص التوفير والكفاءة.',
+      feature7Title: 'مصالحة ضريبية سلسة',
+      feature7Desc: 'قم بمطابقة البيانات بسهولة عبر الأنظمة والمستندات. تقليل وقت المصالحة، واكتشاف التناقضات مبكراً، وضمان دقة الإقرارات.',
+      feature8Title: 'مساعدك الضريبي الذكي',
+      feature8Desc: 'قوّي فرقك الداخلية بمساعد آمن وذكي مدرب على مستنداتك ولوائح الضرائب الإماراتية. من المذكرات إلى التحضير للتدقيق — احصل على الدعم فوراً.',
+      feature9Title: 'تكامل مرن مع عملياتك',
+      feature9Desc: 'أدخل الذكاء الضريبي المدعوم بالذكاء الاصطناعي إلى أنظمتك الحالية — دعم فرق المشتريات والمالية والقانونية برؤى فورية تحسن الدقة وتقلل المخاطر.',
 
       // AI Chat Section
       meetExperts: 'تعرف على خبراء الضرائب الذكيين لدينا',
@@ -384,7 +424,7 @@ const resources = {
       data_security: 'تخزين وأمن البيانات',
       data_security_text: 'نحن نخزن بياناتك بشكل آمن على خوادم محمية ونستخدم تدابير تقنية وتنظيمية لحمايتها من الوصول غير المصرح به أو سوء الاستخدام. بينما نتخذ احتياطات معقولة، لا يوجد نظام آمن بالكامل، وأنت تستخدم خدماتنا على مسؤوليتك الخاصة.',
       
-      children_privacy: 'خصوصية الأطفال',
+      children_privacy: "Children's Privacy",
       children_privacy_text: 'TAX-AI غير مخصص للمستخدمين دون سن 18. إذا علمنا أنه تم جمع بيانات شخصية من القاصرين، فسنقوم بحذفها على الفور. يمكن للآباء أو الأوصياء الاتصال بنا لطلب الحذف.',
       
       data_retention: 'الاحتفاظ بالبيانات',
@@ -394,7 +434,7 @@ const resources = {
       cookies_links_text: 'نستخدم ملفات تعريف الارتباط لتحسين تجربة المستخدم. يرجى الرجوع إلى سياسة ملفات تعريف الارتباط لمزيد من التفاصيل. قد يحتوي موقعنا على روابط لمواقع خارجية. نحن لسنا مسؤولين عن ممارسات الخصوصية أو المحتوى الخاص بهم.',
       
       user_rights: 'حقوقك',
-      user_rights_text: 'لديك حقوق بموجب القوانين المعمول بها، بما في ذلك:\nالحق في الإعلام\nالحق في الوصول\nالحق في التصحيح\nالحق في المحو\nالحق في تقييد المعالجة\nالحق في نقل البيانات\nالحق في الاعتراض\nالحق في سحب الموافقة\nالحق في تقديم شكوى إلى مكتب حماية البيانات في ADGM\n\nلممارسة أي من حقوقك أو رفع المخاوف، يرجى الاتصال بنا.',
+      user_rights_text: 'لديك حقوق بموجب القوانين المعمول بها، بما في ذلك:\nالحق في الإعلام\nالحق في الوصول\nالحق في التصحيح\nالحق في المحو\nالحق في تقييد المعالجة\nالحق في نقل البيانات\nالحق في الاعتراض\nالحق في سحب الموافقة\nالحق في تقديم شكوى إلى مكتب حماية البيانات في ADGM\n\nTo exercise any of your rights or raise concerns, please contact us.',
       
       policy_changes: 'التغييرات على هذا الإشعار',
       policy_changes_text: 'قد نقوم بتحديث سياسة الخصوصية هذه بشكل دوري. الاستمرار في استخدام TAX-AI بعد أي تحديثات يعني قبولك للإشعار المنقح.',
@@ -403,10 +443,10 @@ const resources = {
       last_updated_date: '27 مايو 2025',
       
       contact_us: 'اتصل بنا',
-      contact_us_text: 'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على privacy@taxai.com.',
+      contact_us_text: 'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على privacy@taxai.com.'
     }
   }
-};
+} as const;
 
 i18n
   .use(LanguageDetector)
