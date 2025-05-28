@@ -13,8 +13,8 @@ const resources = {
       getStarted: 'Get Started',
 
       // Hero Section
-      heroTitle: 'AI-Powered Tax Assistant',
-      heroSubtitle: 'Simplify your tax preparation with our intelligent AI assistant',
+      heroTitle: 'AI-Powered Tax Solutions',
+      heroSubtitle: 'Simplify and streamline your enterprise tax operations with intelligent, end-to-end AI capabilities',
       heroDescription: 'Get accurate tax guidance, automated calculations, and personalized support for all your tax needs.',
       startFreeTrial: 'Start Free Trial',
       learnMore: 'Learn More',
@@ -34,11 +34,11 @@ const resources = {
       // AI Chat Section
       meetExperts: 'Meet Our AI Tax Experts',
       exploreAssistants: 'Explore our specialized AI tax assistants designed to help you with different aspects of tax preparation and consultation. Choose the expert that best suits your needs.',
-      attoTitle: 'ATTO',
-      attoDescription: 'Your AI tax consultant based on chat, offering instant, chat-based guidance to intelligently optimize your finances for maximum savings and effortless compliance.',
+      attoTitle: 'ATTO – Your Chat-Based AI Tax Assistant',
+      attoDescription: 'ATTO is your intelligent AI tax consultant available through chat. It delivers instant, text-based answers to your UAE Corporate Tax, VAT, and Excise Tax queries. Whether you’re looking to optimize compliance or uncover eligible deductions, ATTO is always ready to guide you—fast, accurate, and available 24/7.',
       askAtto: 'Ask Atto!',
-      yosrTitle: 'YOSR',
-      yosrDescription: 'Your intelligent AI tax consultant, offering instant, expert advice and seamless filing support right through a natural voice conversation, making tax season effortlessly clear and optimized for you.',
+      yosrTitle: 'YOSR – Your Voice-Powered AI Tax Assistant',
+      yosrDescription: 'Prefer speaking over typing? YOSR is your voice-enabled AI tax assistant, designed for a hands-free, human-like experience. Ask your tax questions out loud—YOSR listens, understands, and replies in real-time, giving you expert insights aligned with the latest UAE tax regulations.',
       talkWithYosr: 'Talk with Yosr!',
 
       // Process Section
@@ -96,16 +96,30 @@ const resources = {
       allQuarterlyFeatures: 'All Quarterly features',
 
       // FAQ Section
-      faqTitle: 'Frequently Asked Questions',
-      faqSubtitle: 'Find answers to common questions',
-      question1: 'How accurate is the AI tax assistant?',
-      answer1: 'Our AI tax assistant is highly accurate and regularly updated with the latest tax regulations.',
-      question2: 'Is my data secure?',
-      answer2: 'Yes, we use industry-standard encryption and security measures to protect your data.',
-      question3: 'Can I cancel my subscription anytime?',
-      answer3: 'Yes, you can cancel your subscription at any time without any penalties.',
-      question4: 'Do you support multiple tax jurisdictions?',
-      answer4: 'Yes, our system supports multiple tax jurisdictions and can handle complex tax scenarios.',
+      faqTitle: 'Frequently Asked Questions (FAQs)',
+      faqSubtitle: 'Find answers to common questions about TAX-AI',
+      faqQuestion1: 'What is TAX-AI?',
+      faqAnswer1: 'TAX-AI is an AI-powered Tax Platform designed for businesses operating in the UAE. It provides real-time, regulation-aware support on Corporate Tax, VAT, and Excise Tax, aligned with the latest rules and guidance from the UAE Federal Tax Authority (FTA).',
+      faqQuestion2: 'What taxes does TAX-AI cover?',
+      faqAnswer2: 'TAX-AI currently supports:\n- UAE Corporate Tax\n- Value Added Tax (VAT)\n- Excise Tax\n\nOur system is continuously updated to reflect the latest FTA regulations, guides, clarifications, and Cabinet Decisions.',
+      faqQuestion3: 'How does the AI Assistant Agent work?',
+      faqAnswer3: 'The AI Assistant Agent is an intelligent chatbot designed for enterprise use. It answers complex tax queries using natural language, instantly referencing FTA regulations and guidance. It helps your team make informed decisions without manually browsing FTA documentation.',
+      faqQuestion4: 'Is TAX-AI up to date with the latest tax laws and FTA guidance?',
+      faqAnswer4: 'Yes. TAX-AI is updated regularly to include the most recent changes to:\n- UAE Corporate Tax Law (Federal Decree-Law No. 47 of 2022 and amendments)\n- VAT rules and Cabinet Decision updates\n- Excise Tax obligations\n\nOur system integrates summaries and interpretations of official FTA publications.',
+      faqQuestion5: 'Can TAX-AI be used by tax professionals and legal teams?',
+      faqAnswer5: 'Absolutely. TAX-AI is built to support:\n- In-house tax teams\n- Legal counsel\n- Compliance officers\n- Tax consultants and advisors\n\nIt provides quick reference to technical tax language in an easy-to-use conversational format.',
+      faqQuestion6: 'Is TAX-AI a replacement for tax advisors?',
+      faqAnswer6: 'No. TAX-AI is an AI-powered assistant designed to augment decision-making. It\'s not a licensed tax advisor. We recommend consulting with qualified tax professionals for complex or high-risk matters.',
+      faqQuestion7: 'What makes TAX-AI different from general AI tools like ChatGPT?',
+      faqAnswer7: 'TAX-AI is built specifically for UAE tax compliance and is:\n- Tuned to FTA-compliant answers only\n- Updated regularly with tax circulars, decisions, and bulletins\n- Trained to avoid speculation or outdated practices\n\nUnlike generic AI, TAX-AI is focused and domain-specific.',
+      faqQuestion8: 'Is TAX-AI compliant with UAE and international data privacy regulations?',
+      faqAnswer8: 'Yes. TAX-AI follows UAE ADGM data protection laws and is GDPR-compliant. All data is processed securely, and no user inputs are used to train external models like OpenAI.',
+      faqQuestion9: 'Can I integrate TAX-AI into my enterprise systems?',
+      faqAnswer9: 'Yes. TAX-AI offers enterprise integration options via API or custom interface solutions. Our team can help embed the Assistant Agent into your internal platforms securely.',
+      faqQuestion10: 'Is there a free trial or demo available?',
+      faqAnswer10: 'Yes. We offer demo access to explore how the AI Assistant works with sample queries across VAT, Excise, and Corporate Tax.',
+      faqQuestion11: 'How often is the AI Assistant Agent updated?',
+      faqAnswer11: 'Updates are pushed weekly or in real-time when:\n- The FTA issues new guides or clarifications\n- New Cabinet Decisions or Ministerial Decisions are released\n- Legislative changes are officially published',
 
       // Testimonials Section
       testimonialsTitle: 'What Our Users Say',
@@ -130,7 +144,7 @@ const resources = {
       help: 'Help',
       privacy: 'Privacy',
       terms: 'Terms',
-      copyright: 'All rights reserved',
+      copyright: 'Copyright © 2025 DataU3 and Atto group. All rights reserved.',
 
       // Chat Interface
       chatPlaceholder: 'Type your tax question here...',
@@ -200,8 +214,8 @@ const resources = {
       getStarted: 'ابدأ الآن',
 
       // Hero Section
-      heroTitle: 'مساعد الضرائب الذكي',
-      heroSubtitle: 'بسّط إعداد الضرائب مع مساعدنا الذكي',
+      heroTitle: 'حلول ضريبية مدعومة بالذكاء الاصطناعي',
+      heroSubtitle: 'بسّط واعمل على تحسين عمليات الضرائب في شركتك باستخدام قدرات الذكاء الاصطناعي الذكية والشاملة',
       heroDescription: 'احصل على توجيه ضريبي دقيق وحسابات آلية ودعم مخصص لجميع احتياجاتك الضريبية.',
       startFreeTrial: 'ابدأ التجربة المجانية',
       learnMore: 'اعرف المزيد',
@@ -221,11 +235,11 @@ const resources = {
       // AI Chat Section
       meetExperts: 'تعرف على خبراء الضرائب الذكيين لدينا',
       exploreAssistants: 'اكتشف مساعدي الضرائب الذكيين المتخصصين لدينا المصممين لمساعدتك في جوانب مختلفة من إعداد الضرائب والاستشارات. اختر الخبير الذي يناسب احتياجاتك.',
-      attoTitle: 'أتّو',
-      attoDescription: 'مستشار الضرائب الذكي الخاص بك القائم على الدردشة، يقدم توجيهاً فورياً قائماً على الدردشة لتحسين أموالك بذكاء لأقصى توفير وامتثال سهل.',
+      attoTitle: ' ATTO – مساعدك الضريبي القائم على الذكاء الاصطناعي والمحادثة',
+      attoDescription: 'ATTO هو مستشارك الضريبي الذكي الذي يعمل بالذكاء الاصطناعي والمتاح عبر الدردشة. يقدم إجابات فورية نصية على استفساراتك المتعلقة بالضريبة على الشركات في الإمارات العربية المتحدة وضريبة القيمة المضافة وضريبة الاستهلاك. سواء كنت تبحث عن تحسين الامتثال أو اكتشاف الخصومات المؤهلة، فإن ATTO جاهز دائمًا لإرشادك بسرعة ودقة ومتاح على مدار الساعة طوال أيام الأسبوع.',
       askAtto: 'اسأل أتّو!',
-      yosrTitle: 'يسر',
-      yosrDescription: 'مستشار الضرائب الذكي الذكي الخاص بك، يقدم نصائح فورية من الخبراء ودعم تقديم سلس من خلال محادثة صوتية طبيعية، مما يجعل موسم الضرائب واضحاً ومحسناً بسهولة.',
+      yosrTitle: 'YOSR – مساعدك الضريبي الذكي الذي يعمل بالصوت',
+      yosrDescription: 'هل تفضل التحدث بدلاً من الكتابة؟ YOSR هو مساعدك الضريبي الذكي الذي يعمل بالصوت، وهو مصمم لتجربة تشبه التجربة البشرية دون استخدام اليدين. اطرح أسئلتك الضريبية بصوت عالٍ — YOSR يستمع ويفهم ويجيب في الوقت الفعلي، ويقدم لك رؤى متخصصة تتوافق مع أحدث اللوائح الضريبية في الإمارات العربية المتحدة.',
       talkWithYosr: 'تحدث مع يسر!',
 
       // Process Section
@@ -284,15 +298,29 @@ const resources = {
 
       // FAQ Section
       faqTitle: 'الأسئلة الشائعة',
-      faqSubtitle: 'اعثر على إجابات للأسئلة الشائعة',
-      question1: 'ما مدى دقة مساعد الضرائب الذكي؟',
-      answer1: 'مساعد الضرائب الذكي لدينا دقيق للغاية ويتم تحديثه بانتظام بأحدث اللوائح الضريبية.',
-      question2: 'هل بياناتي آمنة؟',
-      answer2: 'نعم، نستخدم تشفير ومعايير أمان على مستوى الصناعة لحماية بياناتك.',
-      question3: 'هل يمكنني إلغاء اشتراكي في أي وقت؟',
-      answer3: 'نعم، يمكنك إلغاء اشتراكك في أي وقت دون أي عقوبات.',
-      question4: 'هل تدعمون ولايات قضائية ضريبية متعددة؟',
-      answer4: 'نعم، يدعم نظامنا ولايات قضائية ضريبية متعددة ويمكنه التعامل مع سيناريوهات ضريبية معقدة.',
+      faqSubtitle: 'اعثر على إجابات للأسئلة الشائعة حول TAX-AI',
+      faqQuestion1: 'ما هو TAX-AI؟',
+      faqAnswer1: 'TAX-AI هو منصة ضريبية مدعومة بالذكاء الاصطناعي مصممة للشركات العاملة في الإمارات العربية المتحدة. يوفر دعماً فورياً ومدركاً للوائح في ضريبة الشركات وضريبة القيمة المضافة والضريبة الانتقائية، متوافقاً مع أحدث القواعد والتوجيهات من الهيئة الاتحادية للضرائب (FTA).',
+      faqQuestion2: 'ما هي الضرائب التي يغطيها TAX-AI؟',
+      faqAnswer2: 'يدعم TAX-AI حالياً:\n- ضريبة الشركات الإماراتية\n- ضريبة القيمة المضافة (VAT)\n- الضريبة الانتقائية\n\nيتم تحديث نظامنا باستمرار ليعكس أحدث لوائح وتوجيهات وقرارات مجلس الوزراء الصادرة عن الهيئة الاتحادية للضرائب.',
+      faqQuestion3: 'كيف يعمل مساعد الذكاء الاصطناعي؟',
+      faqAnswer3: 'مساعد الذكاء الاصطناعي هو روبوت محادثة ذكي مصمم للاستخدام المؤسسي. يجيب على الاستفسارات الضريبية المعقدة باستخدام اللغة الطبيعية، مع الإشارة الفورية إلى لوائح وتوجيهات الهيئة الاتحادية للضرائب. يساعد فريقك على اتخاذ قرارات مستنيرة دون الحاجة إلى تصفح وثائق الهيئة يدوياً.',
+      faqQuestion4: 'هل TAX-AI محدث بأحدث قوانين الضرائب وتوجيهات الهيئة الاتحادية للضرائب؟',
+      faqAnswer4: 'نعم. يتم تحديث TAX-AI بانتظام ليشمل أحدث التغييرات في:\n- قانون ضريبة الشركات الإماراتي (المرسوم بقانون اتحادي رقم 47 لسنة 2022 والتعديلات)\n- تحديثات قواعد ضريبة القيمة المضافة وقرارات مجلس الوزراء\n- التزامات الضريبة الانتقائية\n\nيتكامل نظامنا مع ملخصات وتفسيرات المنشورات الرسمية للهيئة الاتحادية للضرائب.',
+      faqQuestion5: 'هل يمكن استخدام TAX-AI من قبل المتخصصين في الضرائب والفرق القانونية؟',
+      faqAnswer5: 'بالتأكيد. تم بناء TAX-AI لدعم:\n- فرق الضرائب الداخلية\n- المستشارين القانونيين\n- مسؤولي الامتثال\n- مستشاري ومستشارين الضرائب\n\nيوفر مرجعاً سريعاً للغة الضريبية التقنية بتنسيق محادثة سهل الاستخدام.',
+      faqQuestion6: 'هل TAX-AI بديل لمستشاري الضرائب؟',
+      faqAnswer6: 'لا. TAX-AI هو مساعد مدعوم بالذكاء الاصطناعي مصمم لتعزيز اتخاذ القرارات. إنه ليس مستشار ضرائب مرخصاً. نوصي بالتشاور مع متخصصي الضرائب المؤهلين للمسائل المعقدة أو عالية المخاطر.',
+      faqQuestion7: 'ما الذي يميز TAX-AI عن أدوات الذكاء الاصطناعي العامة مثل ChatGPT؟',
+      faqAnswer7: 'تم بناء TAX-AI خصيصاً للامتثال الضريبي في الإمارات وهو:\n- مضبوط للإجابات المتوافقة مع الهيئة الاتحادية للضرائب فقط\n- محدث بانتظام بالدوريات والقرارات والنشرات الضريبية\n- مدرب على تجنب التكهن أو الممارسات القديمة\n\nعلى عكس الذكاء الاصطناعي العام، يركز TAX-AI على مجال محدد.',
+      faqQuestion8: 'هل TAX-AI متوافق مع لوائح خصوصية البيانات الإماراتية والدولية؟',
+      faqAnswer8: 'نعم. يتبع TAX-AI قوانين حماية بيانات ADGM الإماراتية وهو متوافق مع GDPR. تتم معالجة جميع البيانات بشكل آمن، ولا يتم استخدام مدخلات المستخدم لتدريب نماذج خارجية مثل OpenAI.',
+      faqQuestion9: 'هل يمكنني دمج TAX-AI في أنظمة المؤسسة الخاصة بي؟',
+      faqAnswer9: 'نعم. يقدم TAX-AI خيارات تكامل المؤسسات عبر واجهة برمجة التطبيقات (API) أو حلول واجهة مخصصة. يمكن لفريقنا المساعدة في تضمين المساعد في منصاتك الداخلية بشكل آمن.',
+      faqQuestion10: 'هل هناك تجربة مجانية أو عرض توضيحي متاح؟',
+      faqAnswer10: 'نعم. نقدم وصولاً تجريبياً لاستكشاف كيفية عمل مساعد الذكاء الاصطناعي مع استعلامات نموذجية عبر ضريبة القيمة المضافة والضريبة الانتقائية وضريبة الشركات.',
+      faqQuestion11: 'كم مرة يتم تحديث مساعد الذكاء الاصطناعي؟',
+      faqAnswer11: 'يتم دفع التحديثات أسبوعياً أو في الوقت الفعلي عندما:\n- تصدر الهيئة الاتحادية للضرائب توجيهات أو توضيحات جديدة\n- يتم إصدار قرارات مجلس الوزراء أو القرارات الوزارية الجديدة\n- يتم نشر التغييرات التشريعية رسمياً',
 
       // Testimonials Section
       testimonialsTitle: 'ماذا يقول مستخدمونا',
@@ -317,7 +345,7 @@ const resources = {
       help: 'المساعدة',
       privacy: 'الخصوصية',
       terms: 'الشروط',
-      copyright: 'جميع الحقوق محفوظة',
+      copyright: 'حقوق النشر © ٢٠٢٥ لـ DataU3 و Atto group. جميع الحقوق محفوظة.',
 
       // Chat Interface
       chatPlaceholder: 'اكتب سؤالك الضريبي هنا...',
