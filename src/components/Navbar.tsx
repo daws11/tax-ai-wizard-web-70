@@ -1,27 +1,74 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, i18n } = useTranslation();
 
-  const handleScrollTo = (elementId: string) => {
+  const isHomePage = location.pathname === '/';
+
+  const handleNavigation = (path: string, elementId?: string) => {
     setIsMenuOpen(false);
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    
+    if (path === '/' && elementId) {
+      if (isHomePage) {
+        const element = document.getElementById(elementId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      } else {
+        navigate('/');
+        setTimeout(() => {
+          const element = document.getElementById(elementId);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      }
+    } else {
+      navigate(path);
     }
   };
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
-    // Update document direction for RTL languages
     document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
+  };
+
+  const renderNavigationLinks = () => {
+    if (isHomePage) {
+      return (
+        <>
+          <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('features')}</button>
+          <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('howItWorks')}</button>
+          <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('faq')}</button>
+        </>
+      );
+    }
+    return (
+      <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('home')}</button>
+    );
+  };
+
+  const renderMobileNavigationLinks = () => {
+    if (isHomePage) {
+      return (
+        <>
+          <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('features')}</button>
+          <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('howItWorks')}</button>
+          <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('faq')}</button>
+        </>
+      );
+    }
+    return (
+      <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('home')}</button>
+    );
   };
 
   return (
@@ -29,7 +76,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 cursor-pointer" onClick={() => handleNavigation('/')}>
               <span className="flex items-center">
                 <picture>
                   <source srcSet="/lovable-uploads/logo dark.png" media="(prefers-color-scheme: dark)" />
@@ -44,9 +91,7 @@ const Navbar = () => {
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('features')}</button>
-              <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('howItWorks')}</button>
-              <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('faq')}</button>
+              {renderNavigationLinks()}
               <Select
                 value={i18n.language}
                 onValueChange={changeLanguage}
@@ -61,7 +106,7 @@ const Navbar = () => {
               </Select>
               <ThemeToggle />
               <Button
-                onClick={() => navigate("/agent")}
+                onClick={() => handleNavigation("/agent")}
                 className="ml-4 bg-primary hover:bg-primary/90"
               >
                 {t('getStarted')}
@@ -105,15 +150,13 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-effect">
-            <button onClick={() => handleScrollTo("features")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('features')}</button>
-            <button onClick={() => handleScrollTo("how-it-works")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('howItWorks')}</button>
-            <button onClick={() => handleScrollTo("faq")} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('faq')}</button>
+            {renderMobileNavigationLinks()}
             <div className="flex items-center px-3 py-2">
               <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
               <ThemeToggle />
             </div>
             <Button
-              onClick={() => navigate("/agent")}
+              onClick={() => handleNavigation("/agent")}
               className="mt-2 w-full bg-primary hover:bg-primary/90"
             >
               {t('getStarted')}

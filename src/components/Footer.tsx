@@ -16,6 +16,8 @@ const Footer = () => {
     ],
     legal: [
       { name: t('privacy_and_policy'), href: '/privacy-policy' },
+      { name: t('disclaimer'), href: '/disclaimer' },
+      // { name: t('terms'), href: '#' },
     ],
   };
 
@@ -70,7 +72,7 @@ const Footer = () => {
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
                 <h3 className="text-sm font-semibold leading-6">
-                  {t('legal')}
+                  {t('Legal')}
                 </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (

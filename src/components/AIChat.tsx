@@ -8,7 +8,7 @@ const AIChat = () => {
   const isRTL = i18n.language === 'ar';
 
   return (
-    <Card className="max-w-6xl mx-auto glass-effect" dir={isRTL ? 'rtl' : 'ltr'}>
+    <Card className="max-w-6xl mx-auto backdrop-blur-sm dark:bg-gray-800/50 dark:border-gray-700" dir={isRTL ? 'rtl' : 'ltr'}>
       <CardHeader>
         <CardTitle className="text-2xl md:text-3xl font-bold text-center text-primary">
           {t('meetExperts')}

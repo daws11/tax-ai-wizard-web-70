@@ -5,9 +5,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const FAQ = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
 
   const faqs = [
     {
@@ -57,32 +60,67 @@ const FAQ = () => {
   ];
 
   return (
-    <div id="faq" className="py-24 sm:py-32">
+    <div 
+      id="faq" 
+      className="py-24 sm:py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800"
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl divide-y divide-gray-900/10">
-          <h2 className="text-3xl font-bold leading-10 tracking-tight text-gray-900 dark:text-gray-100">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className={`mx-auto max-w-4xl ${isRTL ? 'text-right' : 'text-left'}`}
+        >
+          <h2 className="text-3xl font-bold leading-10 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary sm:text-4xl">
             {t('faqTitle')}
           </h2>
-          <p className="mt-4 text-base leading-7 text-gray-600 dark:text-gray-400">
+          <p className="mt-4 text-lg leading-7 text-gray-600 dark:text-gray-400">
             {t('faqSubtitle')}
           </p>
-          <dl className="mt-10 space-y-6 divide-y divide-gray-900/10">
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12 mx-auto max-w-4xl"
+        >
+          <Card className="backdrop-blur-sm bg-white/50 dark:bg-gray-800/50 border border-primary/20 dark:border-primary/10 shadow-lg">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`}
+                  className="border-b border-gray-200 dark:border-gray-700 last:border-0"
+                >
+                  <AccordionTrigger 
+                    className={`text-lg font-semibold text-gray-900 dark:text-gray-100 px-6 py-4 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}
+                  >
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-base text-gray-600 dark:text-gray-400">
-                    <div className="prose dark:prose-invert max-w-none">
-                      {faq.answer}
+                  <AccordionContent 
+                    className={`text-base text-gray-600 dark:text-gray-400 px-6 pb-4 ${
+                      isRTL ? 'text-right' : 'text-left'
+                    }`}
+                  >
+                    <div className="prose dark:prose-invert max-w-none leading-relaxed">
+                      {faq.answer.split('\n').map((paragraph, i) => (
+                        <p key={i} className="mb-4 last:mb-0">
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
-          </dl>
-        </div>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

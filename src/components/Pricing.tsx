@@ -35,7 +35,7 @@ const Pricing = () => {
       description: t('monthlyPlanDesc'),
       features: [
         { text: t('oneUser') },
-        { text: t('oneDevice') },
+        // { text: t('oneDevice') },
         { text: t('monthlyMessages') },
         { text: t('uaeTaxCoverage') },
         { text: t('bilingualSupport') },
@@ -52,7 +52,7 @@ const Pricing = () => {
       description: t('quarterlyPlanDesc'),
       features: [
         { text: t('oneUser') },
-        { text: t('oneDevice') },
+        // { text: t('oneDevice') },
         { text: t('quarterlyMessages') },
         { text: t('allMonthlyFeatures') },
         { text: t('prioritySupport') },
@@ -69,7 +69,7 @@ const Pricing = () => {
       description: t('yearlyPlanDesc'),
       features: [
         { text: t('twoUsers') },
-        { text: t('twoDevices') },
+        // { text: t('twoDevices') },
         { text: t('yearlyMessages') },
         { text: t('allQuarterlyFeatures') },
         { text: t('earlyAccess') },
@@ -95,18 +95,22 @@ const Pricing = () => {
   ];
 
   return (
-    <section id="pricing" className="py-24 bg-white dark:bg-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section 
+      id="pricing" 
+      className="py-24 bg-white dark:bg-gray-800" 
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center slide-up">
-          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
+        <div className={`text-center ${isRTL ? 'text-right' : 'text-left'}`}>
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl mb-4">
             {t('pricingTitle')}
           </h2>
-          <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto">
+          <p className="mt-4 max-w-2xl text-xl text-gray-500 dark:text-gray-400 mx-auto leading-relaxed">
             {t('pricingSubtitle')}
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {plans.map((plan, index) => (
             <Card 
               key={plan.id}
@@ -117,34 +121,52 @@ const Pricing = () => {
             >
               <CardHeader className="pb-0">
                 {plan.mostPopular && (
-                  <Badge variant="secondary" className="w-fit mb-2">
+                  <Badge variant="secondary" className={`w-fit mb-4 ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}>
                     {t('mostPopular')}
                   </Badge>
                 )}
-                <div className="space-y-1">
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{plan.name}</h3>
-                  <div className="flex items-baseline mt-2">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">{plan.price}</span>
-                    <span className={`${isRTL ? 'mr-1' : 'ml-1'} text-sm text-gray-500 dark:text-gray-400`}>{plan.priceAED}</span>
+                <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    {plan.name}
+                  </h3>
+                  <div className={`flex items-baseline ${isRTL ? 'flex-row-reverse' : ''} gap-2`}>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                      {plan.price}
+                    </span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                      {plan.priceAED}
+                    </span>
                   </div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 min-h-[60px]">{plan.description}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 min-h-[60px] leading-relaxed">
+                    {plan.description}
+                  </p>
                 </div>
               </CardHeader>
               <CardContent className="pt-6 flex-grow">
                 <Separator className="mb-6" />
-                <ul className="space-y-3">
+                <ul className={`space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                   {plan.features.map((feature, i) => (
-                    <li key={i} className={`flex items-start ${isRTL ? 'flex-row-reverse' : ''}`}>
-                      <Check className={`h-5 w-5 text-primary shrink-0 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                      <span className="text-sm text-gray-500 dark:text-gray-400">{feature.text}</span>
+                    <li 
+                      key={i} 
+                      className={`flex items-start ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'} gap-3`}
+                    >
+                      <Check 
+                        className={`h-5 w-5 text-primary shrink-0 ${isRTL ? 'order-2' : 'order-1'}`} 
+                      />
+                      <span 
+                        className={`text-sm text-gray-500 dark:text-gray-400 leading-relaxed ${
+                          isRTL ? 'order-1' : 'order-2'
+                        }`}
+                      >
+                        {feature.text}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="mt-auto">
+              <CardFooter className="mt-auto pt-6">
                 <Button 
-                  className="w-full" 
-                  variant={plan.id === "enterprise" ? "outline" : "default"}
+                  className="w-full bg-primary hover:bg-primary/90 text-white" 
                   onClick={plan.id !== "enterprise" ? () => navigate("/agent") : undefined}
                 >
                   {plan.buttonText}
@@ -154,8 +176,8 @@ const Pricing = () => {
           ))}
         </div>
         
-        <div className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
-          <p>{t('pricingNote')}</p>
+        <div className={`mt-12 text-center text-sm text-gray-500 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'}`}>
+          <p className="leading-relaxed">{t('pricingNote')}</p>
         </div>
       </div>
     </section>

@@ -156,104 +156,104 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
       
-      {/* Particles Background */}
-      <div className="fixed inset-0 -z-10">
+      <div className="relative flex-grow">
         <Particles
           id="tsparticles"
           init={particlesInit}
           options={particlesOptions}
+          className="absolute inset-0 z-0"
         />
-      </div>
 
-      <div className="relative mx-auto max-w-4xl px-6 py-16 sm:py-24 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">
-            {t('privacy_policy')}
-          </h1>
-          <div className="mt-4 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
-            <Calendar className="h-5 w-5" />
-            <span>{t('last_updated')}: {t('last_updated_date')}</span>
-          </div>
-        </div>
-
-        {/* Introduction Card */}
-        <Card className="mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-          <CardHeader>
-            <div className="flex items-center gap-4">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Info className="h-6 w-6 text-primary" />
-              </div>
-              <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-white">
-                {t('privacy_policy_introduction')}
-              </CardTitle>
+        <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 sm:py-24 lg:px-8">
+          {/* Header Section */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">
+              {t('privacy_policy')}
+            </h1>
+            <div className="mt-4 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+              <Calendar className="h-5 w-5" />
+              <span>{t('last_updated')}: {t('last_updated_date')}</span>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-gray-600 dark:text-gray-400">
-              {t('privacy_policy_introduction_text')}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 font-medium">
-              {t('privacy_policy_compliance')}
-            </p>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Cards Grid - Single Column */}
-        <div className="space-y-8">
-          {sections.slice(1).map((section, index) => (
-            <Card key={index} className="hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
-              <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <section.icon className="h-6 w-6 text-primary" />
-                </div>
-                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {section.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="prose prose-gray dark:prose-invert max-w-none">
-                  {section.content.split('\n').map((paragraph, i) => (
-                    <p key={i} className="text-gray-600 dark:text-gray-400 mb-2">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Contact Section */}
-        <div className="mt-16">
-          <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+          {/* Introduction Card */}
+          <Card className="mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardHeader>
-              <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center gap-4">
                 <div className="p-2 bg-primary/10 rounded-lg">
-                  <Mail className="h-6 w-6 text-primary" />
+                  <Info className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {t('contact_us')}
+                  {t('privacy_policy_introduction')}
                 </CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="pt-6">
-              <p className="text-gray-600 dark:text-gray-400 mb-6 text-center">
-                {t('contact_us_text')}
+            <CardContent className="space-y-4">
+              <p className="text-gray-600 dark:text-gray-400">
+                {t('privacy_policy_introduction_text')}
               </p>
-              <div className="flex justify-center gap-4">
-                <a
-                  href="mailto:privacy@taxai.com"
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
-                >
-                  {t('contact_us')}
-                </a>
-              </div>
+              <p className="text-gray-600 dark:text-gray-400 font-medium">
+                {t('privacy_policy_compliance')}
+              </p>
             </CardContent>
           </Card>
+
+          {/* Cards Grid - Single Column */}
+          <div className="space-y-8">
+            {sections.slice(1).map((section, index) => (
+              <Card key={index} className="hover:shadow-lg transition-all duration-300 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+                <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <section.icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {section.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="prose prose-gray dark:prose-invert max-w-none">
+                    {section.content.split('\n').map((paragraph, i) => (
+                      <p key={i} className="text-gray-600 dark:text-gray-400 mb-2">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Contact Section */}
+          <div className="mt-16">
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+              <CardHeader>
+                <div className="flex items-center justify-center gap-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Mail className="h-6 w-6 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-white">
+                    {t('contact_us')}
+                  </CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 text-center">
+                  {t('contact_us_text')}
+                </p>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="mailto:privacy@taxai.com"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-colors duration-200"
+                  >
+                    {t('contact_us')}
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 

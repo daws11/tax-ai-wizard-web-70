@@ -7,6 +7,7 @@ const resources = {
   en: {
     translation: {
       // Navigation
+      home: 'Home',
       features: 'Features',
       howItWorks: 'How It Works',
       faq: 'FAQ',
@@ -222,12 +223,19 @@ const resources = {
       last_updated_date: '27 May 2025',
       
       contact_us: 'Contact Us',
-      contact_us_text: 'If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.'
+      contact_us_text: 'If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.',
+
+      // Disclaimer Page
+      disclaimerTitle: 'Disclaimer',
+      disclaimerContent: 'By using TAX-AI, you acknowledge and accept that, as with any large language model, it may generate incorrect, misleading, or potentially offensive information. The content provided is AI-generated and intended solely for informational purposes. It does not constitute professional tax, legal, or financial advice and should not be relied upon as such. TAX-AI and its affiliates make no representations or warranties regarding the accuracy or completeness of the content. You are solely responsible for any actions taken based on the information provided. We welcome feedback and are continually improving our models and services.',
+      legal: 'Legal',
+      disclaimer: 'Disclaimer',
     }
   },
   ar: {
     translation: {
       // Navigation
+      home: 'الرئيسية',
       features: 'الميزات',
       howItWorks: 'كيف يعمل',
       faq: 'الأسئلة الشائعة',
@@ -443,7 +451,13 @@ const resources = {
       last_updated_date: '27 مايو 2025',
       
       contact_us: 'اتصل بنا',
-      contact_us_text: 'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على privacy@taxai.com.'
+      contact_us_text: 'إذا كان لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال بنا على privacy@taxai.com.',
+
+      // Disclaimer Page
+      disclaimerTitle: 'إخلاء المسؤولية',
+      disclaimerContent: 'باستخدام TAX-AI، فإنك تقر وتقبل أنه، مثل أي نموذج لغوي كبير، قد يولد معلومات غير صحيحة أو مضللة أو قد تكون مسيئة. المحتوى المقدم تم إنشاؤه بواسطة الذكاء الاصطناعي وهو مخصص للأغراض المعلوماتية فقط. لا يشكل نصيحة ضريبية أو قانونية أو مالية احترافية ولا يجب الاعتماد عليه كأمر مسلم به. لا تقدم TAX-AI والشركات التابعة لها أي تمثيلات أو ضمانات فيما يتعلق بدقة أو اكتمال المحتوى. أنت مسؤول وحدك عن أي إجراءات يتم اتخاذها بناءً على المعلومات المقدمة. نرحب بالملاحظات ونعمل باستمرار على تحسين نماذجنا وخدماتنا.',
+      legal: 'قانوني',
+      disclaimer: 'إخلاء المسؤولية',
     }
   }
 } as const;
