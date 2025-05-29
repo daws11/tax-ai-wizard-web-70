@@ -39,18 +39,14 @@ const AIChat = () => {
 
           {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
           <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
-            {/* Title Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg md:mb-4">
-              <CardHeader className="pb-4 md:pb-0">
+            {/* Combined Title and Description Card */}
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {t('attoTitle')}
                 </CardTitle>
               </CardHeader>
-            </Card>
-
-            {/* Description and Button Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
-              <CardContent className="pt-0">
+              <CardContent>
                 <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
                   {t('attoDescription')}
                 </p>
@@ -78,25 +74,21 @@ const AIChat = () => {
 
           {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
           <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
-            {/* Title Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg md:mb-4">
-               <CardHeader className="pb-4 md:pb-0">
+            {/* Combined Title and Description Card */}
+            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {t('yosrTitle')}
                 </CardTitle>
               </CardHeader>
-            </Card>
-
-            {/* Description and Button Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
-              <CardContent className="pt-0">
-               <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
-                {t('yosrDescription')}
-               </p>
-              <Link to="/agent/yosr">
-                <Button className="w-full">{t('talkWithYosr')}</Button>
-              </Link>
-             </CardContent>
+              <CardContent>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
+                  {t('yosrDescription')}
+                </p>
+                <Link to="/agent/yosr">
+                  <Button className="w-full">{t('talkWithYosr')}</Button>
+                </Link>
+              </CardContent>
             </Card>
           </div>
         </div>

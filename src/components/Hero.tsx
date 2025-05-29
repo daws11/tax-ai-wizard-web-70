@@ -108,6 +108,7 @@ const Hero = () => {
         <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
           <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="text-center">
+              <h2 className="text-4xl font-extrabold uppercase tracking-wider text-primary mb-4 px-6 py-2 border-2 border-primary rounded-lg inline-block">TAX-AI</h2>
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">
                 <span className="block">{t('heroTitle')}</span>
                 <span className="block text-primary text-2xl sm:text-3xl md:text-4xl">{t('heroSubtitle')}</span>
