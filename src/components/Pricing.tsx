@@ -97,7 +97,7 @@ const Pricing = () => {
   return (
     <section 
       id="pricing" 
-      className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-stone-50/20 via-neutral-50/20 to-zinc-50/20 dark:bg-gray-800/20 backdrop-blur-sm" 
+      className="py-12 sm:py-16 md:py-24 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm" 
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -114,7 +114,7 @@ const Pricing = () => {
           {plans.map((plan, index) => (
             <Card 
               key={plan.id}
-              className={`backdrop-blur-md transition-all border shadow-sm hover:shadow-md bg-gradient-to-br from-neutral-50/20 via-zinc-50/20 to-slate-50/20 dark:bg-gray-800/20 dark:border-gray-700/30 flex flex-col h-full ${
+              className={`backdrop-blur-md transition-all border shadow-sm hover:shadow-md bg-white/20 dark:bg-gray-800/20 dark:border-gray-700/30 flex flex-col h-full ${
                 plan.mostPopular ? "ring-2 ring-primary md:col-span-2 lg:col-span-1" : ""
               } scale-in`} 
               style={{ transitionDelay: `${index * 0.1}s` }}

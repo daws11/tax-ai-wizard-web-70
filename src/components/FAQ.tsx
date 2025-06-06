@@ -62,7 +62,7 @@ const FAQ = () => {
   return (
     <div 
       id="faq" 
-      className="py-24 sm:py-32 bg-gradient-to-b from-neutral-50/20 via-zinc-50/20 to-stone-50/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm"
+      className="py-24 sm:py-32 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -88,7 +88,7 @@ const FAQ = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="mt-12 mx-auto max-w-4xl"
         >
-          <Card className="backdrop-blur-md bg-gradient-to-br from-slate-50/20 via-neutral-50/20 to-zinc-50/20 dark:bg-gray-800/20 border border-primary/20 dark:border-primary/10 shadow-lg">
+          <Card className="backdrop-blur-md bg-white/20 dark:bg-gray-800/20 border border-primary/20 dark:border-primary/10 shadow-lg">
             <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => (
                 <AccordionItem 

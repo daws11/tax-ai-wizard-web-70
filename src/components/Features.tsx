@@ -129,7 +129,7 @@ const Features = () => {
   return (
     <section 
       id="features" 
-      className="py-24 bg-gradient-to-b from-slate-50/20 via-zinc-50/20 to-neutral-50/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm overflow-hidden"
+      className="py-24 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -171,7 +171,7 @@ const Features = () => {
                 onMouseLeave={handleMouseLeave}
               >
                 <Card 
-                  className="glass-effect hover:shadow-xl transition-all duration-300 h-[340px] bg-gradient-to-br from-stone-50/20 via-zinc-50/20 to-slate-50/20 dark:bg-gray-800/20 backdrop-blur-md border border-primary/20 dark:border-primary/10 cursor-pointer"
+                  className="glass-effect hover:shadow-xl transition-all duration-300 h-[340px] bg-white/20 dark:bg-gray-800/20 backdrop-blur-md border border-primary/20 dark:border-primary/10 cursor-pointer"
                 >
                   <CardContent className="p-8 h-full flex flex-col">
                     <div className={`flex items-center gap-5 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
