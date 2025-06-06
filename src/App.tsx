@@ -19,16 +19,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <Router>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/agent" element={<AgentPage />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/disclaimer" element={<Disclaimer />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
+        <div className="min-h-screen w-full flex justify-center bg-transparent">
+          <div className="w-full max-w-[1920px] px-4 sm:px-6 lg:px-8 relative">
+            <Router>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/agent" element={<AgentPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Router>
+          </div>
+        </div>
       </ThemeProvider>
     </TooltipProvider>
   </QueryClientProvider>

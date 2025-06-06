@@ -29,7 +29,7 @@ const Process = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-white dark:bg-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section id="how-it-works" className="py-24 bg-gradient-to-b from-zinc-50/20 via-neutral-50/20 to-stone-50/20 dark:bg-gray-800/20 backdrop-blur-sm" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
@@ -45,7 +45,7 @@ const Process = () => {
             {steps.map((step, index) => (
               <Card 
                 key={step.id} 
-                className={`scale-in backdrop-blur-sm transition-all border-t-0 shadow-sm hover:shadow-md dark:bg-gray-800/50 dark:border-gray-700`}
+                className={`scale-in backdrop-blur-md transition-all border-t-0 shadow-sm hover:shadow-md bg-gradient-to-br from-slate-50/20 via-zinc-50/20 to-neutral-50/20 dark:bg-gray-800/20 dark:border-gray-700/30`}
                 style={{ transitionDelay: `${index * 0.1}s` }}
               >
                 <CardContent className="p-8 flex flex-col items-start">

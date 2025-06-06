@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
+import { useParticlesConfig } from "@/lib/particles-config";
 import { 
   Shield, 
   Database, 
@@ -29,77 +30,7 @@ const PrivacyPolicy = () => {
     await loadSlim(engine);
   }, []);
 
-  const particlesOptions = {
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onClick: {
-          enable: true,
-          mode: "push",
-        },
-        onHover: {
-          enable: true,
-          mode: "grab",
-        },
-        resize: true
-      },
-      modes: {
-        push: {
-          quantity: 4,
-        },
-        grab: {
-          distance: 200,
-          links: {
-            opacity: 0.3
-          }
-        }
-      }
-    },
-    particles: {
-      color: {
-        value: "#3b82f6", // blue-500
-      },
-      links: {
-        color: "#3b82f6",
-        distance: 150,
-        enable: true,
-        opacity: 0.2,
-        width: 1,
-      },
-      move: {
-        direction: "none" as const,
-        enable: true,
-        outModes: {
-          default: "bounce" as const,
-        },
-        random: false,
-        speed: 1,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          area: 800,
-        },
-        value: 80,
-      },
-      opacity: {
-        value: 0.3,
-      },
-      shape: {
-        type: ["circle"]
-      },
-      size: {
-        value: { min: 1, max: 3 }
-      }
-    },
-    detectRetina: true,
-  };
+  const particlesOptions = useParticlesConfig();
 
   const sections = [
     {
@@ -156,24 +87,28 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen flex flex-col" dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
       
       <div className="relative flex-grow">
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          options={particlesOptions}
-          className="absolute inset-0 z-0"
-        />
+        <div className="absolute inset-0 -z-10">
+          <div className="w-full h-full max-w-[1920px] mx-auto">
+            <Particles
+              id="tsparticles"
+              init={particlesInit}
+              options={particlesOptions}
+              className="w-full h-full"
+            />
+          </div>
+        </div>
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 sm:py-24 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl mb-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-4 px-6 rounded-lg inline-block">
               {t('privacy_policy')}
             </h1>
-            <div className="mt-4 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400">
+            <div className="mt-4 flex items-center justify-center gap-2 text-gray-600 dark:text-gray-400 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm py-2 px-4 rounded-lg inline-block">
               <Calendar className="h-5 w-5" />
               <span>{t('last_updated')}: {t('last_updated_date')}</span>
             </div>

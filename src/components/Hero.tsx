@@ -7,6 +7,7 @@ import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
 import { useCallback } from 'react';
+import { useParticlesConfig } from "@/lib/particles-config";
 
 const Hero = () => {
   const { t, i18n } = useTranslation();
@@ -18,97 +19,27 @@ const Hero = () => {
     await loadSlim(engine);
   }, []);
 
-  const particlesOptions = {
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onClick: {
-          enable: true,
-          mode: "push",
-        },
-        onHover: {
-          enable: true,
-          mode: "grab",
-        },
-        resize: {
-          enable: true
-        }
-      },
-      modes: {
-        push: {
-          quantity: 4,
-        },
-        grab: {
-          distance: 200,
-          links: {
-            opacity: 0.3
-          }
-        }
-      }
-    },
-    particles: {
-      color: {
-        value: "#3b82f6", // blue-500
-      },
-      links: {
-        color: "#3b82f6",
-        distance: 150,
-        enable: true,
-        opacity: 0.2,
-        width: 1,
-      },
-      move: {
-        direction: "none" as const,
-        enable: true,
-        outModes: {
-          default: "bounce" as const,
-        },
-        random: false,
-        speed: 1,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          area: 800,
-        },
-        value: 100,
-      },
-      opacity: {
-        value: 0.3,
-      },
-      shape: {
-        type: ["circle"]
-      },
-      size: {
-        value: { min: 1, max: 3 }
-      }
-    },
-    detectRetina: true,
-  };
+  const particlesOptions = useParticlesConfig();
 
   return (
-    <div className="relative overflow-hidden bg-white dark:bg-gray-900 min-h-[600px] flex items-center" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="relative min-h-[600px] flex items-center bg-transparent" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Particle Background Layer */}
-      <div className="absolute inset-0 -z-0">
-        <Particles
-          id="hero-particles"
-          init={particlesInit}
-          options={particlesOptions as any}
-          className="w-full h-full"
-        />
+      <div className="absolute inset-0 -z-10">
+        <div className="w-full h-full max-w-[1920px] mx-auto">
+          <Particles
+            id="hero-particles"
+            init={particlesInit}
+            options={particlesOptions}
+            className="w-full h-full"
+          />
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 w-full">
+      <div className="w-full max-w-[1920px] mx-auto relative z-10 ">
         <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+          <main className="mt-10 mx-auto px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="text-center">
-              <h2 className="text-4xl font-extrabold uppercase tracking-wider text-primary mb-4 px-6 py-2 border-2 border-primary rounded-lg inline-block">TAX-AI</h2>
+              <h2 className="text-4xl font-extrabold uppercase tracking-wider text-primary mb-4 px-6 py-2 border-2 border-primary rounded-lg inline-block bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">TAX-AI</h2>
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">
                 <span className="block">{t('heroTitle')}</span>
                 <span className="block text-primary text-2xl sm:text-3xl md:text-4xl">{t('heroSubtitle')}</span>
@@ -130,7 +61,7 @@ const Hero = () => {
                   <Button
                     onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
                     variant="outline"
-                    className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-primary bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 md:py-4 md:text-lg md:px-10"
+                    className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-primary bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 md:py-4 md:text-lg md:px-10"
                   >
                     {t('learnMore')}
                   </Button>

@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
+import { useParticlesConfig } from "@/lib/particles-config";
 
 const AgentPage = () => {
   const { t, i18n } = useTranslation();
@@ -15,79 +16,8 @@ const AgentPage = () => {
     await loadSlim(engine);
   }, []);
 
-  const particlesOptions = {
-    background: {
-      color: {
-        value: "transparent",
-      },
-    },
-    fpsLimit: 120,
-    interactivity: {
-      events: {
-        onClick: {
-          enable: true,
-          mode: "push",
-        },
-        onHover: {
-          enable: true,
-          mode: "grab",
-        },
-        resize: {
-          enable: true
-        },
-      },
-      modes: {
-        push: {
-          quantity: 4,
-        },
-        grab: {
-          distance: 200,
-          links: {
-            opacity: 0.3
-          }
-        },
-      },
-    },
-    particles: {
-      color: {
-        value: "#3b82f6", // blue-500
-      },
-      links: {
-        color: "#3b82f6",
-        distance: 150,
-        enable: true,
-        opacity: 0.2,
-        width: 1,
-      },
-      move: {
-        direction: "none" as const,
-        enable: true,
-        outModes: {
-          default: "bounce" as const,
-        },
-        random: false,
-        speed: 1,
-        straight: false,
-      },
-      number: {
-        density: {
-          enable: true,
-          area: 800,
-        },
-        value: 100,
-      },
-      opacity: {
-        value: 0.3,
-      },
-      shape: {
-        type: ["circle"],
-      },
-      size: {
-        value: { min: 1, max: 3 },
-      },
-    },
-    detectRetina: true,
-  };
+  const particlesOptions = useParticlesConfig();
+
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -128,58 +58,69 @@ const AgentPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative" dir={isRTL ? 'rtl' : 'ltr'}>
-      <div className="absolute inset-0 -z-10">
-        <Particles
-          id="tsparticles"
-          init={particlesInit}
-          options={particlesOptions as any}
-          className="w-full h-full"
-        />
+    <div className="min-h-screen flex flex-col relative" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="w-full h-full max-w-[1920px] mx-auto">
+          <Particles
+            id="tsparticles"
+            init={particlesInit}
+            options={particlesOptions}
+            className="w-full h-full"
+          />
+        </div>
       </div>
       <Navbar />
       
-      <section className="opacity-0 flex flex-col items-center justify-center py-8 md:py-16 bg-transparent">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-900 dark:text-gray-100">
-          {t('chooseAgent')}
-        </h1>
-        <div className="flex flex-col md:flex-row items-center justify-center w-full px-4 py-4 gap-4 md:gap-8">
-          {/* Agent Option 1: ATTO */}
-          <Link to="https://chat-taxai.onrender.com/" className="group flex flex-col items-center p-4 md:p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1">
-            <div className="w-20 h-20 md:w-32 md:h-32 mb-2 md:mb-4 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-              <img 
-                src="/lovable-uploads/logo atto.png" 
-                alt={t('attoAgentTitle')} 
-                className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105" 
-                style={{ width: 'auto', height: 'auto' }}
-              />
-            </div>
-            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">
-              {t('attoAgentTitle')}
-            </span>
-            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">
-              {t('attoAgentDesc')}
-            </p>
-          </Link>
-          {/* Agent Option 2: YOSR */}
-          <Link to="/agent/yosr" className="group flex flex-col items-center p-4 md:p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1" style={{ animationDelay: '0.2s' }}>
-            <div className="w-20 h-20 md:w-32 md:h-32 mb-2 md:mb-4 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
-              <img 
-                src="/lovable-uploads/logo yosr.png" 
-                alt={t('yosrAgentTitle')} 
-                className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
-                style={{ width: 'auto', height: 'auto' }}
-              />
-            </div>
-            <span className="text-sm md:text-xl font-semibold text-gray-900 dark:text-gray-100">
-              {t('yosrAgentTitle')}
-            </span>
-            <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center mt-1">
-              {t('yosrAgentDesc')}
-            </p>
-          </Link>
+      <main className="flex-grow flex flex-col items-center justify-center py-8 md:py-12">
+        <div className="w-full max-w-4xl px-4">
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-900 dark:text-gray-100 text-center">
+            {t('chooseAgent')}
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto">
+            {/* Agent Option 1: ATTO */}
+            <Link 
+              to="https://chat-taxai.onrender.com/" 
+              className="group flex flex-col items-center p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1"
+            >
+              <div className="w-16 h-16 md:w-24 md:h-24 mb-3 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                <img 
+                  src="/lovable-uploads/logo atto.png" 
+                  alt={t('attoAgentTitle')} 
+                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105" 
+                />
+              </div>
+              <span className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                {t('attoAgentTitle')}
+              </span>
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center">
+                {t('attoAgentDesc')}
+              </p>
+            </Link>
+
+            {/* Agent Option 2: YOSR */}
+            <Link 
+              to="/agent/yosr" 
+              className="group flex flex-col items-center p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1" 
+              style={{ animationDelay: '0.2s' }}
+            >
+              <div className="w-16 h-16 md:w-24 md:h-24 mb-3 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
+                <img 
+                  src="/lovable-uploads/logo yosr.png" 
+                  alt={t('yosrAgentTitle')} 
+                  className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+              <span className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
+                {t('yosrAgentTitle')}
+              </span>
+              <p className="text-xs md:text-sm text-gray-600 dark:text-gray-300 text-center">
+                {t('yosrAgentDesc')}
+              </p>
+            </Link>
+          </div>
         </div>
-      </section>
+      </main>
+
       <Footer />
     </div>
   );

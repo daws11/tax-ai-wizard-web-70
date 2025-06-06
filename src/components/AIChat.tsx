@@ -12,7 +12,7 @@ const AIChat = () => {
   const attoGifSrc = theme === 'dark' ? '/lovable-uploads/attopreview-dark.gif' : '/lovable-uploads/attopreview-light.gif';
 
   return (
-    <Card className="max-w-6xl mx-auto backdrop-blur-sm dark:bg-gray-800/50 dark:border-gray-700" dir={isRTL ? 'rtl' : 'ltr'}>
+    <Card className="max-w-6xl mx-auto backdrop-blur-md bg-gradient-to-br from-neutral-50/20 via-zinc-50/20 to-slate-50/20 dark:bg-gray-800/20 dark:border-gray-700/30" dir={isRTL ? 'rtl' : 'ltr'}>
       <CardHeader>
         <CardTitle className="text-2xl md:text-3xl font-bold text-center text-primary">
           {t('meetExperts')}
@@ -40,7 +40,7 @@ const AIChat = () => {
           {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
           <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
             {/* Combined Title and Description Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+            <Card className="bg-gradient-to-br from-stone-50/20 via-neutral-50/20 to-zinc-50/20 dark:bg-gray-800/20 backdrop-blur-md shadow-lg">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {t('attoTitle')}
@@ -75,7 +75,7 @@ const AIChat = () => {
           {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
           <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
             {/* Combined Title and Description Card */}
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
+            <Card className="bg-gradient-to-br from-zinc-50/20 via-slate-50/20 to-stone-50/20 dark:bg-gray-800/20 backdrop-blur-md shadow-lg">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
                   {t('yosrTitle')}
