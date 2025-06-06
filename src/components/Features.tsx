@@ -40,6 +40,8 @@ const Features = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
   const { isMobile } = useScreenSize();
+  const lastPositionRef = useRef<number>(0);
+  const motionRef = useRef<HTMLDivElement>(null);
 
   // Base features array
   const baseFeatures: Feature[] = [
@@ -85,46 +87,67 @@ const Features = () => {
     },
   ];
 
-  // Duplicate features multiple times to ensure smooth infinite loop
+  // Duplicate features three times to ensure smooth infinite loop
   const features = [...baseFeatures, ...baseFeatures, ...baseFeatures];
 
   const startAnimation = useCallback(() => {
+    if (isHovered) return;
+
     const totalWidth = containerRef.current?.scrollWidth || 0;
-    const singleSetWidth = totalWidth / 3; // Karena kita menduplikasi 3 kali
+    const singleSetWidth = totalWidth / 3;
+
+    // Gunakan posisi terakhir jika ada
+    const startPosition = lastPositionRef.current || (isRTL ? 0 : -singleSetWidth * 2);
+    const endPosition = isRTL ? -singleSetWidth : 0;
 
     controls.start({
-      x: isRTL 
-        ? [0, -singleSetWidth * 2] // Bergerak ke kiri untuk RTL
-        : [-singleSetWidth * 2, 0], // Bergerak ke kanan untuk LTR
+      x: [startPosition, endPosition],
       transition: {
         repeat: Infinity,
         repeatType: "loop",
-        duration: 30,
+        duration: 28,
         ease: "linear",
-        repeatDelay: 0,
       }
     }).then(() => {
-      // Reset posisi tanpa animasi untuk transisi yang mulus
+      // Simpan posisi terakhir sebelum reset
+      lastPositionRef.current = isRTL ? -singleSetWidth : 0;
+      
+      // Set posisi untuk loop berikutnya tanpa animasi
       controls.set({
         x: isRTL ? 0 : -singleSetWidth * 2
       });
+      
+      // Mulai animasi baru jika tidak sedang hover
+      if (!isHovered) {
+        startAnimation();
+      }
     });
-  }, [controls, isRTL]);
-
-  // Start animation on mount
-  useEffect(() => {
-    startAnimation();
-  }, [startAnimation]);
+  }, [controls, isRTL, isHovered]);
 
   const handleMouseEnter = useCallback(() => {
     setIsHovered(true);
+    // Simpan posisi saat ini sebelum berhenti menggunakan getBoundingClientRect
+    if (motionRef.current) {
+      const transform = window.getComputedStyle(motionRef.current).transform;
+      const matrix = new DOMMatrix(transform);
+      lastPositionRef.current = matrix.m41; // m41 adalah nilai translateX
+    }
     controls.stop();
   }, [controls]);
 
   const handleMouseLeave = useCallback(() => {
     setIsHovered(false);
+    // Mulai animasi dari posisi terakhir yang tersimpan
     startAnimation();
   }, [startAnimation]);
+
+  // Start animation on mount and when isRTL changes
+  useEffect(() => {
+    startAnimation();
+    return () => {
+      controls.stop();
+    };
+  }, [startAnimation, isRTL]);
 
   return (
     <section 
@@ -151,13 +174,15 @@ const Features = () => {
         <div 
           className="relative overflow-hidden"
           ref={containerRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
         >
           <motion.div
+            ref={motionRef}
             className="flex gap-6"
             animate={controls}
-            style={{ willChange: 'transform' }} // Optimasi performa
+            style={{ 
+              willChange: 'transform',
+              transition: 'transform 0.2s ease-out'
+            }}
           >
             {features.map((feature, index) => (
               <motion.div
