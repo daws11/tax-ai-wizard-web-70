@@ -79,7 +79,7 @@ const AgentPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-3xl mx-auto">
             {/* Agent Option 1: ATTO */}
             <Link 
-              to="https://chat-taxai.onrender.com/" 
+              to="/agent/ask" 
               className="group flex flex-col items-center p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1"
             >
               <div className="w-16 h-16 md:w-24 md:h-24 mb-3 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110 flex-shrink-0">
@@ -99,7 +99,7 @@ const AgentPage = () => {
 
             {/* Agent Option 2: YOSR */}
             <Link 
-              to="/agent/yosr" 
+              to="/agent/talk" 
               className="group flex flex-col items-center p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 slide-up hover:-translate-y-1" 
               style={{ animationDelay: '0.2s' }}
             >

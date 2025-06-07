@@ -10,6 +10,8 @@ import NotFound from "./pages/NotFound";
 import AgentPage from "./pages/AgentPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Disclaimer from "@/pages/Disclaimer";
+import AskPage from "./pages/agent/AskPage";
+import TalkPage from "./pages/agent/TalkPage";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +27,8 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/agent" element={<AgentPage />} />
+                <Route path="/agent/ask" element={<AskPage />} />
+                <Route path="/agent/talk" element={<TalkPage />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/disclaimer" element={<Disclaimer />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
