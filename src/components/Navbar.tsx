@@ -81,7 +81,7 @@ const Navbar = () => {
                 <picture>
                   <source srcSet="/lovable-uploads/logo dark.png" media="(prefers-color-scheme: dark)" />
                   <img 
-                    src="/lovable-uploads/light logo.png" 
+                    src="/lovable-uploads/logo-new.png" 
                     alt="Atto AI Assistant Logo" 
                     className="h-10 transition-all duration-300"
                   />

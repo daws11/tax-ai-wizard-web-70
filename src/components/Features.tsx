@@ -163,9 +163,9 @@ const Features = () => {
           transition={{ duration: 0.5 }}
           className={`text-center mb-16 ${isRTL ? 'text-right' : 'text-left'}`}
         >
-          {/* <h2 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary sm:text-5xl mb-6">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             {t('enterpriseFeaturesTitle')}
-          </h2> */}
+          </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             {t('enterpriseFeaturesSubtitle')}
           </p>

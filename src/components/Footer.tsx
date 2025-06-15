@@ -31,7 +31,7 @@ const Footer = () => {
           <div className="space-y-8">
             <img
               className="h-7"
-              src="/lovable-uploads/light logo.png"
+              src="/lovable-uploads/logo-new.png"
               alt="TaxAI"
             />
             <p className="text-sm leading-6 text-gray-600 dark:text-gray-400">

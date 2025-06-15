@@ -13,15 +13,15 @@ const AIChat = () => {
 
   return (
     <Card className="max-w-6xl mx-auto backdrop-blur-md bg-white/20 dark:bg-gray-800/20 dark:border-gray-700/30" dir={isRTL ? 'rtl' : 'ltr'}>
-      <CardHeader>
+      {/* <CardHeader>
         <CardTitle className="text-2xl md:text-3xl font-bold text-center text-primary">
           {t('meetExperts')}
         </CardTitle>
-      </CardHeader>
+      </CardHeader> */}
       <CardContent className="flex flex-col gap-12 p-6 md:p-8 lg:p-10">
-        <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 text-center mb-4">
+        {/* <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 text-center mb-4">
           {t('exploreAssistants')}
-        </p>
+        </p> */}
 
         {/* Atto Agent Section */}
         <div className={`flex flex-col md:flex-row items-center gap-8 md:gap-10 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
