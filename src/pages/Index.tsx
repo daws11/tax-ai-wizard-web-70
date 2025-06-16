@@ -90,6 +90,11 @@ const Index = () => {
       <section className="opacity-0">
         <Pricing />
       </section>
+
+      <section className="opacity-0">
+        <CTA />
+      </section>
+      
       {/* <section className="opacity-0">
         <Testimonials />
       </section> */}
@@ -97,11 +102,7 @@ const Index = () => {
       <section className="opacity-0">
         <FAQ />
       </section>
-      
-      <section className="opacity-0">
-        <CTA />
-      </section>
-      
+              
       <Footer />
     </div>
   );

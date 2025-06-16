@@ -71,14 +71,7 @@ const AskPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
-      setIsTyping(true);
-      // Simulate AI typing
-      setTimeout(() => {
-        setIsTyping(false);
-        // Here you would typically handle the AI response
-      }, 1500);
-    }
+    navigate('/register');
   };
 
   return (
@@ -113,7 +106,7 @@ const AskPage = () => {
           </div>
 
           {/* Preview GIF - Changes based on theme */}
-          <div className="max-w-4xl mx-auto mb-16 rounded-xl overflow-hidden shadow-2xl">
+          <div className="max-w-4xl mx-auto mb-8 rounded-xl overflow-hidden shadow-2xl">
             <img 
               src={theme === 'dark' 
                 ? "/lovable-uploads/attopreview-dark.gif" 
@@ -121,6 +114,26 @@ const AskPage = () => {
               alt="ATTO AI Assistant Preview" 
               className="w-full h-auto rounded-xl"
             />
+          </div>
+          <div className="flex justify-center mb-16">
+            <Button 
+              onClick={() => navigate('/register')}
+              className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            >
+              Get Started!
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Button>
           </div>
 
           {/* Features */}
@@ -174,7 +187,7 @@ const AskPage = () => {
                 )}
               </div>
               
-              <form onSubmit={handleSubmit} className="flex gap-2">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2 w-full">
                 <input
                   type="text"
                   value={message}
@@ -185,11 +198,10 @@ const AskPage = () => {
                 />
                 <Button 
                   type="submit" 
-                  disabled={!message.trim() || isTyping}
-                  className="px-6"
+                  className="w-full sm:w-auto px-6 py-3 sm:py-0 h-auto sm:h-[42px] flex items-center justify-center gap-2"
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  Send
+                  <Send className="w-4 h-4" />
+                  <span className="hidden sm:inline">Send</span>
                 </Button>
               </form>
             </div>

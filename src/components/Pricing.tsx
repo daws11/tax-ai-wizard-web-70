@@ -97,7 +97,7 @@ const Pricing = () => {
   return (
     <section 
       id="pricing" 
-      className="py-12 sm:py-16 md:py-24 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm" 
+      className="py-12 sm:py-16 md:py-24 " 
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
@@ -110,70 +110,116 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="mt-8 sm:mt-12 md:mt-16 grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-4">
-          {plans.map((plan, index) => (
-            <Card 
-              key={plan.id}
-              className={`backdrop-blur-md transition-all border shadow-sm hover:shadow-md bg-white/20 dark:bg-gray-800/20 dark:border-gray-700/30 flex flex-col h-full ${
-                plan.mostPopular ? "ring-2 ring-primary md:col-span-2 lg:col-span-1" : ""
-              } scale-in`} 
-              style={{ transitionDelay: `${index * 0.1}s` }}
-            >
-              <CardHeader className="pb-0 px-3 sm:px-4 md:px-6">
-                {plan.mostPopular && (
-                  <Badge variant="secondary" className={`w-fit mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}>
-                    {t('mostPopular')}
-                  </Badge>
-                )}
-                <div className={`space-y-2 sm:space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
-                    {plan.name}
-                  </h3>
-                  <div className={`flex items-baseline ${isRTL ? 'flex-row-reverse' : ''} gap-1 sm:gap-2`}>
-                    <span className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-                      {plan.price}
-                    </span>
-                    <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                      {plan.priceAED}
-                    </span>
+        <div className="mt-8 sm:mt-12 md:mt-16">
+          {/* Regular Pricing Plans */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {plans.filter(plan => plan.id !== 'enterprise').map((plan, index) => (
+              <Card 
+                key={plan.id}
+                className={`backdrop-blur-md transition-all border shadow-sm hover:shadow-md bg-white/20 dark:bg-gray-800/20 dark:border-gray-700/30 flex flex-col h-full ${
+                  plan.mostPopular ? "ring-2 ring-primary" : ""
+                } scale-in`} 
+                style={{ transitionDelay: `${index * 0.1}s` }}
+              >
+                <CardHeader className="pb-0 px-6 pt-6">
+                  {plan.mostPopular && (
+                    <Badge variant="secondary" className={`w-fit mb-4 text-sm ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}>
+                      {t('mostPopular')}
+                    </Badge>
+                  )}
+                  <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                      {plan.name}
+                    </h3>
+                    <div className={`flex items-baseline ${isRTL ? 'flex-row-reverse' : 'flex-row'} gap-2`}>
+                      <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                        {plan.price}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
+                        {plan.priceAED}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 min-h-[60px] leading-relaxed">
+                      {plan.description}
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-1 sm:mt-2 min-h-[48px] sm:min-h-[60px] leading-relaxed">
-                    {plan.description}
+                </CardHeader>
+                <CardContent className="flex-grow px-6 pt-6">
+                  <Separator className="mb-6" />
+                  <ul className={`space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
+                    {plan.features.map((feature, i) => (
+                      <li 
+                        key={i}
+                        className={`flex items-start ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'} gap-3`}
+                      >
+                        <Check 
+                          className={`h-5 w-5 text-primary shrink-0 ${isRTL ? 'order-2' : 'order-1'}`} 
+                        />
+                        <span className={`text-sm text-gray-500 dark:text-gray-400 leading-relaxed ${
+                          isRTL ? 'order-1' : 'order-2'
+                        }`}>
+                          {feature.text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter className="mt-auto pt-6 px-6 pb-6">
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90 text-white text-base py-2.5" 
+                    size="lg"
+                    onClick={() => navigate('/register')}
+                  >
+                    {plan.buttonText}
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+
+          {/* Enterprise Plan - Full Width */}
+          <div className="mt-12 bg-white/20 dark:bg-gray-800/20 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700/30 overflow-hidden">
+            <div className="p-8 md:p-12">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-10">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
+                    {t('enterprisePlan', 'Enterprise Plan')}
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                    {t('enterprisePlanDesc', 'Comprehensive tax solution for large organizations with advanced needs.')}
                   </p>
                 </div>
-              </CardHeader>
-              <CardContent className="pt-4 sm:pt-6 flex-grow px-3 sm:px-4 md:px-6">
-                <Separator className="mb-4 sm:mb-6" />
-                <ul className={`space-y-2 sm:space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
-                  {plan.features.map((feature, i) => (
-                    <li 
-                      key={i} 
-                      className={`flex items-start ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'} gap-2 sm:gap-3`}
-                    >
-                      <Check 
-                        className={`h-4 w-4 sm:h-5 sm:w-5 text-primary shrink-0 ${isRTL ? 'order-2' : 'order-1'}`} 
-                      />
-                      <span 
-                        className={`text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed ${
-                          isRTL ? 'order-1' : 'order-2'
-                        }`}
-                      >
-                        {feature.text}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[
+                    t('enterpriseFeature1', 'AI-powered tax automation'),
+                    t('enterpriseFeature2', 'Insights dashboard with ERP-integrated'),
+                    t('enterpriseFeature3', 'Custom-built advisory modules'),
+                    t('enterpriseFeature4', 'Private AI assistant for your team'),
+                    t('enterpriseFeature5', 'Dedicated account manager & SLA support'),
+                    t('enterpriseFeature6', 'Flexible usage & multi-user access')
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-start p-4 ">
+                      <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <span className="ml-3 text-gray-700 dark:text-gray-300">
+                        {feature}
                       </span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
-              </CardContent>
-              <CardFooter className="mt-auto pt-4 sm:pt-6 px-3 sm:px-4 md:px-6">
-                <Button 
-                  className="w-full bg-primary hover:bg-primary/90 text-white text-sm sm:text-base py-2 sm:py-2.5" 
-                  onClick={plan.id !== "enterprise" ? () => navigate("/agent") : undefined}
-                >
-                  {plan.buttonText}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+                </div>
+
+                <div className="mt-10 text-center">
+                  <Button 
+                    size="lg" 
+                    className="bg-blue-600 hover:bg-blue-700 text-base px-8 py-6"
+                    onClick={() => navigate('/contact')}
+                  >
+                    {t('contactSales', 'Contact Sales for Enterprise Plan')}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div className={`mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'} px-2`}>

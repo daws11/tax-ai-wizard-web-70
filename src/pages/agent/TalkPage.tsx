@@ -63,9 +63,8 @@ const TalkPage = () => {
     }
   ];
 
-  const toggleListening = () => {
-    setIsListening(!isListening);
-    // Add voice recognition logic here
+  const startListening = () => {
+    navigate('/register');
   };
 
   // Custom particles options for better visibility
@@ -119,12 +118,32 @@ const TalkPage = () => {
           </div>
 
           {/* Preview GIF */}
-          <div className="max-w-4xl mx-auto mb-16 rounded-xl overflow-hidden shadow-2xl">
+          <div className="max-w-4xl mx-auto mb-8 rounded-xl overflow-hidden shadow-2xl">
             <img 
               src="/lovable-uploads/yosrpreview.gif" 
               alt="YOSR Voice Agent Preview" 
               className="w-full h-auto rounded-xl"
             />
+          </div>
+          <div className="flex justify-center mb-16">
+            <Button 
+              onClick={() => navigate('/register')}
+              className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
+            >
+              Get Started!
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 ml-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Button>
           </div>
 
           {/* Features */}
@@ -169,24 +188,11 @@ const TalkPage = () => {
               </p>
               
               <Button 
-                onClick={toggleListening}
-                className={`flex items-center gap-2 px-8 py-6 text-lg rounded-full ${
-                  isListening 
-                    ? 'bg-red-500 hover:bg-red-600' 
-                    : 'bg-blue-600 hover:bg-blue-700'
-                }`}
+                onClick={startListening}
+                className="flex items-center gap-2 px-8 py-6 text-lg rounded-full bg-blue-600 hover:bg-blue-700"
               >
-                {isListening ? (
-                  <>
-                    <Pause className="w-5 h-5" />
-                    Stop Listening
-                  </>
-                ) : (
-                  <>
-                    <Mic className="w-5 h-5" />
-                    Start Voice Session
-                  </>
-                )}
+                <Mic className="w-5 h-5" />
+                Start Voice Session
               </Button>
             </div>
           </div>

@@ -29,7 +29,7 @@ const Process = () => {
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm" dir={isRTL ? 'rtl' : 'ltr'}>
+    <section id="how-it-works" className="py-24 " dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center slide-up">
           <h2 className="text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl">
