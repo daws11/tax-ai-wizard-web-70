@@ -48,11 +48,15 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('features')}</button>
           <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('howItWorks')}</button>
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('faq')}</button>
+          <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('pricing', 'Pricing')}</button>
         </>
       );
     }
     return (
-      <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('home')}</button>
+      <>
+        <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('home')}</button>
+        <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+      </>
     );
   };
 
@@ -63,11 +67,15 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('features')}</button>
           <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('howItWorks')}</button>
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('faq')}</button>
+          <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('pricing', 'Pricing')}</button>
         </>
       );
     }
     return (
-      <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('home')}</button>
+      <>
+        <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('home')}</button>
+        <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+      </>
     );
   };
 
@@ -77,15 +85,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0 cursor-pointer" onClick={() => handleNavigation('/')}>
-              <span className="flex items-center">
-                <picture>
-                  <source srcSet="/lovable-uploads/logo dark.png" media="(prefers-color-scheme: dark)" />
-                  <img 
-                    src="/lovable-uploads/logo-new.png" 
-                    alt="Atto AI Assistant Logo" 
-                    className="h-10 transition-all duration-300"
-                  />
-                </picture>
+              <span className="text-4xl font-extrabold tracking-wider text-primary mb-4 px-6 py-2 rounded-lg inline-block bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm select-none">
+                TaxAI
               </span>
             </div>
           </div>

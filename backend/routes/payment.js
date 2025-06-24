@@ -5,10 +5,19 @@ import { auth } from '../middleware/auth.js';
 import { validatePayment, handleValidationErrors } from '../middleware/validation.js';
 
 const router = express.Router();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+function getStripeInstance() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('ERROR: STRIPE_SECRET_KEY is not set! Please check your .env or config.env file.');
+    return null;
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY);
+}
 
 // Create payment intent
 router.post('/create-payment-intent', auth, async (req, res) => {
+  const stripe = getStripeInstance();
+  if (!stripe) return res.status(500).json({ message: 'Stripe key not set' });
   try {
     const { subscriptionType } = req.body;
     
@@ -43,6 +52,8 @@ router.post('/create-payment-intent', auth, async (req, res) => {
 
 // Confirm payment and activate subscription
 router.post('/confirm-payment', auth, validatePayment, handleValidationErrors, async (req, res) => {
+  const stripe = getStripeInstance();
+  if (!stripe) return res.status(500).json({ message: 'Stripe key not set' });
   try {
     const { paymentIntentId, subscriptionType } = req.body;
     

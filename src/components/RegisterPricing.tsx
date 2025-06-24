@@ -244,7 +244,7 @@ export function RegisterPricing({ plans = [], onSelectPlan, selectedPlan }: Regi
             className="mt-6 md:mt-8 bg-white dark:bg-gray-800 border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-base md:text-lg px-6 md:px-8 py-4 md:py-6 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-200"
           >
             {t('contactSales', 'Contact Sales')}
-          </Button>
+            </Button>
         </div>
       </div>
       <div className="mt-6 md:mt-8 text-center">

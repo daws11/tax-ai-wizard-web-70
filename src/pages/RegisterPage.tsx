@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Engine } from '@tsparticles/engine';
-import { loadSlim } from '@tsparticles/slim';
-import Particles from '@tsparticles/react';
+import Particles from 'react-tsparticles';
+import { loadSlim } from 'tsparticles-slim';
+import type { Engine } from 'tsparticles-engine';
 import { useParticlesConfig } from '../lib/particles-config';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -17,6 +17,15 @@ import Footer from '../components/Footer';
 import { RegisterPricing } from '../components/RegisterPricing';
 import PaymentForm from '../components/PaymentForm';
 import apiService, { Plan, RegistrationData } from '../services/api';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter
+} from '../components/ui/dialog';
+import { Loader2 } from 'lucide-react';
 
 interface FormData {
   firstName: string;
@@ -45,6 +54,8 @@ export default function RegisterPage() {
     password: '',
     confirmPassword: ''
   });
+  const [successDialogOpen, setSuccessDialogOpen] = useState(false);
+  const [successDialogInfo, setSuccessDialogInfo] = useState<{planName: string, email: string} | null>(null);
 
   // Load plans on component mount
   useEffect(() => {
@@ -73,7 +84,14 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!acknowledged) return;
+    if (!acknowledged) {
+      toast({
+        title: "Warning",
+        description: "You must check the acknowledgement box before continuing.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     // Validate form
     if (formData.password !== formData.confirmPassword) {
@@ -98,16 +116,39 @@ export default function RegisterPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSelectPlan = (planId: string) => {
+  const handleSelectPlan = async (planId: string) => {
     const plan = plans.find(p => p.id === planId);
-    if (plan) {
-      setSelectedPlan(plan);
-      
+    if (!plan) return;
+    setSelectedPlan(plan);
+
+    if (!validateRegistrationData()) return;
+    setLoading(true);
+    try {
+      const registrationData: RegistrationData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        jobTitle: formData.role,
+        subscriptionType: plan.id as 'monthly' | 'quarterly' | 'yearly' | 'trial'
+      };
+      const response = await apiService.register(registrationData);
+      localStorage.setItem('authToken', response.token);
+      setSuccessDialogInfo({ planName: plan.name, email: formData.email });
       if (plan.id === 'trial') {
-        handleTrialRegistration();
+        setSuccessDialogOpen(true);
       } else {
         setShowPayment(true);
       }
+    } catch (error: unknown) {
+      console.error('Registration error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to create account";
+      toast({
+        title: "Registration Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -157,82 +198,10 @@ export default function RegisterPage() {
     return true;
   };
 
-  const handleTrialRegistration = async () => {
-    if (!selectedPlan) return;
-    if (!validateRegistrationData()) return;
-    setLoading(true);
-    try {
-      const registrationData: RegistrationData = {
-        name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        password: formData.password,
-        jobTitle: formData.role,
-        subscriptionType: 'trial'
-      };
-
-      const response = await apiService.register(registrationData);
-      
-      // Store token
-      localStorage.setItem('authToken', response.token);
-      
-      toast({
-        title: "Registration Successful",
-        description: "Your trial account has been created!",
-      });
-
-      // Redirect to dashboard
-      window.location.href = 'https://www.dashboard.taxai.ae/';
-      
-    } catch (error: unknown) {
-      console.error('Registration error:', error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to create account";
-      toast({
-        title: "Registration Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handlePaymentSuccess = async () => {
     if (!selectedPlan) return;
-    if (!validateRegistrationData()) return;
-    setLoading(true);
-    try {
-      const registrationData: RegistrationData = {
-        name: `${formData.firstName} ${formData.lastName}`,
-        email: formData.email,
-        password: formData.password,
-        jobTitle: formData.role,
-        subscriptionType: selectedPlan.id as 'monthly' | 'quarterly' | 'yearly'
-      };
-
-      const response = await apiService.register(registrationData);
-      
-      // Store token
-      localStorage.setItem('authToken', response.token);
-      
-      toast({
-        title: "Registration Successful",
-        description: "Your account has been created and subscription activated!",
-      });
-
-      // Redirect to dashboard
-      window.location.href = 'https://www.dashboard.taxai.ae/';
-      
-    } catch (error: unknown) {
-      console.error('Registration error:', error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to create account";
-      toast({
-        title: "Registration Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
+    setSuccessDialogInfo({ planName: selectedPlan.name, email: formData.email });
+    setSuccessDialogOpen(true);
   };
 
   const handleBackToForm = () => {
@@ -288,8 +257,16 @@ export default function RegisterPage() {
       </div>
       <Navbar />
       <main className="flex-grow flex flex-col items-center py-8 px-4">
+        {loading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+            <div className="flex flex-col items-center gap-2 bg-white dark:bg-gray-900 rounded-lg p-6 shadow-lg">
+              <Loader2 className="animate-spin w-8 h-8 text-blue-600 mb-2" />
+              <span className="text-gray-700 dark:text-gray-200 font-medium">Processing, please wait...</span>
+            </div>
+          </div>
+        )}
         <AnimatePresence mode="wait">
-          {showPayment && selectedPlan ? (
+          {showPayment && selectedPlan && localStorage.getItem('authToken') ? (
             <motion.div
               key="payment"
               initial="hidden"
@@ -386,6 +363,7 @@ export default function RegisterPage() {
                           autoComplete="given-name"
                           required
                           className="w-full"
+                          disabled={loading}
                         />
                       </div>
                       <div className="space-y-2">
@@ -400,6 +378,7 @@ export default function RegisterPage() {
                           autoComplete="family-name"
                           required
                           className="w-full"
+                          disabled={loading}
                         />
                       </div>
                     </div>
@@ -416,6 +395,7 @@ export default function RegisterPage() {
                         autoComplete="email"
                         required
                         className="w-full"
+                        disabled={loading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -426,6 +406,7 @@ export default function RegisterPage() {
                         value={formData.role} 
                         onValueChange={(value) => handleInputChange('role', value)}
                         required
+                        disabled={loading}
                       >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder={t('register.selectRole', 'Select your role')} />
@@ -456,6 +437,7 @@ export default function RegisterPage() {
                         autoComplete="new-password"
                         required
                         className="w-full"
+                        disabled={loading}
                       />
                     </div>
                     <div className="space-y-2">
@@ -471,6 +453,7 @@ export default function RegisterPage() {
                         autoComplete="new-password"
                         required
                         className="w-full"
+                        disabled={loading}
                       />
                     </div>
                     <div className="relative group">
@@ -479,9 +462,9 @@ export default function RegisterPage() {
                         className={`w-full py-3 text-lg font-semibold text-white rounded-lg shadow-md transition-colors flex items-center justify-center gap-2 ${
                           acknowledged 
                             ? 'bg-blue-600 hover:bg-blue-700' 
-                            : 'bg-blue-400 cursor-not-allowed'
+                            : 'bg-blue-400'
                         }`}
-                        disabled={!acknowledged || loading}
+                        disabled={loading}
                       >
                         {loading ? 'Processing...' : t('register.createAccount', 'Next')}
                         <svg
@@ -513,6 +496,7 @@ export default function RegisterPage() {
                         onChange={e => setAcknowledged(e.target.checked)}
                         className="mt-1 accent-blue-600 w-5 h-5 rounded border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-blue-500"
                         required
+                        disabled={loading}
                       />
                       <span className="text-gray-700 dark:text-gray-300">
                         I acknowledge that Tax-AI provides AI-generated insights and does not offer certified tax or legal advice
@@ -526,6 +510,30 @@ export default function RegisterPage() {
         </AnimatePresence>
       </main>
       <Footer />
+      {/* Success Dialog */}
+      <Dialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Account Created Successfully!</DialogTitle>
+            <DialogDescription>
+              Your account has been created. Please login to the dashboard using the email and password you registered.<br/>
+              <b>Email:</b> {successDialogInfo?.email}<br/>
+              <b>Selected Plan:</b> {successDialogInfo?.planName}<br/>
+              <span className="block mt-2 text-xs text-gray-500">If you do not receive a confirmation email, please check your spam folder or contact support.</span>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              onClick={() => {
+                window.location.href = 'https://www.dashboard.taxai.ae/';
+              }}
+              className="w-full"
+            >
+              Continue to Dashboard
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

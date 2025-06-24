@@ -31,10 +31,9 @@ export const validatePayment = [
   body('subscriptionType')
     .isIn(['monthly', 'quarterly', 'yearly'])
     .withMessage('Invalid subscription type'),
-  
-  body('paymentMethodId')
+  body('paymentIntentId')
     .notEmpty()
-    .withMessage('Payment method ID is required')
+    .withMessage('Payment intent ID is required')
 ];
 
 export const handleValidationErrors = (req, res, next) => {

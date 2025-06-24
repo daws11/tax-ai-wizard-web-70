@@ -1,18 +1,22 @@
+import dotenv from 'dotenv';
+import path from 'path';
+// Load environment variables
+const envFile = process.env.ENV_FILE || (process.env.NODE_ENV === 'production' ? '.env' : '.env');
+dotenv.config({ path: path.resolve(process.cwd(), envFile) });
+if (!process.env.MONGODB_URI) {
+  dotenv.config({ path: path.resolve(process.cwd(), 'config.env') });
+}
+
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
-import path from 'path';
 import { fileURLToPath } from 'url';
 
 // Import routes
 import authRoutes from './routes/auth.js';
 import paymentRoutes from './routes/payment.js';
-
-// Load environment variables
-dotenv.config({ path: './config.env' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -82,6 +86,11 @@ app.use('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);
+  // Log Stripe keys (hanya sebagian, demi keamanan)
+  const sk = process.env.STRIPE_SECRET_KEY || '';
+  const pk = process.env.STRIPE_PUBLISHABLE_KEY || '';
+  console.log('Stripe Secret Key:', sk  );
+  console.log('Stripe Publishable Key:', pk );
 });
 
 // Graceful shutdown
