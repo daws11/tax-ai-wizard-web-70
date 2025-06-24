@@ -1,20 +1,22 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { RegisterPricing } from '@/components/RegisterPricing';
-import Particles from 'react-tsparticles';
-import { loadSlim } from 'tsparticles-slim';
-import type { Engine } from 'tsparticles-engine';
-import { useParticlesConfig } from '@/lib/particles-config';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { Engine } from '@tsparticles/engine';
+import { loadSlim } from '@tsparticles/slim';
+import Particles from '@tsparticles/react';
+import { useParticlesConfig } from '../lib/particles-config';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { useToast } from '../components/ui/use-toast';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { RegisterPricing } from '../components/RegisterPricing';
+import PaymentForm from '../components/PaymentForm';
+import apiService, { Plan, RegistrationData } from '../services/api';
 
 interface FormData {
   firstName: string;
@@ -28,9 +30,13 @@ interface FormData {
 export default function RegisterPage() {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [acknowledged, setAcknowledged] = useState(false);
   const [showPricing, setShowPricing] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<string>();
+  const [showPayment, setShowPayment] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     firstName: '',
     lastName: '',
@@ -40,22 +46,205 @@ export default function RegisterPage() {
     confirmPassword: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Load plans on component mount
+  useEffect(() => {
+    const loadPlans = async () => {
+      try {
+        const { plans: fetchedPlans } = await apiService.getPlans();
+        setPlans(fetchedPlans);
+      } catch (error) {
+        console.error('Failed to load plans:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load subscription plans",
+          variant: "destructive",
+        });
+      }
+    };
+    loadPlans();
+  }, [toast]);
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acknowledged) return;
+
+    // Validate form
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Validation Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast({
+        title: "Validation Error",
+        description: "Password must be at least 6 characters long",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setShowPricing(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSelectPlan = (planId: string) => {
-    setSelectedPlan(planId);
-    // Here you would typically handle the selected plan
-    console.log('Selected plan:', planId);
+    const plan = plans.find(p => p.id === planId);
+    if (plan) {
+      setSelectedPlan(plan);
+      
+      if (plan.id === 'trial') {
+        handleTrialRegistration();
+      } else {
+        setShowPayment(true);
+      }
+    }
+  };
+
+  const validateRegistrationData = () => {
+    if (!formData.firstName || !formData.lastName) {
+      toast({
+        title: "Validation Error",
+        description: "First and last name are required.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    if (!formData.role || formData.role.length < 2) {
+      toast({
+        title: "Validation Error",
+        description: "Role must be at least 2 characters.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
+    if (!formData.password || formData.password.length < 6) {
+      toast({
+        title: "Validation Error",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    if (!passwordRegex.test(formData.password)) {
+      toast({
+        title: "Validation Error",
+        description: "Password must contain uppercase, lowercase, and a number.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        title: "Validation Error",
+        description: "Please provide a valid email address.",
+        variant: "destructive",
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleTrialRegistration = async () => {
+    if (!selectedPlan) return;
+    if (!validateRegistrationData()) return;
+    setLoading(true);
+    try {
+      const registrationData: RegistrationData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        jobTitle: formData.role,
+        subscriptionType: 'trial'
+      };
+
+      const response = await apiService.register(registrationData);
+      
+      // Store token
+      localStorage.setItem('authToken', response.token);
+      
+      toast({
+        title: "Registration Successful",
+        description: "Your trial account has been created!",
+      });
+
+      // Redirect to dashboard
+      window.location.href = 'https://www.dashboard.taxai.ae/';
+      
+    } catch (error: unknown) {
+      console.error('Registration error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to create account";
+      toast({
+        title: "Registration Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePaymentSuccess = async () => {
+    if (!selectedPlan) return;
+    if (!validateRegistrationData()) return;
+    setLoading(true);
+    try {
+      const registrationData: RegistrationData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        jobTitle: formData.role,
+        subscriptionType: selectedPlan.id as 'monthly' | 'quarterly' | 'yearly'
+      };
+
+      const response = await apiService.register(registrationData);
+      
+      // Store token
+      localStorage.setItem('authToken', response.token);
+      
+      toast({
+        title: "Registration Successful",
+        description: "Your account has been created and subscription activated!",
+      });
+
+      // Redirect to dashboard
+      window.location.href = 'https://www.dashboard.taxai.ae/';
+      
+    } catch (error: unknown) {
+      console.error('Registration error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to create account";
+      toast({
+        title: "Registration Failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleBackToForm = () => {
     setShowPricing(false);
+    setShowPayment(false);
+    setSelectedPlan(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleBackToPricing = () => {
+    setShowPayment(false);
+    setSelectedPlan(null);
   };
 
   const particlesInit = useCallback(async (engine: Engine) => {
@@ -71,7 +260,7 @@ export default function RegisterPage() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: 'easeInOut'
+        ease: ['easeInOut']
       }
     },
     exit: { 
@@ -79,12 +268,10 @@ export default function RegisterPage() {
       y: -20,
       transition: {
         duration: 0.3,
-        ease: 'easeInOut'
+        ease: ['easeInOut']
       }
     }
   };
-
-
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -102,7 +289,36 @@ export default function RegisterPage() {
       <Navbar />
       <main className="flex-grow flex flex-col items-center py-8 px-4">
         <AnimatePresence mode="wait">
-          {showPricing ? (
+          {showPayment && selectedPlan ? (
+            <motion.div
+              key="payment"
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              variants={pageVariants}
+              className="w-full max-w-6xl"
+            >
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-12">
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleBackToPricing}
+                    className="mb-6 flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 mx-auto"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                    </svg>
+                    {t('backToPricing', 'Back to Plans')}
+                  </Button>
+                </div>
+                <PaymentForm 
+                  selectedPlan={selectedPlan}
+                  onPaymentSuccess={handlePaymentSuccess}
+                  onBack={handleBackToPricing}
+                />
+              </div>
+            </motion.div>
+          ) : showPricing ? (
             <motion.div
               key="pricing"
               initial="hidden"
@@ -131,8 +347,9 @@ export default function RegisterPage() {
                   </p>
                 </div>
                 <RegisterPricing 
+                  plans={plans}
                   onSelectPlan={handleSelectPlan} 
-                  selectedPlan={selectedPlan}
+                  selectedPlan={selectedPlan?.id}
                 />
               </div>
             </motion.div>
@@ -163,6 +380,8 @@ export default function RegisterPage() {
                         </Label>
                         <Input
                           id="firstName"
+                          value={formData.firstName}
+                          onChange={(e) => handleInputChange('firstName', e.target.value)}
                           placeholder={t('register.firstNamePlaceholder', 'Enter your first name')}
                           autoComplete="given-name"
                           required
@@ -175,6 +394,8 @@ export default function RegisterPage() {
                         </Label>
                         <Input
                           id="lastName"
+                          value={formData.lastName}
+                          onChange={(e) => handleInputChange('lastName', e.target.value)}
                           placeholder={t('register.lastNamePlaceholder', 'Enter your last name')}
                           autoComplete="family-name"
                           required
@@ -189,6 +410,8 @@ export default function RegisterPage() {
                       <Input
                         id="email"
                         type="email"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
                         placeholder={t('register.emailPlaceholder', 'Enter your email')}
                         autoComplete="email"
                         required
@@ -199,7 +422,11 @@ export default function RegisterPage() {
                       <Label htmlFor="role">
                         {t('register.role', 'Role')} *
                       </Label>
-                      <Select required>
+                      <Select 
+                        value={formData.role} 
+                        onValueChange={(value) => handleInputChange('role', value)}
+                        required
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder={t('register.selectRole', 'Select your role')} />
                         </SelectTrigger>
@@ -223,6 +450,8 @@ export default function RegisterPage() {
                       <Input
                         id="password"
                         type="password"
+                        value={formData.password}
+                        onChange={(e) => handleInputChange('password', e.target.value)}
                         placeholder={t('register.passwordPlaceholder', 'Create a password')}
                         autoComplete="new-password"
                         required
@@ -236,6 +465,8 @@ export default function RegisterPage() {
                       <Input
                         id="confirmPassword"
                         type="password"
+                        value={formData.confirmPassword}
+                        onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                         placeholder={t('register.confirmPasswordPlaceholder', 'Confirm your password')}
                         autoComplete="new-password"
                         required
@@ -250,9 +481,9 @@ export default function RegisterPage() {
                             ? 'bg-blue-600 hover:bg-blue-700' 
                             : 'bg-blue-400 cursor-not-allowed'
                         }`}
-                        disabled={!acknowledged}
+                        disabled={!acknowledged || loading}
                       >
-                        {t('register.createAccount', 'Next')}
+                        {loading ? 'Processing...' : t('register.createAccount', 'Next')}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-5 w-5 ml-1"

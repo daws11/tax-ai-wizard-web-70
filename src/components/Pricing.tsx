@@ -28,6 +28,22 @@ const Pricing = () => {
 
   const plans: PricingPlan[] = [
     {
+      id: "trial",
+      name: t('trialPlan', 'Free Trial'),
+      price: t('free', 'Free'),
+      priceAED: t('free', 'Free'),
+      description: t('trialPlanDesc', 'Try all features for 14 days'),
+      features: [
+        { text: t('oneUser', '1 user') },
+        { text: t('trialMessages', 'Up to 30 messages') },
+        { text: t('uaeTaxCoverageFull', 'Coverage of UAE VAT, Corporate Tax, and Excise regulations') },
+        { text: t('bilingualSupportFull', 'Answers in both English and Arabic') },
+        { text: t('standardSupport', 'Standard support') },
+        { text: t('noCreditCardRequired', 'No credit card required') },
+      ],
+      buttonText: t('startFreeTrial', 'Start Free Trial'),
+    },
+    {
       id: "monthly",
       name: t('monthlyPlan'),
       price: "$99",
@@ -112,7 +128,7 @@ const Pricing = () => {
 
         <div className="mt-8 sm:mt-12 md:mt-16">
           {/* Regular Pricing Plans */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {plans.filter(plan => plan.id !== 'enterprise').map((plan, index) => (
               <Card 
                 key={plan.id}
@@ -145,7 +161,7 @@ const Pricing = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow px-6 pt-6">
-                  <Separator className="mb-6" />
+                  {/* <Separator className="mb-6" /> */}
                   <ul className={`space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
                     {plan.features.map((feature, i) => (
                       <li 
@@ -224,6 +240,7 @@ const Pricing = () => {
         
         <div className={`mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'} px-2`}>
           <p className="leading-relaxed">{t('pricingNote')}</p>
+          <p className="mt-2">{t('noCreditCardRequired', 'No credit card required for free trial. Cancel anytime.')}</p>
         </div>
       </div>
     </section>
