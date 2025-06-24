@@ -28,7 +28,12 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://www.dashboard.taxai.ae', 'https://taxai.ae']
+    ? [
+        'https://www.dashboard.taxai.ae', 
+        'https://taxai.ae',
+        'https://tax-ai-frontend-xyz.onrender.com', // Ganti dengan URL frontend Render yang sebenarnya
+        'https://*.onrender.com' // Allow all Render subdomains for flexibility
+      ]
     : ['http://localhost:3000', 'http://localhost:5173', 'http://localhost:8080'],
   credentials: true
 }));
@@ -86,11 +91,6 @@ app.use('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV}`);
-  // Log Stripe keys (hanya sebagian, demi keamanan)
-  const sk = process.env.STRIPE_SECRET_KEY || '';
-  const pk = process.env.STRIPE_PUBLISHABLE_KEY || '';
-  console.log('Stripe Secret Key:', sk  );
-  console.log('Stripe Publishable Key:', pk );
 });
 
 // Graceful shutdown

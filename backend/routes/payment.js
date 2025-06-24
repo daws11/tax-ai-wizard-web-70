@@ -8,7 +8,6 @@ const router = express.Router();
 
 function getStripeInstance() {
   if (!process.env.STRIPE_SECRET_KEY) {
-    console.error('ERROR: STRIPE_SECRET_KEY is not set! Please check your .env or config.env file.');
     return null;
   }
   return new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -45,7 +44,6 @@ router.post('/create-payment-intent', auth, async (req, res) => {
       clientSecret: paymentIntent.client_secret
     });
   } catch (error) {
-    console.error('Payment intent error:', error);
     res.status(500).json({ message: 'Error creating payment intent' });
   }
 });
@@ -100,7 +98,6 @@ router.post('/confirm-payment', auth, validatePayment, handleValidationErrors, a
     });
 
   } catch (error) {
-    console.error('Payment confirmation error:', error);
     res.status(500).json({ message: 'Error confirming payment' });
   }
 });
