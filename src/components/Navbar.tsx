@@ -49,6 +49,7 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('howItWorks')}</button>
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('faq')}</button>
           <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+          <button onClick={() => handleNavigation('/blogs')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Blog</button>
         </>
       );
     }
@@ -56,6 +57,7 @@ const Navbar = () => {
       <>
         <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('home')}</button>
         <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+        <button onClick={() => handleNavigation('/blogs')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300">Blog</button>
       </>
     );
   };
@@ -68,6 +70,7 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('howItWorks')}</button>
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('faq')}</button>
           <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+          <button onClick={() => handleNavigation('/blogs')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">Blog</button>
         </>
       );
     }
@@ -75,6 +78,7 @@ const Navbar = () => {
       <>
         <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('home')}</button>
         <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">{t('pricing', 'Pricing')}</button>
+        <button onClick={() => handleNavigation('/blogs')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300">Blog</button>
       </>
     );
   };

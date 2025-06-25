@@ -16,6 +16,7 @@ export default defineConfig(({ mode }) => ({
         secure: false,
       },
     },
+    historyApiFallback: true,
   },
   build: {
     sourcemap: false,
