@@ -48,6 +48,7 @@ const BlogDetailPage = () => {
   useEffect(() => {
     if (!blog) return;
     document.title = `${blog.title} | Blog TaxAI`;
+    // Description
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
       meta = document.createElement('meta');
@@ -55,6 +56,50 @@ const BlogDetailPage = () => {
       document.head.appendChild(meta);
     }
     meta.setAttribute('content', blog.metaInfo || 'Artikel blog TaxAI');
+
+    // Keywords
+    let keywords = document.querySelector('meta[name="keywords"]');
+    if (!keywords) {
+      keywords = document.createElement('meta');
+      keywords.setAttribute('name', 'keywords');
+      document.head.appendChild(keywords);
+    }
+    keywords.setAttribute('content', blog.keywords || 'tax, ai, finance, blog');
+
+    // Open Graph
+    const setOg = (property, content) => {
+      let el = document.querySelector(`meta[property='${property}']`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('property', property);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+    setOg('og:title', blog.title);
+    setOg('og:description', blog.metaInfo || 'Artikel blog TaxAI');
+    setOg('og:type', 'article');
+    setOg('og:url', window.location.href);
+    if (blog.images && blog.images.length > 0) {
+      setOg('og:image', blog.images[0]);
+    }
+
+    // Twitter Card
+    const setTwitter = (name, content) => {
+      let el = document.querySelector(`meta[name='${name}']`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute('name', name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
+    setTwitter('twitter:card', blog.images && blog.images.length > 0 ? 'summary_large_image' : 'summary');
+    setTwitter('twitter:title', blog.title);
+    setTwitter('twitter:description', blog.metaInfo || 'TaxAi Blog');
+    if (blog.images && blog.images.length > 0) {
+      setTwitter('twitter:image', blog.images[0]);
+    }
   }, [blog]);
 
   if (loading) return <div className="text-center py-10">Loading blog...</div>;
@@ -97,7 +142,7 @@ const BlogDetailPage = () => {
             </div>
           </section>
 
-          <RouterLink to="/blogs" className="inline-block mt-4 text-primary underline hover:text-primary/80 text-sm">← Kembali ke Blog</RouterLink>
+          <RouterLink to="/blogs" className="inline-block mt-4 text-primary underline hover:text-primary/80 text-sm">← Back To Blog</RouterLink>
         </div>
       </main>
       <Footer />
