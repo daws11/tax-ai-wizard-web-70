@@ -8,7 +8,7 @@ const CTA = () => {
   const isRTL = i18n.language === 'ar';
 
   return (
-    <div className="section-padding bg-primary/80 backdrop-blur-sm" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="section-padding bg-primary backdrop-blur-sm" dir={isRTL ? 'rtl' : 'ltr'}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
           {t('ctaTitle')}

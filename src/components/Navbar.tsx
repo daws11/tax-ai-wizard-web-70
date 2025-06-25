@@ -85,9 +85,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0 cursor-pointer" onClick={() => handleNavigation('/')}>
-              <span className="text-4xl font-extrabold tracking-wider text-primary mb-4 px-6 py-2 rounded-lg inline-block bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm select-none">
-                TaxAI
-              </span>
+              <img
+                src="/lovable-uploads/logo%20circle.png"
+                alt="TaxAI Logo"
+                className="h-14 w-auto sm:h-11 md:h-14 lg:h-17 mb-4 px-6 py-2"
+              />
             </div>
           </div>
           <div className="hidden md:block">

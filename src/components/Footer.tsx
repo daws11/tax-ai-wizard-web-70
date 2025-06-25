@@ -32,12 +32,12 @@ const Footer = () => {
             <Link to="/" aria-label="Homepage">
               <img
                 className="h-8 w-auto mb-4"
-                src="/lovable-uploads/logo-new.png"
+                src="/lovable-uploads/logo%20circle.png"
                 alt="TaxAI Logo"
               />
             </Link>
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-left max-w-xs">
-              {t('Empowering your tax journey with AI.')} {/* Optional tagline */}
+              {t('AI Powered Tax Solutions')} {/* Optional tagline */}
             </p>
           </div>
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
