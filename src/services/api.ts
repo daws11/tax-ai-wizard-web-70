@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+import { config } from '@/config/env';
+
+const API_BASE_URL = config.API_URL;
 
 export interface User {
   id: string;
