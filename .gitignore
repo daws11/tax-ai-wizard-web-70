@@ -23,3 +23,9 @@ local.env
 *.njsproj
 *.sln
 *.sw?
+
+#backend
+@/backend
+backend/pnpm-lock.yaml
+backend/server.js
+backend/middleware/validation.js
