@@ -57,6 +57,30 @@ const FAQ = () => {
       question: t('faqQuestion11'),
       answer: t('faqAnswer11'),
     },
+    {
+      question: t('faqQuestion12'),
+      answer: t('faqAnswer12'),
+    },
+    {
+      question: t('faqQuestion13'),
+      answer: t('faqAnswer13'),
+    },
+    {
+      question: t('faqQuestion14'),
+      answer: t('faqAnswer14'),
+    },
+    {
+      question: t('faqQuestion15'),
+      answer: t('faqAnswer15'),
+    },
+    {
+      question: t('faqQuestion16'),
+      answer: t('faqAnswer16'),
+    },
+    {
+      question: t('faqQuestion17'),
+      answer: t('faqAnswer17'),
+    },
   ];
 
   return (

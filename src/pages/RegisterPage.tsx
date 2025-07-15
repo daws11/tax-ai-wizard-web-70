@@ -66,14 +66,14 @@ export default function RegisterPage() {
       } catch (error) {
         console.error('Failed to load plans:', error);
         toast({
-          title: "Error",
-          description: "Failed to load subscription plans",
+          title: t('register.errorTitle'),
+          description: t('register.errorLoadPlans'),
           variant: "destructive",
         });
       }
     };
     loadPlans();
-  }, [toast]);
+  }, [toast, t]);
 
   const handleInputChange = (field: keyof FormData, value: string) => {
     setFormData(prev => ({
@@ -86,8 +86,8 @@ export default function RegisterPage() {
     e.preventDefault();
     if (!acknowledged) {
       toast({
-        title: "Warning",
-        description: "You must check the acknowledgement box before continuing.",
+        title: t('register.warningTitle'),
+        description: t('register.acknowledgeRequired'),
         variant: "destructive",
       });
       return;
@@ -96,8 +96,8 @@ export default function RegisterPage() {
     // Validate form
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Validation Error",
-        description: "Passwords do not match",
+        title: t('register.validationTitle'),
+        description: t('register.passwordsNoMatch'),
         variant: "destructive",
       });
       return;
@@ -105,8 +105,8 @@ export default function RegisterPage() {
 
     if (formData.password.length < 6) {
       toast({
-        title: "Validation Error",
-        description: "Password must be at least 6 characters long",
+        title: t('register.validationTitle'),
+        description: t('register.passwordTooShort'),
         variant: "destructive",
       });
       return;
@@ -143,8 +143,8 @@ export default function RegisterPage() {
       console.error('Registration error:', error);
       const errorMessage = error instanceof Error ? error.message : "Failed to create account";
       toast({
-        title: "Registration Failed",
-        description: errorMessage,
+        title: t('register.failedTitle'),
+        description: t('register.failedCreateAccount', { error: errorMessage }),
         variant: "destructive",
       });
     } finally {
@@ -155,16 +155,16 @@ export default function RegisterPage() {
   const validateRegistrationData = () => {
     if (!formData.firstName || !formData.lastName) {
       toast({
-        title: "Validation Error",
-        description: "First and last name are required.",
+        title: t('register.validationTitle'),
+        description: t('register.nameRequired'),
         variant: "destructive",
       });
       return false;
     }
     if (!formData.role || formData.role.length < 2) {
       toast({
-        title: "Validation Error",
-        description: "Role must be at least 2 characters.",
+        title: t('register.validationTitle'),
+        description: t('register.roleTooShort'),
         variant: "destructive",
       });
       return false;
@@ -172,16 +172,16 @@ export default function RegisterPage() {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/;
     if (!formData.password || formData.password.length < 6) {
       toast({
-        title: "Validation Error",
-        description: "Password must be at least 6 characters long.",
+        title: t('register.validationTitle'),
+        description: t('register.passwordTooShort'),
         variant: "destructive",
       });
       return false;
     }
     if (!passwordRegex.test(formData.password)) {
       toast({
-        title: "Validation Error",
-        description: "Password must contain uppercase, lowercase, and a number.",
+        title: t('register.validationTitle'),
+        description: t('register.passwordWeak'),
         variant: "destructive",
       });
       return false;
@@ -189,8 +189,8 @@ export default function RegisterPage() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       toast({
-        title: "Validation Error",
-        description: "Please provide a valid email address.",
+        title: t('register.validationTitle'),
+        description: t('register.emailInvalid'),
         variant: "destructive",
       });
       return false;
@@ -482,7 +482,7 @@ export default function RegisterPage() {
                       </Button>
                       {!acknowledged && (
                         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1.5 text-sm text-white bg-gray-800 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                          Please check the acknowledgement box to continue
+                          {t('register.acknowledgeText')}
                           <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45 -mt-1"></div>
                         </div>
                       )}
@@ -499,7 +499,7 @@ export default function RegisterPage() {
                         disabled={loading}
                       />
                       <span className="text-gray-700 dark:text-gray-300">
-                        I acknowledge that Tax-AI provides AI-generated insights and does not offer certified tax or legal advice
+                        {t('register.acknowledgeText')}
                       </span>
                     </label>
                   </div>
@@ -513,7 +513,7 @@ export default function RegisterPage() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Login
+                        {t('register.loginLink', 'Login')}
                       </a>
                     </span>
                   </div>
@@ -528,12 +528,12 @@ export default function RegisterPage() {
       <Dialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Account Created Successfully!</DialogTitle>
+            <DialogTitle>{t('register.successTitle')}</DialogTitle>
             <DialogDescription>
-              Your account has been created. Please login to the dashboard using the email and password you registered.<br/>
-              <b>Email:</b> {successDialogInfo?.email}<br/>
-              <b>Selected Plan:</b> {successDialogInfo?.planName}<br/>
-              <span className="block mt-2 text-xs text-gray-500">If you do not receive a confirmation email, please check your spam folder or contact support.</span>
+              {t('register.successDescription')}<br/>
+              <b>{t('register.successEmail')}:</b> {successDialogInfo?.email}<br/>
+              <b>{t('register.successPlan')}:</b> {successDialogInfo?.planName}<br/>
+              <span className="block mt-2 text-xs text-gray-500">{t('register.successNote')}</span>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -543,7 +543,7 @@ export default function RegisterPage() {
               }}
               className="w-full"
             >
-              Continue to Dashboard
+              {t('register.successContinue')}
             </Button>
           </DialogFooter>
         </DialogContent>

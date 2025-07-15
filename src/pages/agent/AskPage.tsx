@@ -98,10 +98,10 @@ const AskPage = () => {
               <MessageSquare className="w-16 h-16 text-blue-600" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              ATTO Chat Agent
+              {t('askPage.title')}
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Ask any tax-related question and get accurate, AI-powered answers instantly.
+              {t('askPage.subtitle')}
             </p>
           </div>
 
@@ -120,7 +120,7 @@ const AskPage = () => {
               onClick={() => navigate('/register')}
               className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
-              Get Started!
+              {t('askPage.getStarted')}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 ml-2"
@@ -144,10 +144,10 @@ const AskPage = () => {
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-                  {feature.title}
+                  {t(`askPage.feature${index+1}Title`)}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
+                  {t(`askPage.feature${index+1}Desc`)}
                 </p>
               </div>
             ))}
@@ -156,7 +156,7 @@ const AskPage = () => {
           {/* Chat Interface */}
           <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16">
             <h2 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-6">
-              Ask ATTO Anything About Taxes
+              {t('askPage.askAnything')}
             </h2>
             
             <div className="mb-6">
@@ -170,7 +170,7 @@ const AskPage = () => {
                 ) : (
                   <div className="space-y-4">
                     <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                      Type your tax-related question below to get started.
+                      {t('askPage.typePrompt')}
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                       {exampleQuestions.map((question, i) => (
@@ -179,7 +179,7 @@ const AskPage = () => {
                           onClick={() => setMessage(question)}
                           className="text-left p-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm"
                         >
-                          {question}
+                          {t(`askPage.example${i+1}`)}
                         </button>
                       ))}
                     </div>
@@ -192,7 +192,7 @@ const AskPage = () => {
                   type="text"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Ask me anything about taxes..."
+                  placeholder={t('askPage.inputPlaceholder')}
                   className="flex-1 p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   disabled={isTyping}
                 />

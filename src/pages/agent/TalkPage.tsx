@@ -110,10 +110,10 @@ const TalkPage = () => {
               <Headphones className="w-16 h-16 text-blue-600" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              Yosr Voice Agent
+              {t('talkPage.title')}
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Have natural conversations with our AI tax expert. Get instant answers to all your tax questions.
+              {t('talkPage.subtitle')}
             </p>
           </div>
 
@@ -130,7 +130,7 @@ const TalkPage = () => {
               onClick={() => navigate('/register')}
               className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
-              Get Started!
+              {t('talkPage.getStarted')}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 ml-2"
@@ -154,10 +154,10 @@ const TalkPage = () => {
                   {feature.icon}
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-                  {feature.title}
+                  {t(`talkPage.feature${index+1}Title`)}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  {feature.description}
+                  {t(`talkPage.feature${index+1}Desc`)}
                 </p>
               </div>
             ))}
@@ -166,7 +166,7 @@ const TalkPage = () => {
           {/* Talk Section */}
           <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 mb-16">
             <h2 className="text-2xl font-bold text-center text-blue-600 dark:text-blue-400 mb-6">
-              Talk to Yosr Voice Agent
+              {t('talkPage.talkToYosr')}
             </h2>
             
             <div className="flex flex-col items-center justify-center py-8">
@@ -181,10 +181,10 @@ const TalkPage = () => {
               </div>
               
               <p className="text-lg text-center mb-2 text-gray-800 dark:text-gray-200">
-                {isListening ? 'Listening...' : 'Ready to help with your tax questions'}
+                {isListening ? t('talkPage.listening') : t('talkPage.ready')}
               </p>
               <p className="text-gray-500 dark:text-gray-400 text-center mb-6">
-                {isListening ? 'Speak now...' : 'Click the button below to start talking with Yosr'}
+                {isListening ? t('talkPage.speakNow') : t('talkPage.clickToStart')}
               </p>
               
               <Button 
@@ -192,7 +192,7 @@ const TalkPage = () => {
                 className="flex items-center gap-2 px-8 py-6 text-lg rounded-full bg-blue-600 hover:bg-blue-700"
               >
                 <Mic className="w-5 h-5" />
-                Start Voice Session
+                {t('talkPage.startSession')}
               </Button>
             </div>
           </div>
@@ -210,10 +210,10 @@ const TalkPage = () => {
                     {step.number}
                   </div>
                   <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-                    {step.title}
+                    {t(`talkPage.step${step.number}Title`)}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    {step.description}
+                    {t(`talkPage.step${step.number}Desc`)}
                   </p>
                 </div>
               ))}

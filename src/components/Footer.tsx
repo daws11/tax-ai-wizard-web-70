@@ -11,7 +11,7 @@ const Footer = () => {
       { name: t('contact'), href: '#' },
     ],
     resources: [
-      { name: 'Blog', href: '/blogs' },
+      { name: t('blog'), href: '/blogs' },
       { name: t('help'), href: '#' },
     ],
     legal: [
@@ -37,7 +37,7 @@ const Footer = () => {
               />
             </Link>
             <p className="text-xs text-gray-500 dark:text-gray-400 text-center md:text-left max-w-xs">
-              {t('AI Powered Tax Solutions')} {/* Optional tagline */}
+              {t('heroTitle')} {/* Optional tagline */}
             </p>
           </div>
           <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -71,7 +71,7 @@ const Footer = () => {
             </div>
             <div>
               <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white mb-2">
-                {t('Legal')}
+                {t('legal')}
               </h3>
               <ul role="list" className="space-y-3">
                 {navigation.legal.map((item) => (
@@ -87,7 +87,7 @@ const Footer = () => {
         </div>
         <div className="mt-10 border-t border-gray-200 dark:border-gray-700 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            &copy; {new Date().getFullYear()}  {t('All rights reserved.')}
+            &copy; {new Date().getFullYear()}  {t('copyright')}
           </p>
           <div className="flex space-x-4 mt-2 sm:mt-0">
             {/* Social media or additional links can be added here */}
