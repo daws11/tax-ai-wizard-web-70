@@ -35,7 +35,7 @@ const Pricing = () => {
       description: t('trialPlanDesc', 'Try all features for 14 days'),
       features: [
         { text: t('oneUser', '1 user') },
-        { text: t('trialMessages', 'Up to 30 messages') },
+        { text: t( 'Up to 10 messages') },
         { text: t('uaeTaxCoverageFull', 'Coverage of UAE VAT, Corporate Tax, and Excise regulations') },
         { text: t('bilingualSupportFull', 'Answers in both English and Arabic') },
         { text: t('standardSupport', 'Standard support') },

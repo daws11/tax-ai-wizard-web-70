@@ -503,6 +503,20 @@ export default function RegisterPage() {
                       </span>
                     </label>
                   </div>
+                  {/* Login navigation for existing users */}
+                  <div className="mt-6 text-center">
+                    <span className="text-gray-700 dark:text-gray-300">
+                      Already have an account?{' '}
+                      <a
+                        href="https://dashboard.taxai.ae/"
+                        className="text-blue-600 hover:underline font-semibold"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Login
+                      </a>
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -525,7 +539,7 @@ export default function RegisterPage() {
           <DialogFooter>
             <Button
               onClick={() => {
-                window.location.href = 'https://www.dashboard.taxai.ae/';
+                window.location.href = 'https://dashboard.taxai.ae/';
               }}
               className="w-full"
             >
