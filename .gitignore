@@ -29,3 +29,5 @@ local.env
 backend/pnpm-lock.yaml
 backend/server.js
 backend/middleware/validation.js
+.env.development
+.env.production

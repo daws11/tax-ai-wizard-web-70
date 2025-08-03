@@ -5,10 +5,10 @@
   "type": "module",
   "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
     "dev:backend": "cd backend && pnpm run dev",
     "dev:full": "concurrently \"pnpm run dev\" \"pnpm run dev:backend\"",
-    "build": "vite build",
+    "build": "vite build --mode production",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",

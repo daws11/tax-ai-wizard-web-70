@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
-import { Button } from '../components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useToast } from '../components/ui/use-toast';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import apiService from '../services/api';
+import { config } from '@/config/env';
 
 export default function EmailVerificationPage() {
   const [searchParams] = useSearchParams();
@@ -21,13 +22,13 @@ export default function EmailVerificationPage() {
 
         if (!token) {
           setStatus('error');
-          setMessage('Invalid verification link. Please check your email and try again.');
+          setMessage('No verification token found. Please check your email and try again.');
           return;
         }
 
         // Verify the token with backend
         try {
-          const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/verify-email`, {
+          const response = await fetch(`${config.API_URL}/auth/verify-email`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
