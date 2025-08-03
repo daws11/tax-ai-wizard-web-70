@@ -71,7 +71,7 @@ const AskPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/register');
+          navigate('/registration');
   };
 
   return (
@@ -117,7 +117,7 @@ const AskPage = () => {
           </div>
           <div className="flex justify-center mb-16">
             <Button 
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/registration')}
               className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
               {t('askPage.getStarted')}

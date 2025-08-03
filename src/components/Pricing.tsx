@@ -184,7 +184,7 @@ const Pricing = () => {
                   <Button 
                     className="w-full bg-primary hover:bg-primary/90 text-white text-base py-2.5" 
                     size="lg"
-                    onClick={() => navigate('/register')}
+                    onClick={() => navigate('/registration')}
                   >
                     {plan.buttonText}
                   </Button>

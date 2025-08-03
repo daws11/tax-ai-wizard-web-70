@@ -14,7 +14,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Disclaimer from "@/pages/Disclaimer";
 import AskPage from "./pages/agent/AskPage";
 import TalkPage from "./pages/agent/TalkPage";
-import RegisterPage from "./pages/RegisterPage";
+import RegistrationFlow from "./pages/RegistrationFlow";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 
 const queryClient = new QueryClient();
 
@@ -38,7 +39,8 @@ const App = () => (
                   <Route path="/agent/talk" element={<TalkPage />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/disclaimer" element={<Disclaimer />} />
-                  <Route path="/register" element={<RegisterPage />} />
+                  <Route path="/registration" element={<RegistrationFlow />} />
+                  <Route path="/verify-email" element={<EmailVerificationPage />} />
                   <Route path="/blogs" element={<BlogListPage />} />
                   <Route path="/blogs/:slug" element={<BlogDetailPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -113,7 +113,15 @@ class ApiService {
       
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        
+        // Create error object with response data
+        const error = new Error(errorData.message || `HTTP error! status: ${response.status}`) as Error & { response: { status: number; data: unknown } };
+        error.response = {
+          status: response.status,
+          data: errorData
+        };
+        
+        throw error;
       }
 
       return await response.json();
@@ -162,6 +170,36 @@ class ApiService {
     return this.request<{ message: string; subscription: Subscription }>('/payment/confirm-payment', {
       method: 'POST',
       body: JSON.stringify({ paymentIntentId, subscriptionType }),
+    });
+  }
+
+  // Select plan and send verification email
+  async selectPlan(subscriptionType: string): Promise<{ message: string; user: User; requiresEmailVerification: boolean }> {
+    return this.request<{ message: string; user: User; requiresEmailVerification: boolean }>('/auth/select-plan', {
+      method: 'POST',
+      body: JSON.stringify({ subscriptionType }),
+    });
+  }
+
+  // Update user after email verification (for new flow)
+  async updateUserAfterVerification(data: {
+    firstName: string;
+    lastName: string;
+    role: string;
+    password: string;
+    email: string;
+  }): Promise<{ message: string; user: User; token: string }> {
+    return this.request<{ message: string; user: User; token: string }>('/auth/update-user-after-verification', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // Update subscription
+  async updateSubscription(subscriptionType: string): Promise<{ message: string; user: User; requiresPayment: boolean }> {
+    return this.request<{ message: string; user: User; requiresPayment: boolean }>('/auth/update-subscription', {
+      method: 'POST',
+      body: JSON.stringify({ subscriptionType }),
     });
   }
 

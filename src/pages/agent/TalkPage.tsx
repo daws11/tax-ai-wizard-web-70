@@ -64,7 +64,7 @@ const TalkPage = () => {
   ];
 
   const startListening = () => {
-    navigate('/register');
+          navigate('/registration');
   };
 
   // Custom particles options for better visibility
@@ -127,7 +127,7 @@ const TalkPage = () => {
           </div>
           <div className="flex justify-center mb-16">
             <Button 
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/registration')}
               className="px-8 py-6 text-lg font-medium rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
               {t('talkPage.getStarted')}

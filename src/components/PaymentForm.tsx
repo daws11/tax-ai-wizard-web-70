@@ -142,11 +142,25 @@ export default function PaymentForm({ selectedPlan, onPaymentSuccess, onBack }: 
         
         onPaymentSuccess();
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Payment error:', error);
+      
+      // Handle email verification error
+      const errorObj = error as { response?: { status?: number; data?: { requiresEmailVerification?: boolean } }; message?: string };
+      if (errorObj?.response?.status === 403 && errorObj?.response?.data?.requiresEmailVerification) {
+        toast({
+          title: "Email Verification Required",
+          description: "Please verify your email before proceeding with payment.",
+          variant: "destructive",
+        });
+        // Redirect to email verification page
+        window.location.href = '/email-verification-pending';
+        return;
+      }
+      
       toast({
         title: "Payment Error",
-        description: "An error occurred during payment. Please try again.",
+        description: errorObj?.message || "An error occurred during payment. Please try again.",
         variant: "destructive",
       });
     } finally {
