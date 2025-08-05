@@ -59,7 +59,7 @@ export default function PlanSelectionStep({
               <CreditCard className="w-12 h-12 text-blue-600" />
             </div>
             <CardTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-              {t('loadingPlans', 'Loading Plans...')}
+              {t('register.loadingPlans')}
             </CardTitle>
           </CardHeader>
         </Card>
@@ -71,10 +71,10 @@ export default function PlanSelectionStep({
     <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div className={`text-center ${isRTL ? 'text-right' : 'text-left'}`}>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl mb-3 sm:mb-4">
-          {t('chooseYourPlan', 'Choose Your Plan')}
+          {t('register.chooseYourPlan')}
         </h2>
         <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 mx-auto leading-relaxed px-2">
-          {t('selectPlanDescription', 'Select the plan that best fits your needs.')}
+          {t('register.selectPlanDescription')}
         </p>
       </div>
 
@@ -92,7 +92,7 @@ export default function PlanSelectionStep({
               <CardHeader className="pb-0 px-6 pt-6">
                 {(plan as ExtendedPlan).mostPopular && (
                   <Badge variant="secondary" className={`w-fit mb-4 text-sm ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}>
-                    {t('mostPopular', 'Most Popular')}
+                    {t('mostPopular')}
                   </Badge>
                 )}
                 <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
@@ -108,7 +108,7 @@ export default function PlanSelectionStep({
                     </span>
                   </div>
                   <p className="text-sm text-gray-500 dark:text-gray-400 min-h-[60px] leading-relaxed">
-                    {plan.description || t('planDescription', 'Comprehensive tax solution for your needs.')}
+                    {plan.description || t('register.selectPlanDescription')}
                   </p>
                 </div>
               </CardHeader>
@@ -142,8 +142,8 @@ export default function PlanSelectionStep({
                   onClick={() => handlePlanSelect(plan)}
                 >
                   {selectedPlan?.id === plan.id 
-                    ? t('selected', 'Selected') 
-                    : t('selectPlan', 'Select Plan')
+                    ? t('register.createAccount') 
+                    : t('register.createAccount')
                   }
                 </Button>
               </CardFooter>

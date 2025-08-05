@@ -5,6 +5,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { useToast } from '../ui/use-toast';
 import { User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface PersonalInfoStepProps {
   firstName: string;
@@ -28,14 +29,15 @@ export default function PersonalInfoStep({
   onSubmit
 }: PersonalInfoStepProps) {
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (password !== confirmPassword) {
       toast({
-        title: "Passwords Don't Match",
-        description: "Please make sure your passwords match.",
+        title: t('register.passwordsDontMatchTitle'),
+        description: t('register.passwordsDontMatchDescription'),
         variant: "destructive",
       });
       return;
@@ -43,8 +45,8 @@ export default function PersonalInfoStep({
 
     if (password.length < 6) {
       toast({
-        title: "Password Too Short",
-        description: "Password must be at least 6 characters long.",
+        title: t('register.passwordTooShortTitle'),
+        description: t('register.passwordTooShortDescription'),
         variant: "destructive",
       });
       return;
@@ -59,16 +61,16 @@ export default function PersonalInfoStep({
         <div className="flex justify-center mb-4">
           <User className="w-12 h-12 text-blue-600" />
         </div>
-        <CardTitle className="text-2xl font-bold">Complete Your Profile</CardTitle>
+        <CardTitle className="text-2xl font-bold">{t('register.personalInfoTitle')}</CardTitle>
         <p className="text-gray-600 dark:text-gray-300">
-          Please provide your personal information to complete registration.
+          {t('register.personalInfoDescription')}
         </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">{t('register.firstName')}</Label>
               <Input
                 id="firstName"
                 value={firstName}
@@ -78,7 +80,7 @@ export default function PersonalInfoStep({
               />
             </div>
             <div>
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">{t('register.lastName')}</Label>
               <Input
                 id="lastName"
                 value={lastName}
@@ -89,18 +91,18 @@ export default function PersonalInfoStep({
             </div>
           </div>
           <div>
-            <Label htmlFor="role">Job Title</Label>
+            <Label htmlFor="role">{t('register.jobTitleLabel')}</Label>
             <Input
               id="role"
               value={role}
               onChange={(e) => onFieldChange('role', e.target.value)}
-              placeholder="e.g., Developer, Manager, Analyst"
+              placeholder={t('register.jobTitlePlaceholder')}
               required
               className="mt-2"
             />
           </div>
           <div>
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('register.password')}</Label>
             <Input
               id="password"
               type="password"
@@ -111,7 +113,7 @@ export default function PersonalInfoStep({
             />
           </div>
           <div>
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Label htmlFor="confirmPassword">{t('register.confirmPassword')}</Label>
             <Input
               id="confirmPassword"
               type="password"
@@ -122,7 +124,7 @@ export default function PersonalInfoStep({
             />
           </div>
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Creating Account...' : 'Continue'}
+            {loading ? t('register.checkingButton') : t('register.createAccount')}
           </Button>
         </form>
       </CardContent>

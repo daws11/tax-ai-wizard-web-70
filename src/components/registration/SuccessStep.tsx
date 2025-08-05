@@ -5,6 +5,7 @@ import { CheckCircle } from 'lucide-react';
 import { Plan } from '../../services/api';
 import apiService from '../../services/api';
 import { config } from '../../config/env';
+import { useTranslation } from 'react-i18next';
 
 interface SuccessStepProps {
   email: string;
@@ -19,6 +20,7 @@ export default function SuccessStep({
   lastName,
   selectedPlan
 }: SuccessStepProps) {
+  const { t } = useTranslation();
   // Send welcome email when component mounts
   useEffect(() => {
     const sendWelcomeEmail = async () => {
@@ -87,24 +89,24 @@ export default function SuccessStep({
         <div className="flex justify-center mb-4">
           <CheckCircle className="w-12 h-12 text-green-600" />
         </div>
-        <CardTitle className="text-2xl font-bold">Account Activated!</CardTitle>
+        <CardTitle className="text-2xl font-bold">{t('register.accountActivatedTitle')}</CardTitle>
         <p className="text-gray-600 dark:text-gray-300">
-          Your account has been successfully created and activated.
+          {t('register.accountActivatedDescription')}
         </p>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-            <h4 className="font-semibold mb-2">Account Details:</h4>
+            <h4 className="font-semibold mb-2">{t('register.accountDetailsTitle')}</h4>
             <div className="space-y-2 text-sm">
-              <div><strong>Email:</strong> {email}</div>
-              <div><strong>Username:</strong> {firstName} {lastName}</div>
-              <div><strong>Plan:</strong> {selectedPlan?.name || 'Trial'}</div>
-              <div><strong>Expires:</strong> {getEndDate()}</div>
+              <div><strong>{t('register.successEmail')}:</strong> {email}</div>
+              <div><strong>{t('register.firstName')} {t('register.lastName')}:</strong> {firstName} {lastName}</div>
+              <div><strong>{t('register.successPlan')}:</strong> {selectedPlan?.name || 'Trial'}</div>
+              <div><strong>{t('register.endDateLabel')}</strong> {getEndDate()}</div>
             </div>
           </div>
           <Button onClick={handleContinueToDashboard} className="w-full">
-            Continue to Dashboard
+            {t('register.successContinue')}
           </Button>
         </div>
       </CardContent>

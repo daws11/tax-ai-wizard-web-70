@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { useToast } from '../ui/use-toast';
 import { Mail } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface EmailVerificationStepProps {
   email: string;
@@ -19,6 +20,7 @@ export default function EmailVerificationStep({
   const [cooldown, setCooldown] = useState(0);
   const [initialEmailSent, setInitialEmailSent] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   // Cooldown timer effect
   useEffect(() => {
@@ -38,8 +40,8 @@ export default function EmailVerificationStep({
     if (isManualResend) {
       if (cooldown > 0) {
         toast({
-          title: "Please Wait",
-          description: `You can resend verification email in ${cooldown} seconds.`,
+          title: t('register.pleaseWaitTitle'),
+          description: t('register.pleaseWaitDescription', { seconds: cooldown }),
           variant: "destructive",
         });
         return;
@@ -58,8 +60,8 @@ export default function EmailVerificationStep({
           });
         } else if (verificationSent && !initialEmailSent) {
           toast({
-            title: "Email Already Sent",
-            description: "Verification email has already been sent. Please check your inbox.",
+            title: t('register.emailAlreadySentTitle'),
+            description: t('register.emailAlreadySentDescription'),
             variant: "destructive",
           });
         }
@@ -92,8 +94,8 @@ export default function EmailVerificationStep({
         }
         
         toast({
-          title: "Verification Email Sent",
-          description: "Please check your email and click the verification link.",
+          title: t('register.verificationEmailSentTitle'),
+          description: t('register.verificationEmailSentDescription'),
         });
       } else if (response.status === 429) {
         // Handle cooldown error
@@ -213,16 +215,16 @@ export default function EmailVerificationStep({
         <div className="flex justify-center mb-4">
           <Mail className="w-12 h-12 text-blue-600" />
         </div>
-        <CardTitle className="text-2xl font-bold">Verify Your Email</CardTitle>
+        <CardTitle className="text-2xl font-bold">{t('register.emailVerificationTitle')}</CardTitle>
         <p className="text-gray-600 dark:text-gray-300">
-          We've sent a verification link to <strong>{email}</strong>
+          {t('register.emailVerificationDescription')} <strong>{email}</strong>
         </p>
       </CardHeader>
       <CardContent className="text-center">
         <div className="space-y-4">
           <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
             <p className="text-sm text-blue-800 dark:text-blue-200">
-              Please check your email and click the verification link to continue.
+              {t('register.emailVerificationInstruction')}
             </p>
           </div>
           <Button
@@ -233,8 +235,8 @@ export default function EmailVerificationStep({
             variant="outline"
             disabled={loading || cooldown > 0}
           >
-            {loading ? 'Sending...' : 
-             cooldown > 0 ? `Resend in ${cooldown}s` : 'Resend Verification Email'}
+            {loading ? t('register.sendingButton') : 
+             cooldown > 0 ? t('register.resendInSeconds', { seconds: cooldown }) : t('register.resendVerificationEmail')}
           </Button>
         </div>
       </CardContent>
