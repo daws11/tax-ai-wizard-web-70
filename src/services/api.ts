@@ -207,6 +207,13 @@ class ApiService {
   async getPaymentHistory(): Promise<{ paymentHistory: PaymentHistory }> {
     return this.request<{ paymentHistory: PaymentHistory }>('/payment/history');
   }
+
+  async sendWelcomeEmail(email: string, name: string): Promise<{ message: string }> {
+    return this.request<{ message: string }>('/auth/send-welcome-email', {
+      method: 'POST',
+      body: JSON.stringify({ email, name }),
+    });
+  }
 }
 
 export const apiService = new ApiService();

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { CheckCircle } from 'lucide-react';
 import { Plan } from '../../services/api';
+import apiService from '../../services/api';
+import { config } from '../../config/env';
 
 interface SuccessStepProps {
   email: string;
@@ -17,6 +19,26 @@ export default function SuccessStep({
   lastName,
   selectedPlan
 }: SuccessStepProps) {
+  // Send welcome email when component mounts
+  useEffect(() => {
+    const sendWelcomeEmail = async () => {
+      try {
+        const fullName = `${firstName} ${lastName}`;
+        console.log('📧 Sending welcome email to:', email, 'for user:', fullName);
+        await apiService.sendWelcomeEmail(email, fullName);
+        console.log('✅ Welcome email sent successfully');
+      } catch (error) {
+        console.error('❌ Failed to send welcome email:', error);
+        // Don't show error to user, just log it
+      }
+    };
+
+    // Only send if we have valid email and name
+    if (email && firstName && lastName) {
+      sendWelcomeEmail();
+    }
+  }, [email, firstName, lastName]);
+
   const handleContinueToDashboard = () => {
     // Clear all registration data
     localStorage.removeItem('registrationFlowData');
@@ -24,8 +46,8 @@ export default function SuccessStep({
     localStorage.removeItem('emailVerificationToken');
     localStorage.removeItem('emailVerified');
     
-    // Redirect to dashboard
-    window.location.href = '/dashboard';
+    // Redirect to dashboard using the correct URL
+    window.location.href = config.DASHBOARD_URL;
   };
 
   const getEndDate = () => {
