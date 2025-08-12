@@ -254,6 +254,8 @@ export function useRegistrationFlow() {
 
   // Handle plan selection
   const handlePlanSelect = React.useCallback((plan: Plan) => {
+    console.log('📋 Plan selected:', plan);
+    
     setSelectedPlan(plan);
     
     // Save plan selection to localStorage
@@ -269,28 +271,57 @@ export function useRegistrationFlow() {
     
     if (plan.name.toLowerCase().includes('trial')) {
       // For trial plans, go directly to success
+      console.log('🎯 Trial plan selected, going to success step');
       goToStep('success');
     } else {
       // For paid plans, go to payment
+      console.log('💳 Paid plan selected, going to payment step');
       goToStep('payment');
     }
   }, [setSelectedPlan, goToStep, state.data, state.emailVerified, state.userId, state.authToken]);
 
   // Handle payment success
-  const handlePaymentSuccess = React.useCallback(() => {
-    // Save final state to localStorage
-    const updatedState = {
-      data: state.data,
-      currentStep: 'success',
-      emailVerified: state.emailVerified,
-      userId: state.userId,
-      authToken: state.authToken,
-      selectedPlan: state.selectedPlan
-    };
-    localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
+  const handlePaymentSuccess = React.useCallback(async (paymentData: any) => {
+    console.log('💳 Payment successful, finalizing registration');
     
-    goToStep('success');
-  }, [goToStep, state.data, state.emailVerified, state.userId, state.authToken, state.selectedPlan]);
+    try {
+      // Save final state to localStorage
+      const updatedState = {
+        data: state.data,
+        currentStep: 'success',
+        emailVerified: state.emailVerified,
+        userId: state.userId,
+        authToken: state.authToken,
+        selectedPlan: state.selectedPlan
+      };
+      localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
+      
+      // Ensure user data is complete before going to success
+      if (state.userId && state.authToken && state.selectedPlan) {
+        console.log('✅ All data complete, going to success step');
+        goToStep('success');
+      } else {
+        console.error('❌ Missing required data for success step:', {
+          userId: state.userId,
+          authToken: state.authToken,
+          selectedPlan: state.selectedPlan
+        });
+        // Try to recover or show error
+        toast({
+          title: "Registration Error",
+          description: "Some data is missing. Please try again or contact support.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('❌ Error in payment success handler:', error);
+      toast({
+        title: "Payment Error",
+        description: "Payment was successful but there was an error finalizing your registration. Please contact support.",
+        variant: "destructive",
+      });
+    }
+  }, [goToStep, state.data, state.emailVerified, state.userId, state.authToken, state.selectedPlan, toast]);
 
   return {
     state,

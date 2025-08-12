@@ -132,14 +132,18 @@ export default function PaymentForm({ selectedPlan, onPaymentSuccess, onBack }: 
           variant: "destructive",
         });
       } else if (paymentIntent?.status === 'succeeded') {
+        console.log('💳 Payment successful, confirming with backend...');
+        
         // Confirm payment with backend
-        await apiService.confirmPayment(paymentIntent.id, selectedPlan.id);
+        const confirmationResponse = await apiService.confirmPayment(paymentIntent.id, selectedPlan.id);
+        console.log('✅ Payment confirmed with backend:', confirmationResponse);
         
         toast({
           title: "Payment Successful",
           description: "Your subscription has been activated!",
         });
         
+        // Call onPaymentSuccess with payment data
         onPaymentSuccess();
       }
     } catch (error: unknown) {

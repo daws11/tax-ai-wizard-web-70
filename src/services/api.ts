@@ -214,6 +214,17 @@ class ApiService {
       body: JSON.stringify({ email, name }),
     });
   }
+
+  // Activate trial plan for new users
+  async activateTrialPlan(data: {
+    email: string;
+    planName: string;
+  }): Promise<{ message: string; subscription: any }> {
+    return this.request<{ message: string; subscription: any }>('/auth/activate-trial-plan', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
 }
 
 export const apiService = new ApiService();

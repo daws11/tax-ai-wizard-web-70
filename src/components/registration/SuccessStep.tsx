@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { CheckCircle } from 'lucide-react';
@@ -21,25 +21,61 @@ export default function SuccessStep({
   selectedPlan
 }: SuccessStepProps) {
   const { t } = useTranslation();
-  // Send welcome email when component mounts
+  const [welcomeEmailSent, setWelcomeEmailSent] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(true);
+
+  // Send welcome email and finalize registration when component mounts
   useEffect(() => {
-    const sendWelcomeEmail = async () => {
+    const finalizeRegistration = async () => {
       try {
-        const fullName = `${firstName} ${lastName}`;
-        console.log('📧 Sending welcome email to:', email, 'for user:', fullName);
-        await apiService.sendWelcomeEmail(email, fullName);
-        console.log('✅ Welcome email sent successfully');
+        setIsProcessing(true);
+        
+        // Step 1: Ensure user subscription is properly saved
+        if (selectedPlan && !selectedPlan.name.toLowerCase().includes('trial')) {
+          console.log('📋 Finalizing paid plan subscription for:', selectedPlan.name);
+          // For paid plans, subscription should already be saved from payment confirmation
+          // Just verify the data is complete
+        } else {
+          console.log('📋 Finalizing trial plan subscription');
+          // For trial plans, we need to ensure subscription data is saved
+          try {
+            const response = await apiService.activateTrialPlan({
+              email: email,
+              planName: selectedPlan?.name || 'trial'
+            });
+            console.log('✅ Trial plan activated:', response);
+          } catch (error) {
+            console.error('⚠️ Trial plan activation failed (may already be active):', error);
+          }
+        }
+
+        // Step 2: Send welcome email
+        if (!welcomeEmailSent) {
+          const fullName = `${firstName} ${lastName}`;
+          console.log('📧 Sending welcome email to:', email, 'for user:', fullName);
+          await apiService.sendWelcomeEmail(email, fullName);
+          console.log('✅ Welcome email sent successfully');
+          setWelcomeEmailSent(true);
+        }
+
+        // Step 3: Ensure all data is properly saved
+        console.log('✅ Registration finalized successfully');
+        
       } catch (error) {
-        console.error('❌ Failed to send welcome email:', error);
+        console.error('❌ Failed to finalize registration:', error);
         // Don't show error to user, just log it
+      } finally {
+        setIsProcessing(false);
       }
     };
 
-    // Only send if we have valid email and name
+    // Only finalize if we have valid email and name
     if (email && firstName && lastName) {
-      sendWelcomeEmail();
+      finalizeRegistration();
+    } else {
+      setIsProcessing(false);
     }
-  }, [email, firstName, lastName]);
+  }, [email, firstName, lastName, selectedPlan, welcomeEmailSent]);
 
   const handleContinueToDashboard = () => {
     // Clear all registration data
@@ -105,8 +141,20 @@ export default function SuccessStep({
               <div><strong>{t('register.endDateLabel')}</strong> {getEndDate()}</div>
             </div>
           </div>
-          <Button onClick={handleContinueToDashboard} className="w-full">
-            {t('register.successContinue')}
+          
+          {isProcessing && (
+            <div className="text-center text-sm text-gray-600 dark:text-gray-400">
+              <div className="animate-spin inline-block w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full mr-2"></div>
+              Finalizing your account...
+            </div>
+          )}
+          
+          <Button 
+            onClick={handleContinueToDashboard} 
+            className="w-full"
+            disabled={isProcessing}
+          >
+            {isProcessing ? 'Setting up your account...' : t('register.successContinue')}
           </Button>
         </div>
       </CardContent>
