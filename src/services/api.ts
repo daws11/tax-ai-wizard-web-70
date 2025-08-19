@@ -174,10 +174,10 @@ class ApiService {
   }
 
   // Select plan and send verification email
-  async selectPlan(subscriptionType: string): Promise<{ message: string; user: User; requiresEmailVerification: boolean }> {
-    return this.request<{ message: string; user: User; requiresEmailVerification: boolean }>('/auth/select-plan', {
+  async selectPlan(subscriptionType: string, email: string): Promise<{ message: string; user: User; requiresPayment: boolean }> {
+    return this.request<{ message: string; user: User; requiresPayment: boolean }>('/auth/select-plan', {
       method: 'POST',
-      body: JSON.stringify({ subscriptionType }),
+      body: JSON.stringify({ subscriptionType, email }),
     });
   }
 

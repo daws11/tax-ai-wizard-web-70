@@ -17,7 +17,7 @@ export default function EmailVerificationPage() {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const token = searchParams.get('token');
+    const token = searchParams.get('token');
         const email = searchParams.get('email');
 
         if (!token) {
@@ -29,20 +29,34 @@ export default function EmailVerificationPage() {
         // Verify the token with backend
         try {
           const response = await fetch(`${config.API_URL}/auth/verify-email`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
             body: JSON.stringify({ token, email }),
-          });
+      });
 
           if (response.ok) {
-            const data = await response.json();
+      const data = await response.json();
+
+            console.log('✅ Email verification successful:', data);
             
             // Store email and verification data in localStorage
             localStorage.setItem('registrationEmail', email || '');
             localStorage.setItem('emailVerificationToken', token);
             localStorage.setItem('emailVerified', 'true');
+            
+            // Store auth token if provided
+            if (data.token) {
+              localStorage.setItem('authToken', data.token);
+              console.log('🔑 Auth token stored:', data.token);
+            }
+            
+            // Store user ID if provided
+            if (data.userId) {
+              localStorage.setItem('userId', data.userId);
+              console.log('👤 User ID stored:', data.userId);
+            }
             
             setStatus('success');
             setMessage('Email verified successfully! Redirecting to complete your registration...');
@@ -51,12 +65,12 @@ export default function EmailVerificationPage() {
             setTimeout(() => {
               navigate('/registration');
             }, 2000);
-          } else {
+      } else {
             const errorData = await response.json();
             setStatus('error');
             setMessage(errorData.message || 'Verification failed. Please try again.');
-          }
-        } catch (error) {
+      }
+    } catch (error) {
           console.error('Backend verification error:', error);
           // Fallback: still redirect to registration if backend is down
           if (email) {
@@ -101,40 +115,40 @@ export default function EmailVerificationPage() {
             {status === 'loading' && <Loader2 className="w-12 h-12 text-blue-600 animate-spin" />}
             {status === 'success' && <CheckCircle className="w-12 h-12 text-green-600" />}
             {status === 'error' && <XCircle className="w-12 h-12 text-red-600" />}
-          </div>
+              </div>
           <CardTitle className="text-2xl font-bold">
             {status === 'loading' && 'Verifying Email...'}
             {status === 'success' && 'Email Verified!'}
             {status === 'error' && 'Verification Failed'}
-          </CardTitle>
-        </CardHeader>
+              </CardTitle>
+            </CardHeader>
         <CardContent className="text-center">
           <p className="text-gray-600 dark:text-gray-300 mb-6">
-            {message}
-          </p>
-          
+                    {message}
+                  </p>
+                  
           {status === 'error' && (
-            <div className="space-y-3">
+                  <div className="space-y-3">
               <Button onClick={handleRetry} className="w-full">
                 Try Again
-              </Button>
-              <Button 
+                    </Button>
+                    <Button
                 onClick={handleGoToRegistration} 
-                variant="outline" 
-                className="w-full"
-              >
+                      variant="outline"
+                      className="w-full"
+                    >
                 Go to Registration
-              </Button>
-            </div>
-          )}
-          
+                    </Button>
+                </div>
+              )}
+
           {status === 'success' && (
             <div className="text-sm text-gray-500 dark:text-gray-400">
               <p>Redirecting automatically...</p>
-            </div>
+              </div>
           )}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
     </div>
   );
 } 

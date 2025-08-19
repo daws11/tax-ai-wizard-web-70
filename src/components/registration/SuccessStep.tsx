@@ -30,6 +30,8 @@ export default function SuccessStep({
       try {
         setIsProcessing(true);
         
+        console.log('🚀 Finalizing registration for:', { email, firstName, lastName, selectedPlan });
+        
         // Step 1: Ensure user subscription is properly saved
         if (selectedPlan && !selectedPlan.name.toLowerCase().includes('trial')) {
           console.log('📋 Finalizing paid plan subscription for:', selectedPlan.name);
@@ -46,6 +48,7 @@ export default function SuccessStep({
             console.log('✅ Trial plan activated:', response);
           } catch (error) {
             console.error('⚠️ Trial plan activation failed (may already be active):', error);
+            // Don't fail the entire process if trial activation fails
           }
         }
 
@@ -58,7 +61,28 @@ export default function SuccessStep({
           setWelcomeEmailSent(true);
         }
 
-        // Step 3: Ensure all data is properly saved
+        // Step 3: Verify final user data
+        try {
+          // Get user profile to verify all data is saved
+          const userProfile = await apiService.getProfile();
+          console.log('✅ User profile verified:', userProfile);
+          
+          // Verify subscription data
+          if (userProfile.user.subscription) {
+            console.log('📋 Subscription details:', {
+              type: userProfile.user.subscription.type,
+              status: userProfile.user.subscription.status,
+              messageLimit: userProfile.user.subscription.messageLimit,
+              remainingMessages: userProfile.user.subscription.remainingMessages,
+              callSeconds: userProfile.user.subscription.callSeconds
+            });
+          }
+        } catch (error) {
+          console.error('⚠️ Profile verification failed:', error);
+          // Don't fail the entire process
+        }
+
+        // Step 4: Ensure all data is properly saved
         console.log('✅ Registration finalized successfully');
         
       } catch (error) {

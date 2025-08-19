@@ -54,6 +54,17 @@ export function useRegistrationFlow() {
   useEffect(() => {
     const savedData = localStorage.getItem('registrationFlowData');
     const registrationEmail = localStorage.getItem('registrationEmail');
+    const emailVerified = localStorage.getItem('emailVerified') === 'true';
+    const authToken = localStorage.getItem('authToken');
+    const userId = localStorage.getItem('userId');
+    
+    console.log('🔄 Loading registration data from localStorage:', {
+      hasSavedData: !!savedData,
+      registrationEmail,
+      emailVerified,
+      hasAuthToken: !!authToken,
+      userId
+    });
     
     if (savedData) {
       try {
@@ -62,9 +73,9 @@ export function useRegistrationFlow() {
           ...prev,
           data: { ...prev.data, ...parsed.data },
           currentStep: parsed.currentStep || 'email-input',
-          emailVerified: parsed.emailVerified || false,
-          userId: parsed.userId || null,
-          authToken: parsed.authToken || null,
+          emailVerified: parsed.emailVerified || emailVerified,
+          userId: parsed.userId || userId,
+          authToken: parsed.authToken || authToken,
           selectedPlan: parsed.selectedPlan || null
         }));
       } catch (error) {
@@ -74,18 +85,21 @@ export function useRegistrationFlow() {
     
     // If we have an email from verification page, use it and go to personal info
     if (registrationEmail) {
-      const emailVerified = localStorage.getItem('emailVerified') === 'true';
+      console.log('📧 Found registration email, setting up flow');
       
       setState(prev => ({
         ...prev,
         data: { ...prev.data, email: registrationEmail },
         currentStep: emailVerified ? 'personal-info' : 'email-verification',
-        emailVerified: emailVerified
+        emailVerified: emailVerified,
+        userId: userId || prev.userId,
+        authToken: authToken || prev.authToken
       }));
       
       // Clear the email from localStorage
       localStorage.removeItem('registrationEmail');
       localStorage.removeItem('emailVerified');
+      localStorage.removeItem('emailVerificationToken');
     }
   }, []);
 
@@ -209,6 +223,8 @@ export function useRegistrationFlow() {
 
     setLoading(true);
     try {
+      console.log('📝 Submitting personal info for email:', state.data.email);
+      
       const response = await apiService.updateUserAfterVerification({
         firstName: state.data.firstName,
         lastName: state.data.lastName,
@@ -217,15 +233,22 @@ export function useRegistrationFlow() {
         email: state.data.email
       });
 
+      console.log('✅ Personal info updated successfully:', response);
+
       // Save token to localStorage
       if (response.token) {
         localStorage.setItem('authToken', response.token);
+        console.log('🔑 New auth token stored:', response.token);
       }
 
+      // Update state with new user data
+      const newUserId = response.user.id;
+      const newAuthToken = response.token || localStorage.getItem('authToken');
+      
       setState(prev => ({
         ...prev,
-        userId: response.user.id,
-        authToken: response.token || localStorage.getItem('authToken')
+        userId: newUserId,
+        authToken: newAuthToken
       }));
 
       // Save updated state to localStorage
@@ -233,15 +256,18 @@ export function useRegistrationFlow() {
         data: state.data,
         currentStep: 'plan-selection',
         emailVerified: true,
-        userId: response.user.id,
-        authToken: response.token || localStorage.getItem('authToken'),
+        userId: newUserId,
+        authToken: newAuthToken,
         selectedPlan: state.selectedPlan
       };
       localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
+      
+      console.log('💾 Updated state saved to localStorage');
 
       goToStep('plan-selection');
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Failed to create account. Please try again.";
+      console.error('❌ Personal info submission failed:', error);
       toast({
         title: "Registration Failed",
         description: errorMessage,
@@ -250,41 +276,82 @@ export function useRegistrationFlow() {
     } finally {
       setLoading(false);
     }
-  }, [state.data.password, state.data.confirmPassword, state.data.firstName, state.data.lastName, state.data.role, setLoading, goToStep]);
+  }, [state.data.password, state.data.confirmPassword, state.data.firstName, state.data.lastName, state.data.role, state.data.email, state.selectedPlan, setLoading, goToStep, toast]);
 
   // Handle plan selection
-  const handlePlanSelect = React.useCallback((plan: Plan) => {
+  const handlePlanSelect = React.useCallback(async (plan: Plan) => {
     console.log('📋 Plan selected:', plan);
     
     setSelectedPlan(plan);
     
-    // Save plan selection to localStorage
-    const updatedState = {
-      data: state.data,
-      currentStep: plan.name.toLowerCase().includes('trial') ? 'success' : 'payment',
-      emailVerified: state.emailVerified,
-      userId: state.userId,
-      authToken: state.authToken,
-      selectedPlan: plan
-    };
-    localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
-    
-    if (plan.name.toLowerCase().includes('trial')) {
-      // For trial plans, go directly to success
-      console.log('🎯 Trial plan selected, going to success step');
-      goToStep('success');
-    } else {
-      // For paid plans, go to payment
-      console.log('💳 Paid plan selected, going to payment step');
-      goToStep('payment');
+    try {
+      setLoading(true);
+      
+      // Call backend to save plan selection
+      const planType = plan.name.toLowerCase().includes('trial') ? 'trial' : 
+                      plan.name.toLowerCase().includes('monthly') ? 'monthly' :
+                      plan.name.toLowerCase().includes('quarterly') ? 'quarterly' :
+                      plan.name.toLowerCase().includes('yearly') ? 'yearly' : 'trial';
+      
+      console.log('📋 Saving plan selection to backend:', planType);
+      
+      const response = await apiService.selectPlan(planType, state.data.email);
+      console.log('✅ Plan selection saved:', response);
+      
+      // Save plan selection to localStorage
+      const updatedState = {
+        data: state.data,
+        currentStep: plan.name.toLowerCase().includes('trial') ? 'success' : 'payment',
+        emailVerified: state.emailVerified,
+        userId: state.userId,
+        authToken: state.authToken,
+        selectedPlan: plan
+      };
+      localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
+      
+      if (plan.name.toLowerCase().includes('trial')) {
+        // For trial plans, go directly to success
+        console.log('🎯 Trial plan selected, going to success step');
+        goToStep('success');
+      } else {
+        // For paid plans, go to payment
+        console.log('💳 Paid plan selected, going to payment step');
+        goToStep('payment');
+      }
+    } catch (error) {
+      console.error('❌ Failed to save plan selection:', error);
+      toast({
+        title: "Plan Selection Failed",
+        description: "Failed to save your plan selection. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
-  }, [setSelectedPlan, goToStep, state.data, state.emailVerified, state.userId, state.authToken]);
+  }, [setSelectedPlan, goToStep, state.data, state.emailVerified, state.userId, state.authToken, toast, setLoading]);
 
   // Handle payment success
-  const handlePaymentSuccess = React.useCallback(async (paymentData: any) => {
+  const handlePaymentSuccess = React.useCallback(async (paymentData: { paymentIntentId: string; subscriptionType: string }) => {
     console.log('💳 Payment successful, finalizing registration');
+    console.log('📊 Payment data:', paymentData);
     
     try {
+      // Ensure we have all required data
+      if (!state.userId || !state.authToken || !state.selectedPlan) {
+        console.error('❌ Missing required data for success step:', {
+          userId: state.userId,
+          authToken: state.authToken,
+          selectedPlan: state.selectedPlan
+        });
+        
+        toast({
+          title: "Registration Error",
+          description: "Some data is missing. Please try again or contact support.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
       // Save final state to localStorage
       const updatedState = {
         data: state.data,
@@ -296,23 +363,13 @@ export function useRegistrationFlow() {
       };
       localStorage.setItem('registrationFlowData', JSON.stringify(updatedState));
       
-      // Ensure user data is complete before going to success
-      if (state.userId && state.authToken && state.selectedPlan) {
-        console.log('✅ All data complete, going to success step');
-        goToStep('success');
-      } else {
-        console.error('❌ Missing required data for success step:', {
-          userId: state.userId,
-          authToken: state.authToken,
-          selectedPlan: state.selectedPlan
-        });
-        // Try to recover or show error
-        toast({
-          title: "Registration Error",
-          description: "Some data is missing. Please try again or contact support.",
-          variant: "destructive",
-        });
-      }
+      console.log('✅ Final state saved to localStorage');
+      console.log('🎯 Going to success step with data:', {
+        userId: state.userId,
+        selectedPlan: state.selectedPlan?.name
+      });
+      
+      goToStep('success');
     } catch (error) {
       console.error('❌ Error in payment success handler:', error);
       toast({
