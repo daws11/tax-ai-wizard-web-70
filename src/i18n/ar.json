@@ -265,13 +265,12 @@
     "accountDetailsTitle": "تفاصيل الحساب:",
     "endDateLabel": "تاريخ الانتهاء:",
     "loadingPlans": "جاري تحميل الخطط...",
-    "agreementTitle": "الشروط والاتفاقيات",
-    "agreementDescription": "يرجى قراءة والموافقة على شروطنا قبل المتابعة",
-    "disclaimerAgreement": "لقد قرأت ووافقت على",
+    "termsNoticeTitle": "الشروط والأحكام",
+    "termsNoticeText": "بالتسجيل، فإنك تقر وتوافق على",
+    "termsNoticeAnd": "و",
+    "termsNoticeSuffix": ".",
     "disclaimerLink": "إخلاء المسؤولية",
-    "privacyAgreement": "لقد قرأت ووافقت على",
     "privacyLink": "سياسة الخصوصية",
-    "agreementRequired": "يجب الموافقة على جميع الشروط قبل المتابعة",
     "continueButton": "متابعة"
   },
   "askPage": {

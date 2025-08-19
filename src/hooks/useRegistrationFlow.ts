@@ -18,8 +18,6 @@ export interface RegistrationData {
   role: string;
   password: string;
   confirmPassword: string;
-  disclaimerAgreed: boolean;
-  privacyAgreed: boolean;
 }
 
 export interface RegistrationState {
@@ -41,9 +39,7 @@ export function useRegistrationFlow() {
       lastName: '',
       role: '',
       password: '',
-      confirmPassword: '',
-      disclaimerAgreed: false,
-      privacyAgreed: false
+      confirmPassword: ''
     },
     selectedPlan: null,
     emailVerified: false,
@@ -119,7 +115,7 @@ export function useRegistrationFlow() {
     }));
   }, [state.data, state.currentStep, state.emailVerified, state.userId, state.authToken, state.selectedPlan]);
 
-  const updateData = React.useCallback((field: keyof RegistrationData, value: string | boolean) => {
+  const updateData = React.useCallback((field: keyof RegistrationData, value: string) => {
     setState(prev => ({
       ...prev,
       data: { ...prev.data, [field]: value }
@@ -225,14 +221,7 @@ export function useRegistrationFlow() {
       return;
     }
 
-    if (!state.data.disclaimerAgreed || !state.data.privacyAgreed) {
-      toast({
-        title: "Agreement Required",
-        description: "You must agree to all terms before continuing.",
-        variant: "destructive",
-      });
-      return;
-    }
+
 
     setLoading(true);
     try {

@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { Checkbox } from '../ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { useToast } from '../ui/use-toast';
 import { User } from 'lucide-react';
@@ -39,6 +38,15 @@ export default function PersonalInfoStep({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted!');
+    
+    // Debug: Log the actual values before validation
+    console.log('Submit validation - Actual values:', {
+      disclaimerAgreed: disclaimerAgreed,
+      privacyAgreed: privacyAgreed,
+      disclaimerType: typeof disclaimerAgreed,
+      privacyType: typeof privacyAgreed
+    });
     
     if (password !== confirmPassword) {
       toast({
@@ -58,19 +66,32 @@ export default function PersonalInfoStep({
       return;
     }
 
-    if (!disclaimerAgreed || !privacyAgreed) {
-      toast({
-        title: t('register.agreementRequired'),
-        description: t('register.agreementRequired'),
-        variant: "destructive",
-      });
-      return;
-    }
 
+
+    console.log('Calling parent onSubmit function');
     onSubmit(e);
   };
 
-  const isFormValid = firstName && lastName && role && password && confirmPassword && disclaimerAgreed && privacyAgreed;
+  const isFormValid = firstName && lastName && role && password && confirmPassword;
+  
+  // Debug logging
+  console.log('Form validation state:', {
+    firstName: !!firstName,
+    lastName: !!lastName,
+    role: !!role,
+    password: !!password,
+    confirmPassword: !!confirmPassword,
+    isFormValid
+  });
+
+  // Individual field validation
+  const fieldValidations = {
+    firstName: !!firstName,
+    lastName: !!lastName,
+    role: !!role,
+    password: !!password,
+    confirmPassword: !!confirmPassword
+  };
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -110,7 +131,10 @@ export default function PersonalInfoStep({
           
           <div>
             <Label htmlFor="role">{t('register.selectRole')}</Label>
-            <Select value={role} onValueChange={(value) => onFieldChange('role', value)}>
+            <Select value={role} onValueChange={(value) => {
+              console.log('Role selected:', value);
+              onFieldChange('role', value);
+            }}>
               <SelectTrigger className="mt-2">
                 <SelectValue placeholder={t('register.selectRole')} />
               </SelectTrigger>
@@ -120,6 +144,7 @@ export default function PersonalInfoStep({
                 <SelectItem value="developer">{t('register.roles.developer')}</SelectItem>
               </SelectContent>
             </Select>
+            {role && <p className="text-xs text-green-600 mt-1">Selected: {role}</p>}
           </div>
           
           <div>
@@ -145,49 +170,62 @@ export default function PersonalInfoStep({
             />
           </div>
 
-          {/* Agreements Section */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">{t('register.agreementTitle')}</Label>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {t('register.agreementDescription')}
-            </p>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="disclaimer"
-                checked={disclaimerAgreed}
-                onCheckedChange={(checked) => onFieldChange('disclaimerAgreed', checked as boolean)}
-              />
-              <Label htmlFor="disclaimer" className="text-sm">
-                {t('register.disclaimerAgreement')}{' '}
-                <a 
-                  href="/disclaimer" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  {t('register.disclaimerLink')}
-                </a>
-              </Label>
+          {/* Terms and Conditions Notice */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                  {t('register.termsNoticeTitle')}
+                </h4>
+                <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                  {t('register.termsNoticeText')}{' '}
+                  <a 
+                    href="/disclaimer" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="font-medium underline hover:text-blue-800 dark:hover:text-blue-200"
+                  >
+                    {t('register.disclaimerLink')}
+                  </a>{' '}
+                  {t('register.termsNoticeAnd')}{' '}
+                  <a 
+                    href="/privacy-policy" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="font-medium underline hover:text-blue-800 dark:hover:text-blue-200"
+                  >
+                    {t('register.privacyLink')}
+                  </a>
+                  {t('register.termsNoticeSuffix')}
+                </p>
+              </div>
             </div>
-            
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="privacy"
-                checked={privacyAgreed}
-                onCheckedChange={(checked) => onFieldChange('privacyAgreed', checked as boolean)}
-              />
-              <Label htmlFor="privacy" className="text-sm">
-                {t('register.privacyAgreement')}{' '}
-                <a 
-                  href="/privacy-policy" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  {t('register.privacyLink')}
-                </a>
-              </Label>
+          </div>
+
+          {/* Validation Summary */}
+          <div className="text-xs text-gray-500 dark:text-gray-400 space-y-1">
+            <p>Required fields:</p>
+            <div className="grid grid-cols-2 gap-2">
+              <span className={fieldValidations.firstName ? 'text-green-600' : 'text-red-600'}>
+                • First Name {fieldValidations.firstName ? '✓' : '✗'}
+              </span>
+              <span className={fieldValidations.lastName ? 'text-green-600' : 'text-red-600'}>
+                • Last Name {fieldValidations.lastName ? '✓' : '✗'}
+              </span>
+              <span className={fieldValidations.role ? 'text-green-600' : 'text-red-600'}>
+                • Role {fieldValidations.role ? '✓' : '✗'}
+              </span>
+              <span className={fieldValidations.password ? 'text-green-600' : 'text-red-600'}>
+                • Password {fieldValidations.password ? '✓' : '✗'}
+              </span>
+              <span className={fieldValidations.confirmPassword ? 'text-green-600' : 'text-red-600'}>
+                • Confirm Password {fieldValidations.confirmPassword ? '✓' : '✗'}
+              </span>
             </div>
           </div>
 
@@ -195,9 +233,22 @@ export default function PersonalInfoStep({
             type="submit" 
             className="w-full" 
             disabled={loading || !isFormValid}
+            onClick={() => {
+              console.log('Button clicked!', {
+                loading,
+                isFormValid,
+                disabled: loading || !isFormValid
+              });
+            }}
           >
             {loading ? t('register.checkingButton') : t('register.continueButton')}
           </Button>
+          
+          {!isFormValid && (
+            <p className="text-xs text-red-600 text-center">
+              Please fill in all required fields and agree to the terms
+            </p>
+          )}
         </form>
       </CardContent>
     </Card>

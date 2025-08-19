@@ -265,13 +265,12 @@
     "accountDetailsTitle": "Account Details:",
     "endDateLabel": "End Date:",
     "loadingPlans": "Loading Plans...",
-    "agreementTitle": "Terms & Agreements",
-    "agreementDescription": "Please read and agree to our terms before continuing",
-    "disclaimerAgreement": "I have read and agree to the",
+    "termsNoticeTitle": "Terms & Conditions",
+    "termsNoticeText": "By registering, you acknowledge and agree to our",
+    "termsNoticeAnd": "and",
+    "termsNoticeSuffix": ".",
     "disclaimerLink": "Disclaimer",
-    "privacyAgreement": "I have read and agree to the",
     "privacyLink": "Privacy Policy",
-    "agreementRequired": "You must agree to all terms before continuing",
     "continueButton": "Continue"
   },
   "askPage": {
