@@ -230,9 +230,9 @@
     "confirmPasswordPlaceholder": "Confirm your password",
     "selectRole": "Select your role",
     "roles": {
-      "taxAgent": "Tax Agent/Consultant",
+      "taxConsultant": "Tax Consultant",
       "businessOwner": "Business Owner",
-      "finance": "Finance"
+      "developer": "Developer"
     },
     "emailInputTitle": "Enter Your Work Email",
     "emailInputDescription": "We'll send a verification link to your work email address.",
@@ -264,7 +264,15 @@
     "accountActivatedDescription": "Your account has been successfully created and activated.",
     "accountDetailsTitle": "Account Details:",
     "endDateLabel": "End Date:",
-    "loadingPlans": "Loading Plans..."
+    "loadingPlans": "Loading Plans...",
+    "agreementTitle": "Terms & Agreements",
+    "agreementDescription": "Please read and agree to our terms before continuing",
+    "disclaimerAgreement": "I have read and agree to the",
+    "disclaimerLink": "Disclaimer",
+    "privacyAgreement": "I have read and agree to the",
+    "privacyLink": "Privacy Policy",
+    "agreementRequired": "You must agree to all terms before continuing",
+    "continueButton": "Continue"
   },
   "askPage": {
     "title": "ATTO Chat Agent",

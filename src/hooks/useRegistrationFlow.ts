@@ -18,6 +18,8 @@ export interface RegistrationData {
   role: string;
   password: string;
   confirmPassword: string;
+  disclaimerAgreed: boolean;
+  privacyAgreed: boolean;
 }
 
 export interface RegistrationState {
@@ -39,7 +41,9 @@ export function useRegistrationFlow() {
       lastName: '',
       role: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      disclaimerAgreed: false,
+      privacyAgreed: false
     },
     selectedPlan: null,
     emailVerified: false,
@@ -115,7 +119,7 @@ export function useRegistrationFlow() {
     }));
   }, [state.data, state.currentStep, state.emailVerified, state.userId, state.authToken, state.selectedPlan]);
 
-  const updateData = React.useCallback((field: keyof RegistrationData, value: string) => {
+  const updateData = React.useCallback((field: keyof RegistrationData, value: string | boolean) => {
     setState(prev => ({
       ...prev,
       data: { ...prev.data, [field]: value }
@@ -216,6 +220,15 @@ export function useRegistrationFlow() {
       toast({
         title: "Password Too Short",
         description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!state.data.disclaimerAgreed || !state.data.privacyAgreed) {
+      toast({
+        title: "Agreement Required",
+        description: "You must agree to all terms before continuing.",
         variant: "destructive",
       });
       return;

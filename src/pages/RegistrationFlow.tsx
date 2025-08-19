@@ -50,11 +50,13 @@ export default function RegistrationFlow() {
       role={state.data.role}
       password={state.data.password}
       confirmPassword={state.data.confirmPassword}
+      disclaimerAgreed={state.data.disclaimerAgreed}
+      privacyAgreed={state.data.privacyAgreed}
       loading={state.loading}
-      onFieldChange={(field, value) => updateData(field as 'firstName' | 'lastName' | 'role' | 'password' | 'confirmPassword', value)}
+      onFieldChange={(field, value) => updateData(field, value)}
       onSubmit={handlePersonalInfoSubmit}
     />
-  ), [state.data.firstName, state.data.lastName, state.data.role, state.data.password, state.data.confirmPassword, state.loading, updateData, handlePersonalInfoSubmit]);
+  ), [state.data.firstName, state.data.lastName, state.data.role, state.data.password, state.data.confirmPassword, state.data.disclaimerAgreed, state.data.privacyAgreed, state.loading, updateData, handlePersonalInfoSubmit]);
 
   // Step 4: Plan Selection
   const PlanSelectionStepComponent = React.useCallback(() => (

@@ -230,9 +230,9 @@
     "confirmPasswordPlaceholder": "أكد كلمة المرور",
     "selectRole": "اختر دورك",
     "roles": {
-      "taxAgent": "وكيل ضريبي/مستشار",
+      "taxConsultant": "مستشار ضريبي",
       "businessOwner": "صاحب عمل",
-      "finance": "تمويل"
+      "developer": "مطور"
     },
     "emailInputTitle": "أدخل بريدك الإلكتروني للعمل",
     "emailInputDescription": "سنرسل رابط التحقق إلى بريدك الإلكتروني للعمل.",
@@ -264,7 +264,15 @@
     "accountActivatedDescription": "تم إنشاء حسابك وتفعيله بنجاح.",
     "accountDetailsTitle": "تفاصيل الحساب:",
     "endDateLabel": "تاريخ الانتهاء:",
-    "loadingPlans": "جاري تحميل الخطط..."
+    "loadingPlans": "جاري تحميل الخطط...",
+    "agreementTitle": "الشروط والاتفاقيات",
+    "agreementDescription": "يرجى قراءة والموافقة على شروطنا قبل المتابعة",
+    "disclaimerAgreement": "لقد قرأت ووافقت على",
+    "disclaimerLink": "إخلاء المسؤولية",
+    "privacyAgreement": "لقد قرأت ووافقت على",
+    "privacyLink": "سياسة الخصوصية",
+    "agreementRequired": "يجب الموافقة على جميع الشروط قبل المتابعة",
+    "continueButton": "متابعة"
   },
   "askPage": {
     "title": "وكيل الدردشة أتّو",
