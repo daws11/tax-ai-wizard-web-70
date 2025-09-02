@@ -1,5 +1,6 @@
 {
   "home": "Home",
+  "login": "Login",
   "features": "Features",
   "pricing": "Pricing",
   "howItWorks": "How It Works",
@@ -182,7 +183,7 @@
   "last_updated": "Last Updated",
   "last_updated_date": "27 May 2025",
   "contact_us": "Contact Us",
-  "contact_us_text": "If you have any questions about this Privacy Policy, please contact us at privacy@taxai.com.",
+      "contact_us_text": "If you have any questions about this Privacy Policy, please contact us at privacy@taxai.ae.",
   "disclaimerTitle": "Disclaimer",
   "disclaimerContent": "By using TAX-AI, you acknowledge and accept that, as with any large language model, it may generate incorrect, misleading, or potentially offensive information. The content provided is AI-generated and intended solely for informational purposes. It does not constitute professional tax, legal, or financial advice and should not be relied upon as such. TAX-AI and its affiliates make no representations or warranties regarding the accuracy or completeness of the content. You are solely responsible for any actions taken based on the information provided. We welcome feedback and are continually improving our models and services.",
   "legal": "Legal",
@@ -232,7 +233,9 @@
     "roles": {
       "taxConsultant": "Tax Consultant",
       "businessOwner": "Business Owner",
-      "developer": "Developer"
+      "lawyer": "Lawyer",
+      "auditor": "Auditor",
+      "accountant": "Accountant"
     },
     "emailInputTitle": "Enter Your Work Email",
     "emailInputDescription": "We'll send a verification link to your work email address.",

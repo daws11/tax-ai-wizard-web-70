@@ -74,7 +74,7 @@ export default function PlanSelectionStep({
           {t('register.chooseYourPlan')}
         </h2>
         <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 mx-auto leading-relaxed px-2">
-          {t('register.selectPlanDescription')}
+          Choose your plan and start chatting with our AI tax assistant immediately
         </p>
       </div>
 
@@ -142,8 +142,8 @@ export default function PlanSelectionStep({
                   onClick={() => handlePlanSelect(plan)}
                 >
                   {selectedPlan?.id === plan.id 
-                    ? t('register.createAccount') 
-                    : t('register.createAccount')
+                    ? 'Start Chatting Now' 
+                    : 'Start Chatting Now'
                   }
                 </Button>
               </CardFooter>
@@ -153,8 +153,8 @@ export default function PlanSelectionStep({
       </div>
       
       <div className={`mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'} px-2`}>
-        <p className="leading-relaxed">{t('planSelectionNote', 'All plans include our comprehensive tax support and guidance.')}</p>
-        <p className="mt-2">{t('noCreditCardRequired', 'No credit card required for free trial. Cancel anytime.')}</p>
+        <p className="leading-relaxed">All plans include our comprehensive AI tax assistant and guidance.</p>
+        <p className="mt-2">No credit card required for free trial. Start chatting immediately.</p>
       </div>
     </div>
   );

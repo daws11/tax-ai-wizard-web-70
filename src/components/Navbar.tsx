@@ -113,6 +113,13 @@ const Navbar = () => {
               </Select>
               <ThemeToggle />
               <Button
+                onClick={() => { window.location.href = 'https://ask.taxai.ae/'; }}
+                variant="outline"
+                className="ml-4 border-primary text-primary hover:bg-primary hover:text-white"
+              >
+                {t('login')}
+              </Button>
+              <Button
                 onClick={() => handleNavigation("/agent")}
                 className="ml-4 bg-primary hover:bg-primary/90"
               >
@@ -162,6 +169,13 @@ const Navbar = () => {
               <span className="text-gray-600 dark:text-gray-300 mr-2">Theme:</span>
               <ThemeToggle />
             </div>
+            <Button
+              onClick={() => { window.location.href = 'https://ask.taxai.ae/'; }}
+              variant="outline"
+              className="mt-2 w-full border-primary text-primary hover:bg-primary hover:text-white"
+            >
+              {t('login')}
+            </Button>
             <Button
               onClick={() => handleNavigation("/agent")}
               className="mt-2 w-full bg-primary hover:bg-primary/90"

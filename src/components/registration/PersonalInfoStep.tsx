@@ -4,8 +4,9 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { Checkbox } from '../ui/checkbox';
 import { useToast } from '../ui/use-toast';
-import { User } from 'lucide-react';
+import { User, Eye, EyeOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface PersonalInfoStepProps {
@@ -35,6 +36,8 @@ export default function PersonalInfoStep({
 }: PersonalInfoStepProps) {
   const { toast } = useToast();
   const { t } = useTranslation();
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +75,7 @@ export default function PersonalInfoStep({
     onSubmit(e);
   };
 
-  const isFormValid = firstName && lastName && role && password && confirmPassword;
+  const isFormValid = firstName && lastName && role && password && confirmPassword && disclaimerAgreed && privacyAgreed;
   
   // Debug logging
   console.log('Form validation state:', {
@@ -141,7 +144,9 @@ export default function PersonalInfoStep({
               <SelectContent>
                 <SelectItem value="tax-consultant">{t('register.roles.taxConsultant')}</SelectItem>
                 <SelectItem value="business-owner">{t('register.roles.businessOwner')}</SelectItem>
-                <SelectItem value="developer">{t('register.roles.developer')}</SelectItem>
+                <SelectItem value="lawyer">{t('register.roles.lawyer')}</SelectItem>
+                <SelectItem value="auditor">{t('register.roles.auditor')}</SelectItem>
+                <SelectItem value="accountant">{t('register.roles.accountant')}</SelectItem>
               </SelectContent>
             </Select>
             {role && <p className="text-xs text-green-600 mt-1">Selected: {role}</p>}
@@ -149,40 +154,67 @@ export default function PersonalInfoStep({
           
           <div>
             <Label htmlFor="password">{t('register.password')}</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => onFieldChange('password', e.target.value)}
-              required
-              className="mt-2"
-            />
+            <div className="relative mt-2">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => onFieldChange('password', e.target.value)}
+                required
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-400" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-400" />
+                )}
+              </button>
+            </div>
           </div>
           <div>
             <Label htmlFor="confirmPassword">{t('register.confirmPassword')}</Label>
-            <Input
-              id="confirmPassword"
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => onFieldChange('confirmPassword', e.target.value)}
-              required
-              className="mt-2"
-            />
+            <div className="relative mt-2">
+              <Input
+                id="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => onFieldChange('confirmPassword', e.target.value)}
+                required
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-4 w-4 text-gray-400" />
+                ) : (
+                  <Eye className="h-4 w-4 text-gray-400" />
+                )}
+              </button>
+            </div>
           </div>
 
-          {/* Terms and Conditions Notice */}
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          {/* Terms and Conditions Checkboxes */}
+          <div className="space-y-4">
             <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <Checkbox
+                id="disclaimer"
+                checked={disclaimerAgreed}
+                onCheckedChange={(checked) => onFieldChange('disclaimerAgreed', checked as boolean)}
+                className="mt-1"
+              />
               <div className="flex-1">
-                <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                <Label htmlFor="disclaimer" className="text-sm font-medium">
                   {t('register.termsNoticeTitle')}
-                </h4>
-                <p className="text-sm text-blue-700 dark:text-blue-300 mt-1">
+                </Label>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {t('register.termsNoticeText')}{' '}
                   <a 
                     href="/disclaimer" 
@@ -202,6 +234,23 @@ export default function PersonalInfoStep({
                     {t('register.privacyLink')}
                   </a>
                   {t('register.termsNoticeSuffix')}
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start space-x-3">
+              <Checkbox
+                id="privacy"
+                checked={privacyAgreed}
+                onCheckedChange={(checked) => onFieldChange('privacyAgreed', checked as boolean)}
+                className="mt-1"
+              />
+              <div className="flex-1">
+                <Label htmlFor="privacy" className="text-sm font-medium">
+                  {t('register.privacyLink')}
+                </Label>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  I agree to the processing of my personal data in accordance with the Privacy Policy.
                 </p>
               </div>
             </div>
@@ -225,6 +274,12 @@ export default function PersonalInfoStep({
               </span>
               <span className={fieldValidations.confirmPassword ? 'text-green-600' : 'text-red-600'}>
                 • Confirm Password {fieldValidations.confirmPassword ? '✓' : '✗'}
+              </span>
+              <span className={disclaimerAgreed ? 'text-green-600' : 'text-red-600'}>
+                • Terms & Conditions {disclaimerAgreed ? '✓' : '✗'}
+              </span>
+              <span className={privacyAgreed ? 'text-green-600' : 'text-red-600'}>
+                • Privacy Policy {privacyAgreed ? '✓' : '✗'}
               </span>
             </div>
           </div>

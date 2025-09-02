@@ -59,9 +59,18 @@ const Hero = () => {
                 </div>
                 <div className="w-full sm:w-auto">
                   <Button
-                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                    onClick={() => { window.location.href = 'https://ask.taxai.ae/'; }}
                     variant="outline"
                     className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-primary bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 md:py-4 md:text-lg md:px-10"
+                  >
+                    {t('login')}
+                  </Button>
+                </div>
+                <div className="w-full sm:w-auto">
+                  <Button
+                    onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                    variant="outline"
+                    className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-gray-600 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800 md:py-4 md:text-lg md:px-10"
                   >
                     {t('learnMore')}
                   </Button>

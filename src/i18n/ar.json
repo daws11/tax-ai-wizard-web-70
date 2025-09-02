@@ -1,5 +1,6 @@
 {
   "home": "الصفحة الرئيسية",
+  "login": "تسجيل الدخول",
   "features": "المميزات",
   "pricing": "التسعير",
   "howItWorks": "آلية العمل ",
@@ -182,7 +183,7 @@
   "last_updated": "آخر تحديث",
   "last_updated_date": "27 مايو 2025",
   "contact_us": "اتصل بنا",
-  "contact_us_text": "إذا كانت لديك أي أسئلة حول سياسة الخصوصية، يرجى الاتصال بنا على privacy@taxai.com.",
+      "contact_us_text": "إذا كانت لديك أي أسئلة حول سياسة الخصوصية، يرجى الاتصال بنا على privacy@taxai.ae.",
   "disclaimerTitle": "إخلاء المسؤولية",
   "disclaimerContent": "باستخدام TAX-AI، فإنك تقر وتوافق على أنه - مثل أي نموذج لغوي كبير - قد يولد جزء من المعلومات. المحتوى المقدم لا يشكل نصيحة ضريبية أو قانونية أو مالية محترفة.",
   "legal": "قانوني",
@@ -232,7 +233,9 @@
     "roles": {
       "taxConsultant": "مستشار ضريبي",
       "businessOwner": "صاحب عمل",
-      "developer": "مطور"
+      "lawyer": "محامي",
+      "auditor": "مدقق",
+      "accountant": "محاسب"
     },
     "emailInputTitle": "أدخل بريدك الإلكتروني للعمل",
     "emailInputDescription": "سنرسل رابط التحقق إلى بريدك الإلكتروني للعمل.",
