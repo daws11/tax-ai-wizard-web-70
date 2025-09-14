@@ -51,7 +51,7 @@ const Hero = () => {
               <div className="mt-5 sm:mt-8 flex flex-col sm:flex-row justify-center items-center gap-3">
                 <div className="w-full sm:w-auto">
                   <Button 
-                    onClick={() => navigate("/agent")}
+                    onClick={() => navigate("/agent/ask")}
                     className="w-full flex items-center justify-center px-8 py-3 text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 md:py-4 md:text-lg md:px-10"
                   >
                     {t('startFreeTrial')}

@@ -122,7 +122,7 @@ const Navbar = () => {
                 {t('login')}
               </Button>
               <Button
-                onClick={() => handleNavigation("/agent")}
+                onClick={() => handleNavigation("/agent/ask")}
                 className="ml-4 bg-primary hover:bg-primary/90"
               >
                 {t('getStarted')}
@@ -179,7 +179,7 @@ const Navbar = () => {
               {t('login')}
             </Button>
             <Button
-              onClick={() => handleNavigation("/agent")}
+              onClick={() => handleNavigation("/agent/ask")}
               className="mt-2 w-full bg-primary hover:bg-primary/90"
             >
               {t('getStarted')}

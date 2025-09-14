@@ -20,7 +20,7 @@ const CTA = () => {
           <Button 
             size="lg"
             className="bg-white text-primary hover:bg-gray-100 hover:text-primary/90 font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
-            onClick={() => navigate("/agent")}
+            onClick={() => navigate("/agent/ask")}
           >
             {t('ctaButton')}
           </Button>
