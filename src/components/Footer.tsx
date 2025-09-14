@@ -11,7 +11,7 @@ const Footer = () => {
       { name: t('contact'), href: '#' },
     ],
     resources: [
-      { name: t('blog'), href: '/blogs' },
+      { name: t('blogNav'), href: '/blog' },
       { name: t('help'), href: '#' },
     ],
     legal: [

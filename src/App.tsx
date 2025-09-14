@@ -43,8 +43,8 @@ const App = () => (
                   <Route path="/registration" element={<RegistrationFlow />} />
                   <Route path="/register" element={<RegistrationFlow />} />
                   <Route path="/verify-email" element={<EmailVerificationPage />} />
-                  <Route path="/blogs" element={<BlogListPage />} />
-                  <Route path="/blogs/:slug" element={<BlogDetailPage />} />
+                  <Route path="/blog" element={<BlogListPage />} />
+                  <Route path="/blog/:slug" element={<BlogDetailPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

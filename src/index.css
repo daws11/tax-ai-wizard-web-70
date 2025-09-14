@@ -3,6 +3,128 @@
 @tailwind components;
 @tailwind utilities;
 
+/* RTL Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-reverse > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+}
+
+/* RTL Navigation improvements */
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .text-right {
+  text-align: right;
+}
+
+[dir="rtl"] .text-left {
+  text-align: left;
+}
+
+/* Blog Table Styling for Better Readability */
+.blog-table-container {
+  overflow-x: auto;
+  margin: 24px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.blog-table thead tr {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color: white;
+}
+
+.blog-table th {
+  border: none;
+  padding: 16px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.blog-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.blog-table tbody tr:nth-child(even) {
+  background-color: #f9fafb;
+}
+
+.blog-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.blog-table td {
+  border: none;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.blog-table td:first-child {
+  color: #374151;
+}
+
+.blog-table .tax-rate-0 {
+  color: #059669;
+  font-weight: 600;
+}
+
+.blog-table .tax-rate-9 {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.blog-table .tax-rate-15 {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* Dark mode support for tables */
+.dark .blog-table {
+  background: #1f2937;
+}
+
+.dark .blog-table tbody tr {
+  border-bottom: 1px solid #374151;
+}
+
+.dark .blog-table tbody tr:nth-child(even) {
+  background-color: #111827;
+}
+
+.dark .blog-table td:first-child {
+  color: #d1d5db;
+}
+
+.dark .blog-table .tax-rate-0 {
+  color: #10b981;
+}
+
+.dark .blog-table .tax-rate-9 {
+  color: #ef4444;
+}
+
+.dark .blog-table .tax-rate-15 {
+  color: #ef4444;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

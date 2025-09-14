@@ -1,53 +1,45 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Link as RouterLink } from "react-router-dom";
-
-interface Blog {
-  _id: string;
-  title: string;
-  content: string;
-  metaInfo: string;
-  keywords: string;
-  images: string[];
-  createdAt: string;
-}
-
-function slugify(title: string) {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .replace(/--+/g, "-");
-}
+import { getBlogPostBySlug, BlogPost } from "@/data/blogs";
 
 const BlogDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const location = useLocation();
-  const [blog, setBlog] = useState<Blog | null>(location.state?.blog || null);
-  const [loading, setLoading] = useState(!blog);
+  const { t, i18n } = useTranslation();
+  const [blog, setBlog] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (blog) return;
-    fetch("https://ai-auto-blogger.onrender.com/api/blogs")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch blogs");
-        return res.json();
-      })
-      .then((blogs: Blog[]) => {
-        const found = blogs.find((b) => slugify(b.title) === slug);
-        if (!found) throw new Error("Blog not found");
-        setBlog(found);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, [slug, blog]);
+    if (!slug) {
+      setError("Invalid blog post");
+      setLoading(false);
+      return;
+    }
+
+    const foundBlog = getBlogPostBySlug(slug);
+    if (!foundBlog) {
+      setError("Blog post not found");
+      setLoading(false);
+      return;
+    }
+
+    setBlog(foundBlog);
+    setLoading(false);
+  }, [slug]);
 
   useEffect(() => {
     if (!blog) return;
-    document.title = `${blog.title} | Blog TaxAI`;
+    
+    const currentLanguage = i18n.language as 'en' | 'ar';
+    const blogTitle = blog.title[currentLanguage];
+    const blogDescription = blog.metaDescription[currentLanguage];
+    const blogKeywords = blog.keywords[currentLanguage];
+
+    document.title = `${blogTitle} | TaxAI Blog`;
+    
     // Description
     let meta = document.querySelector('meta[name="description"]');
     if (!meta) {
@@ -55,7 +47,7 @@ const BlogDetailPage = () => {
       meta.setAttribute('name', 'description');
       document.head.appendChild(meta);
     }
-    meta.setAttribute('content', blog.metaInfo || 'Artikel blog TaxAI');
+    meta.setAttribute('content', blogDescription);
 
     // Keywords
     let keywords = document.querySelector('meta[name="keywords"]');
@@ -64,10 +56,10 @@ const BlogDetailPage = () => {
       keywords.setAttribute('name', 'keywords');
       document.head.appendChild(keywords);
     }
-    keywords.setAttribute('content', blog.keywords || 'tax, ai, finance, blog');
+    keywords.setAttribute('content', blogKeywords);
 
     // Open Graph
-    const setOg = (property, content) => {
+    const setOg = (property: string, content: string) => {
       let el = document.querySelector(`meta[property='${property}']`);
       if (!el) {
         el = document.createElement('meta');
@@ -76,16 +68,16 @@ const BlogDetailPage = () => {
       }
       el.setAttribute('content', content);
     };
-    setOg('og:title', blog.title);
-    setOg('og:description', blog.metaInfo || 'Artikel blog TaxAI');
+    setOg('og:title', blogTitle);
+    setOg('og:description', blogDescription);
     setOg('og:type', 'article');
     setOg('og:url', window.location.href);
-    if (blog.images && blog.images.length > 0) {
-      setOg('og:image', blog.images[0]);
+    if (blog.featuredImage) {
+      setOg('og:image', blog.featuredImage);
     }
 
     // Twitter Card
-    const setTwitter = (name, content) => {
+    const setTwitter = (name: string, content: string) => {
       let el = document.querySelector(`meta[name='${name}']`);
       if (!el) {
         el = document.createElement('meta');
@@ -94,55 +86,108 @@ const BlogDetailPage = () => {
       }
       el.setAttribute('content', content);
     };
-    setTwitter('twitter:card', blog.images && blog.images.length > 0 ? 'summary_large_image' : 'summary');
-    setTwitter('twitter:title', blog.title);
-    setTwitter('twitter:description', blog.metaInfo || 'TaxAi Blog');
-    if (blog.images && blog.images.length > 0) {
-      setTwitter('twitter:image', blog.images[0]);
+    setTwitter('twitter:card', blog.featuredImage ? 'summary_large_image' : 'summary');
+    setTwitter('twitter:title', blogTitle);
+    setTwitter('twitter:description', blogDescription);
+    if (blog.featuredImage) {
+      setTwitter('twitter:image', blog.featuredImage);
     }
-  }, [blog]);
+  }, [blog, i18n.language]);
 
-  if (loading) return <div className="text-center py-10">Loading blog...</div>;
+  if (loading) return <div className="text-center py-10">{t('blog.loading')}</div>;
   if (error) return <div className="text-center text-red-500 py-10">{error}</div>;
   if (!blog) return null;
 
+  const currentLanguage = i18n.language as 'en' | 'ar';
+  const isRTL = currentLanguage === 'ar';
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300" dir={document.documentElement.dir}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800 transition-colors duration-300" dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
       <main className="flex-grow">
-        <div className="max-w-3xl mx-auto py-10 px-4">
+        <div className="max-w-4xl mx-auto py-10 px-4">
           {/* Breadcrumbs */}
           <nav className="mb-6 text-sm text-gray-500 dark:text-gray-400 flex gap-2 items-center" aria-label="Breadcrumb">
-            <RouterLink to="/blogs" className="hover:text-primary underline">Blog</RouterLink>
+            <Link to="/blog" className="hover:text-primary underline">{t('blog.title')}</Link>
             <span className="mx-1">/</span>
-            <span className="text-gray-400 dark:text-gray-500 line-clamp-1">{blog.title}</span>
+            <span className="text-gray-400 dark:text-gray-500 line-clamp-1">{blog.title[currentLanguage]}</span>
           </nav>
 
           {/* Header */}
-          <header className="mb-6">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-2 text-primary drop-shadow-lg leading-tight">{blog.title}</h1>
-            <div className="flex flex-wrap gap-4 text-gray-500 dark:text-gray-400 text-xs md:text-sm mb-2">
-              <span>🗓️ {new Date(blog.createdAt).toLocaleString()}</span>
-              <span>🏷️ {blog.keywords}</span>
+          <header className="mb-8">
+            <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-4">
+              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
+                {blog.category[currentLanguage]}
+              </span>
+              <span>•</span>
+              <span>{blog.readTime[currentLanguage]}</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-primary drop-shadow-lg leading-tight">
+              {blog.title[currentLanguage]}
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              {blog.excerpt[currentLanguage]}
+            </p>
+            <div className="flex flex-wrap gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-2">
+                <span>🗓️</span>
+                <span>{t('blog.publishedOn')} {new Date(blog.publishedAt).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span>👤</span>
+                <span>{t('blog.author')}: {blog.author[currentLanguage]}</span>
+              </div>
             </div>
           </header>
 
-          {/* Main Image */}
-          {/* Main Image */}
+          {/* Featured Image */}
+          {blog.featuredImage && (
+            <div className="mb-8">
+              <img 
+                src={blog.featuredImage} 
+                alt={blog.title[currentLanguage]}
+                className="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg"
+              />
+            </div>
+          )}
 
           {/* Content */}
           <section className="mb-10">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800 dark:text-gray-200">Content</h2>
-            <div className="prose prose-gray dark:prose-invert max-w-none bg-white/90 dark:bg-gray-900/90 p-6 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 transition-colors duration-300">
+            <div className="prose prose-lg prose-gray dark:prose-invert max-w-none bg-white/90 dark:bg-gray-900/90 p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-800 transition-colors duration-300">
               <div 
-                style={{ textAlign: 'justify' }}
-                className="[&>p]:mb-6 [&>p]:text-justify [&>p]:leading-relaxed [&>p]:text-base md:[&>p]:text-lg [&>p]:text-gray-700 dark:[&>p]:text-gray-200"
-                dangerouslySetInnerHTML={{ __html: blog.content }} 
+                className="[&>h2]:text-2xl [&>h2]:font-bold [&>h2]:mb-4 [&>h2]:mt-8 [&>h2]:text-primary [&>h2]:first:mt-0 [&>p]:mb-6 [&>p]:leading-relaxed [&>p]:text-gray-700 dark:[&>p]:text-gray-200 [&>ul]:mb-6 [&>ul]:pl-6 [&>li]:mb-2 [&>li]:text-gray-700 dark:[&>li]:text-gray-200"
+                dangerouslySetInnerHTML={{ __html: blog.content[currentLanguage] }} 
               />
             </div>
           </section>
 
-          <RouterLink to="/blogs" className="inline-block mt-4 text-primary underline hover:text-primary/80 text-sm">← Back To Blog</RouterLink>
+          {/* Tags */}
+          {blog.tags.length > 0 && (
+            <section className="mb-8">
+              <h3 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">{t('blog.tags')}</h3>
+              <div className="flex flex-wrap gap-2">
+                {blog.tags.map((tag) => (
+                  <span 
+                    key={tag}
+                    className="bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Back to Blog */}
+          <div className="text-center">
+            <Link 
+              to="/blog" 
+              className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors"
+            >
+              <span className={isRTL ? 'rotate-180' : ''}>←</span>
+              {t('blog.backToBlog')}
+            </Link>
+          </div>
         </div>
       </main>
       <Footer />

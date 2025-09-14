@@ -5,6 +5,7 @@
   "pricing": "Pricing",
   "howItWorks": "How It Works",
   "faq": "FAQ",
+  "blogNav": "Blog",
   "getStarted": "Get Started",
   "heroTitle": "AI-Powered Tax Solutions",
   "heroSubtitle": "Simplify and streamline your enterprise tax operations with intelligent, end-to-end AI capabilities",
@@ -324,6 +325,22 @@
   "faqAnswer15": "No. Unused messages expire at the end of each billing cycle (monthly or quarterly) and do not transfer.",
   "faqQuestion16": "How many messages will I get when my quarterly plan starts?",
   "faqAnswer16": "You’ll receive a fresh allocation of 300 messages on the first day of your new quarterly billing cycle.",
-  "faqQuestion17": "Why can’t I use the new plan immediately after upgrading?",
-  "faqAnswer17": "Message tokens are time-bound to each billing period. Your existing plan must conclude before the new cycle begins."
+  "faqQuestion17": "Why can't I use the new plan immediately after upgrading?",
+  "faqAnswer17": "Message tokens are time-bound to each billing period. Your existing plan must conclude before the new cycle begins.",
+  "blog": {
+    "title": "Blog & News",
+    "subtitle": "Find the latest articles, news, and insights about tax, finance, and AI technology here.",
+    "readMore": "Read More",
+    "backToBlog": "← Back To Blog",
+    "publishedOn": "Published on",
+    "readTime": "min read",
+    "author": "Author",
+    "category": "Category",
+    "tags": "Tags",
+    "noPostsFound": "No blog posts found",
+    "searchPlaceholder": "Search blog posts...",
+    "allCategories": "All Categories",
+    "loading": "Loading blog posts...",
+    "error": "Error loading blog posts"
+  }
 } 
