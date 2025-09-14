@@ -1,0 +1,99 @@
+import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { useMemo } from "react";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+
+const Features = () => {
+  const { t, i18n } = useTranslation();
+  const { isRTL } = useLanguageDetection();
+
+  // Features data for infinite moving cards - memoized to re-render on language change
+  const features = useMemo(() => {
+    // Debug logging
+    if (import.meta.env.DEV) {
+      console.log('🎠 Features - Current language:', i18n.language);
+      console.log('🎠 Features - isRTL:', isRTL);
+    }
+    
+    return [
+    {
+      quote: t('feature1Title'),
+      name: t('feature1Desc'),
+      title: "Smart Tax Management",
+    },
+    {
+      quote: t('feature2Title'),
+      name: t('feature2Desc'),
+      title: "Clear Tax Insights",
+    },
+    {
+      quote: t('feature3Title'),
+      name: t('feature3Desc'),
+      title: "Automated Workflows",
+    },
+    {
+      quote: t('feature4Title'),
+      name: t('feature4Desc'),
+      title: "Risk Management",
+    },
+    {
+      quote: t('feature5Title'),
+      name: t('feature5Desc'),
+      title: "Tax Law Clarity",
+    },
+    {
+      quote: t('feature6Title'),
+      name: t('feature6Desc'),
+      title: "Corporate Structuring",
+    },
+    {
+      quote: t('feature7Title'),
+      name: t('feature7Desc'),
+      title: "Tax Reconciliation",
+    },
+    {
+      quote: t('feature8Title'),
+      name: t('feature8Desc'),
+      title: "AI Tax Assistant",
+    },
+  ];
+  }, [t, i18n.language, isRTL]);
+
+  return (
+    <section 
+      id="features" 
+      className="py-24 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm overflow-hidden"
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className={`text-center mb-16 ${isRTL ? 'text-right' : 'text-left'}`}
+        >
+          <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+            {t('enterpriseFeaturesTitle')}
+          </h2>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            {t('enterpriseFeaturesSubtitle')}
+          </p>
+        </motion.div>
+
+        <div className="h-[40rem] rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden">
+          <InfiniteMovingCards
+            items={features}
+            direction={isRTL ? "left" : "right"}
+            speed="slow"
+            pauseOnHover={true}
+            className="w-full"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Features;

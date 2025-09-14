@@ -23,12 +23,12 @@ const AIChat = () => {
           {t('exploreAssistants')}
         </p> */}
 
-        {/* Atto Agent Section */}
-        <div className={`flex flex-col md:flex-row items-center gap-8 md:gap-10 ${isRTL ? 'md:flex-row-reverse' : ''}`}>
-          {/* Image Link - order 1 on mobile, order none on desktop */}
+        {/* ATTO Agent Section - Centered and Larger */}
+        <div className="flex flex-col items-center gap-8 md:gap-12">
+          {/* Larger Image Link */}
           <Link
             to="https://chat-taxai.onrender.com/"
-            className="w-full md:w-1/2 lg:w-2/5 flex-shrink-0 group overflow-hidden rounded-md shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 order-1 md:order-none"
+            className="w-full max-w-4xl group overflow-hidden rounded-lg shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 hover:scale-105"
           >
             <img
               src={attoGifSrc}
@@ -37,56 +37,25 @@ const AIChat = () => {
             />
           </Link>
 
-          {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
-          <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
-            {/* Combined Title and Description Card */}
-            <Card className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md shadow-lg">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
+          {/* Centered Title and Description Card */}
+          <div className="w-full max-w-2xl">
+            <Card className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md shadow-xl border-2 border-primary/20">
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100">
                   {t('attoTitle')}
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
+              <CardContent className="text-center">
+                <p className="text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
                   {t('attoDescription')}
                 </p>
                 <Link to="https://chat-taxai.onrender.com/">
-                  <Button className="w-full">{t('askAtto')}</Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* YOSR Agent Section */}
-        <div className={`flex flex-col md:flex-row items-center gap-8 md:gap-10 ${isRTL ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-          {/* Image Link - order 1 on mobile, order none on desktop */}
-          <Link
-            to="/agent/yosr"
-            className="w-full md:w-1/2 lg:w-2/5 flex-shrink-0 group overflow-hidden rounded-md shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 order-1 md:order-none"
-          >
-            <img
-              src="/lovable-uploads/yosrpreview.gif"
-              alt={t('yosrTitle')}
-              className="object-contain w-full h-auto"
-            />
-          </Link>
-
-          {/* Container for Title and Description/Button Cards - order 2 on mobile, order none on desktop*/}
-          <div className="flex-grow flex flex-col gap-6 md:gap-0 order-2 md:order-none">
-            {/* Combined Title and Description Card */}
-            <Card className="bg-white/20 dark:bg-gray-800/20 backdrop-blur-md shadow-lg">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {t('yosrTitle')}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 mb-6">
-                  {t('yosrDescription')}
-                </p>
-                <Link to="/agent/yosr">
-                  <Button className="w-full">{t('talkWithYosr')}</Button>
+                  <Button 
+                    size="lg" 
+                    className="w-full md:w-auto px-8 py-4 text-lg font-semibold hover:scale-105 transition-transform duration-300"
+                  >
+                    {t('askAtto')}
+                  </Button>
                 </Link>
               </CardContent>
             </Card>

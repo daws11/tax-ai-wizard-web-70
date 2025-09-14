@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import Features from "../components/Features";
+// import Features from "../components/Features";
+// import FeaturesOptimized from "../components/FeaturesOptimized";
+import FeaturesFixed from "../components/FeaturesFixed";
 import Process from "../components/Process";
 import AIChat from "../components/AIChat";
 import Pricing from "../components/Pricing";
@@ -66,7 +68,7 @@ const Index = () => {
       </section>
       
       <section className="opacity-0">
-        <Features />
+        <FeaturesFixed />
       </section>
       
       <section className="opacity-0 section-padding">

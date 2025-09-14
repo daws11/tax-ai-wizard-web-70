@@ -8,12 +8,13 @@ import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
 import { useCallback } from 'react';
 import { useParticlesConfig } from "@/lib/particles-config";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
 const Hero = () => {
   const { t, i18n } = useTranslation();
   const isMobile = useIsMobile();
   const navigate = useNavigate();
-  const isRTL = i18n.language === 'ar';
+  const { isRTL } = useLanguageDetection();
   
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);

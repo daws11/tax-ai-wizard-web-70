@@ -16,6 +16,7 @@ import AskPage from "./pages/agent/AskPage";
 import TalkPage from "./pages/agent/TalkPage";
 import RegistrationFlow from "./pages/RegistrationFlow";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
+import { LanguageDebugger } from "@/components/LanguageDebugger";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,8 @@ const App = () => (
                 </Routes>
               </Suspense>
             </Router>
+            {/* Language Debugger - Only in development */}
+            <LanguageDebugger />
           </div>
         </div>
       </ThemeProvider>

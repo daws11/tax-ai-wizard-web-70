@@ -4,12 +4,14 @@ import { ThemeToggle } from "./ThemeToggle";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
+  const { changeLanguage, isRTL } = useLanguageDetection();
 
   const isHomePage = location.pathname === '/';
 
@@ -36,10 +38,7 @@ const Navbar = () => {
     }
   };
 
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-    document.documentElement.dir = lng === 'ar' ? 'rtl' : 'ltr';
-  };
+  // changeLanguage function is now provided by useLanguageDetection hook
 
   const renderNavigationLinks = () => {
     if (isHomePage) {
@@ -88,12 +87,15 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0 cursor-pointer" onClick={() => handleNavigation('/')}>
+            <div className="flex-shrink-0 cursor-pointer flex items-center" onClick={() => handleNavigation('/')}>
               <img
                 src="/lovable-uploads/logo%20circle.png"
                 alt="TaxAI Logo"
-                className="h-14 w-auto sm:h-11 md:h-14 lg:h-17 mb-4 px-6 py-2"
+                className="h-14 w-auto sm:h-11 md:h-14 lg:h-17"
               />
+              <h2 className="text-2xl font-extrabold tracking-wider text-primary ml-3 px-3 py-1 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm">
+                TaxAi
+              </h2>
             </div>
           </div>
           <div className="hidden md:block">
@@ -108,7 +110,7 @@ const Navbar = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="ar">العربية</SelectItem>
+                  <SelectItem value="ar">الشركاء</SelectItem>
                 </SelectContent>
               </Select>
               <ThemeToggle />
@@ -137,7 +139,7 @@ const Navbar = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="en">English</SelectItem>
-                <SelectItem value="ar">العربية</SelectItem>
+                <SelectItem value="ar">الشركاء</SelectItem>
               </SelectContent>
             </Select>
             <ThemeToggle />
