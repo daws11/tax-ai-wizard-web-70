@@ -195,10 +195,21 @@ export default function EmailVerificationStep({
         });
 
         if (response.ok) {
-          const data = await response.json();
-          if (data.verified) {
-            onVerificationSuccess(data.userId, data.token);
+          // Check if response has content before parsing JSON
+          const responseText = await response.text();
+          if (responseText.trim()) {
+            try {
+              const data = JSON.parse(responseText);
+              if (data.verified) {
+                onVerificationSuccess(data.userId, data.token);
+              }
+            } catch (parseError) {
+              console.error('JSON parsing error in verification check:', parseError);
+              console.error('Response text:', responseText);
+            }
           }
+        } else {
+          console.error('Verification check failed with status:', response.status);
         }
       } catch (error) {
         console.error('Error checking verification:', error);

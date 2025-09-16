@@ -29,47 +29,68 @@ export default function EmailVerificationPage() {
         // Verify the token with backend
         try {
           const response = await fetch(`${config.API_URL}/auth/verify-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
             body: JSON.stringify({ token, email }),
-      });
+          });
 
           if (response.ok) {
-      const data = await response.json();
+            // Check if response has content before parsing JSON
+            const responseText = await response.text();
+            if (responseText.trim()) {
+              try {
+                const data = JSON.parse(responseText);
+                console.log('✅ Email verification successful:', data);
+                
+                // Store email and verification data in localStorage
+                localStorage.setItem('registrationEmail', email || '');
+                localStorage.setItem('emailVerificationToken', token);
+                localStorage.setItem('emailVerified', 'true');
+                
+                // Store auth token if provided
+                if (data.token) {
+                  localStorage.setItem('authToken', data.token);
+                  console.log('🔑 Auth token stored:', data.token);
+                }
+                
+                // Store user ID if provided
+                if (data.userId) {
+                  localStorage.setItem('userId', data.userId);
+                  console.log('👤 User ID stored:', data.userId);
+                }
+                
+                setStatus('success');
+                setMessage('Email verified successfully! Redirecting to complete your registration...');
 
-            console.log('✅ Email verification successful:', data);
-            
-            // Store email and verification data in localStorage
-            localStorage.setItem('registrationEmail', email || '');
-            localStorage.setItem('emailVerificationToken', token);
-            localStorage.setItem('emailVerified', 'true');
-            
-            // Store auth token if provided
-            if (data.token) {
-              localStorage.setItem('authToken', data.token);
-              console.log('🔑 Auth token stored:', data.token);
+                // Redirect to registration page after a short delay
+                setTimeout(() => {
+                  navigate('/registration');
+                }, 2000);
+              } catch (parseError) {
+                console.error('JSON parsing error in email verification:', parseError);
+                console.error('Response text:', responseText);
+                setStatus('error');
+                setMessage('Verification failed. Please try again.');
+              }
+            } else {
+              console.error('Empty response from verification endpoint');
+              setStatus('error');
+              setMessage('Verification failed. Please try again.');
             }
-            
-            // Store user ID if provided
-            if (data.userId) {
-              localStorage.setItem('userId', data.userId);
-              console.log('👤 User ID stored:', data.userId);
+          } else {
+            // Handle error response
+            try {
+              const errorData = await response.json();
+              setStatus('error');
+              setMessage(errorData.message || 'Verification failed. Please try again.');
+            } catch (parseError) {
+              console.error('JSON parsing error in error response:', parseError);
+              setStatus('error');
+              setMessage('Verification failed. Please try again.');
             }
-            
-            setStatus('success');
-            setMessage('Email verified successfully! Redirecting to complete your registration...');
-
-            // Redirect to registration page after a short delay
-            setTimeout(() => {
-              navigate('/registration');
-            }, 2000);
-      } else {
-            const errorData = await response.json();
-            setStatus('error');
-            setMessage(errorData.message || 'Verification failed. Please try again.');
-      }
+          }
     } catch (error) {
           console.error('Backend verification error:', error);
           // Fallback: still redirect to registration if backend is down
