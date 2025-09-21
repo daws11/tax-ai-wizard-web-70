@@ -51,7 +51,7 @@ const App = () => (
               </Suspense>
             </Router>
             {/* Language Debugger - Only in development */}
-            <LanguageDebugger />
+            {/* <LanguageDebugger /> */}
           </div>
         </div>
       </ThemeProvider>

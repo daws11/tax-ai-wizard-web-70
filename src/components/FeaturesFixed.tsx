@@ -149,7 +149,7 @@ const FeaturesFixed = () => {
   return (
     <section 
       id="features" 
-      className="py-24 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -161,7 +161,7 @@ const FeaturesFixed = () => {
             duration: 0.8,
             ease: [0.4, 0.0, 0.2, 1]
           }}
-          className={`text-center mb-16 ${isRTL ? 'text-right' : 'text-left'}`}
+          className={`text-center mb-8 sm:mb-12 md:mb-16 ${isRTL ? 'text-right' : 'text-left'}`}
         >
           <motion.h2 
             className="text-3xl font-extrabold text-gray-900 sm:text-4xl"
@@ -197,7 +197,7 @@ const FeaturesFixed = () => {
           onMouseLeave={handleMouseLeave}
         >
           {/* Fixed height container to prevent layout shift */}
-          <div className="min-h-[680px] relative">
+          <div className="min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[680px] relative">
             {featuresInRows.map((row, rowIndex) => (
               <AnimatePresence key={rowIndex} mode="wait">
                 {currentRow === rowIndex && (
@@ -263,10 +263,10 @@ const FeaturesFixed = () => {
                         }}
                       >
                         <Card 
-                          className="glass-effect hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 h-[340px] bg-white/20 dark:bg-gray-800/20 backdrop-blur-md border border-primary/20 dark:border-primary/10 cursor-pointer shadow-lg shadow-gray-200/20 dark:shadow-gray-900/20"
+                          className="glass-effect hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 h-[280px] sm:h-[320px] md:h-[340px] bg-white/20 dark:bg-gray-800/20 backdrop-blur-md border border-primary/20 dark:border-primary/10 cursor-pointer shadow-lg shadow-gray-200/20 dark:shadow-gray-900/20"
                         >
-                          <CardContent className="p-8 h-full flex flex-col">
-                            <div className={`flex items-center gap-5 mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <CardContent className="p-6 sm:p-7 md:p-8 h-full flex flex-col">
+                            <div className={`flex items-center gap-4 sm:gap-5 mb-4 sm:mb-5 md:mb-6 ${isRTL ? 'flex-row-reverse' : ''}`}>
                               <div className="p-4 rounded-2xl bg-primary/10 shadow-lg flex-shrink-0">
                                 <feature.icon className="h-8 w-8 text-primary" />
                               </div>
@@ -288,7 +288,7 @@ const FeaturesFixed = () => {
           </div>
           
           {/* Row indicators */}
-          <div className="flex justify-center mt-8 space-x-2">
+          <div className="flex justify-center mt-4 sm:mt-6 md:mt-8 space-x-2">
             {featuresInRows.map((_, index) => (
               <motion.button
                 key={index}

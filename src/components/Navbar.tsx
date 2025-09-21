@@ -93,7 +93,7 @@ const Navbar = () => {
                 alt="TaxAI Logo"
                 className="h-14 w-auto sm:h-11 md:h-14 lg:h-17"
               />
-              <h2 className={`text-2xl font-extrabold tracking-wider text-primary px-3 py-1 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm ${isRTL ? 'mr-3' : 'ml-3'}`}>
+              <h2 className={`text-2xl font-extrabold tracking-wider text-primary px-3 py-1 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm hidden sm:block ${isRTL ? 'mr-3' : 'ml-3'}`}>
                 TaxAi
               </h2>
             </div>
