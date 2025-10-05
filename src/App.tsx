@@ -16,6 +16,7 @@ import AskPage from "./pages/agent/AskPage";
 import TalkPage from "./pages/agent/TalkPage";
 import RegistrationFlow from "./pages/RegistrationFlow";
 import EmailVerificationPage from "./pages/EmailVerificationPage";
+import CollaborateWithUs from "./pages/CollaborateWithUs";
 import { LanguageDebugger } from "@/components/LanguageDebugger";
 
 const queryClient = new QueryClient();
@@ -43,6 +44,7 @@ const App = () => (
                   <Route path="/registration" element={<RegistrationFlow />} />
                   <Route path="/register" element={<RegistrationFlow />} />
                   <Route path="/verify-email" element={<EmailVerificationPage />} />
+                  <Route path="/collaborate-with-us" element={<CollaborateWithUs />} />
                   <Route path="/blog" element={<BlogListPage />} />
                   <Route path="/blog/:slug" element={<BlogDetailPage />} />
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

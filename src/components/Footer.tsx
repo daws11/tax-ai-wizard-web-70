@@ -13,6 +13,7 @@ const Footer = () => {
     resources: [
       { name: t('blogNav'), href: '/blog' },
       { name: t('help'), href: '#' },
+      { name: 'Partner with Us', href: '/collaborate-with-us' },
     ],
     legal: [
       { name: t('privacy_and_policy'), href: '/privacy-policy' },

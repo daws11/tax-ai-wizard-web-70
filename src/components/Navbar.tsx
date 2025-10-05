@@ -49,6 +49,7 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('faq')}</button>
           <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
           <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
+          <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
         </>
       );
     }
@@ -57,6 +58,7 @@ const Navbar = () => {
         <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('home')}</button>
         <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
         <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
+        <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
       </>
     );
   };
@@ -70,6 +72,7 @@ const Navbar = () => {
           <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('faq')}</button>
           <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
           <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
+          <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
         </>
       );
     }
@@ -78,6 +81,7 @@ const Navbar = () => {
         <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('home')}</button>
         <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
         <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
+        <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
       </>
     );
   };

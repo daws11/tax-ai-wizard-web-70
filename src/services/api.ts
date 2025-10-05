@@ -93,7 +93,6 @@ class ApiService {
     
     const config: RequestInit = {
       headers: {
-        'Content-Type': 'application/json',
         ...options.headers,
       },
       ...options,
@@ -124,7 +123,13 @@ class ApiService {
         throw error;
       }
 
-      return await response.json();
+      // Handle empty responses
+      const text = await response.text();
+      try {
+        return text ? (JSON.parse(text) as T) : ({} as T);
+      } catch {
+        return {} as T;
+      }
     } catch (error) {
       console.error('API request failed:', error);
       throw error;
@@ -223,6 +228,16 @@ class ApiService {
     return this.request<{ message: string; subscription: any }>('/auth/activate-trial-plan', {
       method: 'POST',
       body: JSON.stringify(data),
+    });
+  }
+
+  // Submit partner collaboration form (multipart/form-data)
+  async submitPartnerForm(formData: FormData): Promise<{ message: string; id: string; createdAt: string } | { message: string }>
+  {
+    // Do not set Content-Type header; browser will set correct boundary for FormData
+    return this.request('/partners/submit', {
+      method: 'POST',
+      body: formData,
     });
   }
 }
