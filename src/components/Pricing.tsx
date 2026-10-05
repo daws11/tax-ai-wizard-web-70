@@ -1,247 +1,136 @@
-import { Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { ArrowRight, Check } from "lucide-react";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
-interface PlanFeature {
-  text: string;
-}
-
-interface PricingPlan {
-  id: string;
-  name: string;
-  price: string;
-  priceAED: string;
-  description: string;
-  features: PlanFeature[];
-  mostPopular?: boolean;
-  buttonText: string;
-}
-
+/** Four plan cards + enterprise band. Enterprise CTA routes to the partner
+ *  page — the old "/contact" target never existed (404). */
 const Pricing = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { isRTL } = useLanguageDetection();
 
-  const plans: PricingPlan[] = [
+  const plans = [
     {
-      id: "trial",
       name: t('trialPlan'),
-      price: t('free'),
-      priceAED: t('free'),
-      description: t('trialPlanDesc'),
-      features: [
-        { text: t('oneUser') },
-        { text: t('upTo10Messages') },
-        { text: t('uaeTaxCoverage') },
-        { text: t('bilingualSupport') },
-        { text: t('standardSupport') },
-        { text: t('noCreditCardRequired') },
-      ],
-      buttonText: t('startFreeTrial'),
+      tagline: t('site.pricing.trialTagline'),
+      price: "$0",
+      per: "",
+      note: t('site.pricing.trialNote'),
+      features: [t('upTo10Messages'), t('site.pricing.trialF2'), t('oneUser')],
+      cta: t('startFreeTrial'),
+      popular: false,
     },
     {
-      id: "monthly",
       name: t('monthlyPlan'),
+      tagline: t('site.pricing.monthlyTagline'),
       price: "$99",
-      priceAED: "AED 365",
-      description: t('monthlyPlanDesc'),
-      features: [
-        { text: t('oneUser') },
-        // { text: t('oneDevice') },
-        { text: t('monthlyMessages') },
-        { text: t('uaeTaxCoverage') },
-        { text: t('bilingualSupport') },
-        { text: t('standardSupport') },
-        { text: t('stepByStepGuidance') },
-      ],
-      buttonText: t('pricingGetStarted'),
+      per: "/mo",
+      note: t('site.pricing.monthlyNote'),
+      features: [t('monthlyMessages'), t('site.pricing.monthlyF2'), t('standardSupport')],
+      cta: t('site.pricing.monthlyCta'),
+      popular: false,
     },
     {
-      id: "quarterly",
       name: t('quarterlyPlan'),
+      tagline: t('site.pricing.quarterlyTagline'),
       price: "$250",
-      priceAED: "AED 915",
-      description: t('quarterlyPlanDesc'),
-      features: [
-        { text: t('oneUser') },
-        // { text: t('oneDevice') },
-        { text: t('quarterlyMessages') },
-        { text: t('allMonthlyFeatures') },
-        { text: t('prioritySupport') },
-        { text: t('monthlyTaxDigest') },
-      ],
-      mostPopular: true,
-      buttonText: t('pricingGetStarted'),
+      per: "/qtr",
+      note: t('site.pricing.quarterlyNote'),
+      features: [t('quarterlyMessages'), t('allMonthlyFeatures'), t('prioritySupport')],
+      cta: t('site.pricing.quarterlyCta'),
+      popular: true,
     },
     {
-      id: "yearly",
       name: t('yearlyPlan'),
+      tagline: t('site.pricing.yearlyTagline'),
       price: "$899",
-      priceAED: "AED 3,300",
-      description: t('yearlyPlanDesc'),
-      features: [
-        { text: t('twoUsers') },
-        // { text: t('twoDevices') },
-        { text: t('yearlyMessages') },
-        { text: t('allQuarterlyFeatures') },
-        { text: t('earlyAccess') },
-        { text: t('onboardingSession') },
-      ],
-      buttonText: t('pricingGetStarted'),
-    },
-    {
-      id: "enterprise",
-      name: t('enterprisePlan'),
-      price: t('customPrice'),
-      priceAED: t('quotation'),
-      description: t('enterprisePlanDesc'),
-      features: [
-        { text: t('threePlusUsers') },
-        { text: t('volumeBasedMessages') },
-        { text: t('dedicatedManager') },
-        { text: t('customModules') },
-        { text: t('slaSupport') },
-      ],
-      buttonText: t('contactSales'),
+      per: "/yr",
+      note: t('site.pricing.yearlyNote'),
+      features: [t('yearlyMessages'), t('twoUsers'), t('prioritySupport')],
+      cta: t('site.pricing.yearlyCta'),
+      popular: false,
     },
   ];
 
   return (
-    <section 
-      id="pricing" 
-      className="py-12 sm:py-16 md:py-24 " 
-      dir={isRTL ? 'rtl' : 'ltr'}
-    >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className={`text-center ${isRTL ? 'text-right' : 'text-left'}`}>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-gray-100 sm:text-4xl mb-3 sm:mb-4">
-            {t('pricingTitle')}
-          </h2>
-          <p className="mt-3 sm:mt-4 max-w-2xl text-base sm:text-lg md:text-xl text-gray-500 dark:text-gray-400 mx-auto leading-relaxed px-2">
-            {t('pricingSubtitle')}
-          </p>
+    <section id="pricing" className="scroll-mt-20 border-y border-slate-200 bg-surface py-24" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="reveal mx-auto max-w-2xl text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">{t('pricing')}</p>
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{t('site.pricing.title')}</h2>
+          <p className="mt-4 text-lg leading-relaxed text-slate-600">{t('site.pricing.subtitle')}</p>
         </div>
 
-        <div className="mt-8 sm:mt-12 md:mt-16">
-          {/* Regular Pricing Plans */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-            {plans.filter(plan => plan.id !== 'enterprise').map((plan, index) => (
-              <Card 
-                key={plan.id}
-                className={`backdrop-blur-md transition-all border shadow-sm hover:shadow-md bg-white/20 dark:bg-gray-800/20 dark:border-gray-700/30 flex flex-col h-full ${
-                  plan.mostPopular ? "ring-2 ring-primary" : ""
-                } scale-in`} 
-                style={{ transitionDelay: `${index * 0.1}s` }}
+        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {plans.map((plan, i) => (
+            <article
+              key={plan.name}
+              className={`reveal flex flex-col rounded-2xl p-7 ${
+                plan.popular
+                  ? "relative border-2 border-brand-600 bg-white shadow-lift reveal-d2"
+                  : "border border-slate-200 bg-white shadow-card"
+              } ${i === 1 ? "reveal-d1" : ""} ${i === 3 ? "reveal-d3" : ""}`}
+            >
+              {plan.popular && (
+                <span className="absolute -top-3.5 start-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm rtl:translate-x-1/2">
+                  {t('mostPopular')}
+                </span>
+              )}
+              <h3 className="text-base font-extrabold text-navy-900">{plan.name}</h3>
+              <p className="mt-1 text-[13px] font-medium text-slate-500">{plan.tagline}</p>
+              <p className="mt-5">
+                <span className="text-4xl font-extrabold tracking-tight text-navy-900">{plan.price}</span>
+                {plan.per && <span className="text-sm font-semibold text-slate-500"> {plan.per}</span>}
+              </p>
+              <p className="mt-1 text-xs font-medium text-slate-500">{plan.note}</p>
+              <ul className="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+                {plan.features.map((f) => (
+                  <li key={f} className="flex gap-2.5">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={() => navigate('/registration')}
+                className={`mt-7 inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-bold transition ${
+                  plan.popular
+                    ? "bg-brand-600 text-white shadow-sm hover:bg-brand-500"
+                    : "border border-slate-300 bg-white text-navy-900 hover:bg-slate-50"
+                }`}
               >
-                <CardHeader className="pb-0 px-6 pt-6">
-                  {plan.mostPopular && (
-                    <Badge variant="secondary" className={`w-fit mb-4 text-sm ${isRTL ? 'mr-0 ml-auto' : 'ml-0 mr-auto'}`}>
-                      {t('mostPopular')}
-                    </Badge>
-                  )}
-                  <div className={`space-y-3 ${isRTL ? 'text-right' : 'text-left'}`}>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                      {plan.name}
-                    </h3>
-                    <div className={`flex items-baseline ${isRTL ? 'flex-row-reverse' : 'flex-row'} gap-2`}>
-                      <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                        {plan.price}
-                      </span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {plan.priceAED}
-                      </span>
-                    </div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400 min-h-[60px] leading-relaxed">
-                      {plan.description}
-                    </p>
-                  </div>
-                </CardHeader>
-                <CardContent className="flex-grow px-6 pt-6">
-                  {/* <Separator className="mb-6" /> */}
-                  <ul className={`space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
-                    {plan.features.map((feature, i) => (
-                      <li 
-                        key={i}
-                        className={`flex items-start ${isRTL ? 'flex-row-reverse justify-end' : 'flex-row'} gap-3`}
-                      >
-                        <Check 
-                          className={`h-5 w-5 text-primary shrink-0 ${isRTL ? 'order-2' : 'order-1'}`} 
-                        />
-                        <span className={`text-sm text-gray-500 dark:text-gray-400 leading-relaxed ${
-                          isRTL ? 'order-1' : 'order-2'
-                        }`}>
-                          {feature.text}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-                <CardFooter className="mt-auto pt-6 px-6 pb-6">
-                  <Button 
-                    className="w-full bg-primary hover:bg-primary/90 text-white text-base py-2.5" 
-                    size="lg"
-                    onClick={() => navigate('/registration')}
-                  >
-                    {plan.buttonText}
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+                {plan.cta}
+              </button>
+            </article>
+          ))}
+        </div>
 
-          {/* Enterprise Plan - Full Width */}
-          <div className="mt-12 bg-white/20 dark:bg-gray-800/20 backdrop-blur-md rounded-xl border border-gray-200 dark:border-gray-700/30 overflow-hidden">
-            <div className="p-8 md:p-12">
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-10">
-                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                    {t('enterprisePlan', 'Enterprise Plan')}
-                  </h2>
-                  <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                    {t('enterprisePlanDesc', 'Comprehensive tax solution for large organizations with advanced needs.')}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[
-                    t('enterpriseFeature1', 'AI-powered tax automation'),
-                    t('enterpriseFeature2', 'Insights dashboard with ERP-integrated'),
-                    t('enterpriseFeature3', 'Custom-built advisory modules'),
-                    t('enterpriseFeature4', 'Private AI assistant for your team'),
-                    t('enterpriseFeature5', 'Dedicated account manager & SLA support'),
-                    t('enterpriseFeature6', 'Flexible usage & multi-user access')
-                  ].map((feature, i) => (
-                    <div key={i} className="flex items-start p-4 ">
-                      <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span className="ml-3 text-gray-700 dark:text-gray-300">
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10 text-center">
-                  <Button 
-                    size="lg" 
-                    className="bg-blue-600 hover:bg-blue-700 text-base px-8 py-6"
-                    onClick={() => navigate('/contact')}
-                  >
-                    {t('contactSales', 'Contact Sales for Enterprise Plan')}
-                  </Button>
-                </div>
-              </div>
+        {/* Enterprise band */}
+        <article className="reveal reveal-d1 mt-6 overflow-hidden rounded-2xl bg-navy-950">
+          <div className="relative grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[1fr_auto]">
+            <div
+              className="hero-glow"
+              aria-hidden="true"
+              style={{ top: 'auto', bottom: '-120px', left: '30%', width: '560px', height: '280px', background: 'radial-gradient(closest-side, rgba(37,99,235,0.22), transparent)', opacity: 0.6 }}
+            />
+            <div className="relative">
+              <h3 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">{t('enterprisePlan')}</h3>
+              <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-slate-400">{t('site.pricing.entDesc')}</p>
+            </div>
+            <div className="relative">
+              <button
+                onClick={() => navigate('/collaborate-with-us')}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-navy-900 transition hover:bg-slate-100"
+              >
+                {t('site.pricing.entCta')}
+                <ArrowRight className={`h-4 w-4 ${isRTL ? 'rotate-180' : ''}`} />
+              </button>
             </div>
           </div>
-        </div>
-        
-        <div className={`mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 ${isRTL ? 'text-right' : 'text-left'} px-2`}>
-          <p className="leading-relaxed">{t('pricingNote')}</p>
-          <p className="mt-2">{t('noCreditCardRequired', 'No credit card required for free trial. Cancel anytime.')}</p>
-        </div>
+        </article>
+
+        <p className="reveal mt-6 text-center text-sm text-slate-500">{t('pricingNote')}</p>
       </div>
     </section>
   );

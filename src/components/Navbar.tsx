@@ -1,36 +1,42 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "./ThemeToggle";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
+/**
+ * Site navbar. Renders the dark (over-navy) variant on the homepage and the
+ * light variant on inner pages. Theme switching was removed — the current
+ * design system is a fixed light-hybrid.
+ */
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const { changeLanguage, isRTL } = useLanguageDetection();
 
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === "/";
+  const dark = isHomePage; // dark variant sits on the navy hero
+
+  useEffect(() => {
+    if (!dark) return;
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [dark]);
 
   const handleNavigation = (path: string, elementId?: string) => {
     setIsMenuOpen(false);
-    
-    if (path === '/' && elementId) {
+    if (path === "/" && elementId) {
       if (isHomePage) {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById(elementId)?.scrollIntoView({ behavior: "smooth" });
       } else {
-        navigate('/');
+        navigate("/");
         setTimeout(() => {
-          const element = document.getElementById(elementId);
-          if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-          }
+          document.getElementById(elementId)?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }
     } else {
@@ -38,162 +44,158 @@ const Navbar = () => {
     }
   };
 
-  // changeLanguage function is now provided by useLanguageDetection hook
+  const linkBase = dark
+    ? "text-sm font-semibold text-slate-300 transition hover:text-white"
+    : "text-sm font-semibold text-slate-600 transition hover:text-navy-900";
+  const linkActive = dark ? "text-sm font-bold text-white" : "text-sm font-bold text-brand-600";
 
-  const renderNavigationLinks = () => {
-    if (isHomePage) {
-      return (
-        <>
-          <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('features')}</button>
-          <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('howItWorks')}</button>
-          <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('faq')}</button>
-          <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
-          <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
-          <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
-        </>
-      );
-    }
-    return (
-      <>
-        <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('home')}</button>
-        <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
-        <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
-        <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary px-3 py-2 rounded-md text-sm font-medium dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
-      </>
-    );
-  };
+  const links = isHomePage ? (
+    <>
+      <button onClick={() => handleNavigation("/", "features")} className={linkBase}>{t('features')}</button>
+      <button onClick={() => handleNavigation("/", "demo")} className={linkBase}>{t('site.nav.assistant')}</button>
+      <button onClick={() => handleNavigation("/", "how-it-works")} className={linkBase}>{t('howItWorks')}</button>
+      <button onClick={() => handleNavigation("/", "pricing")} className={linkBase}>{t('pricing')}</button>
+      <button onClick={() => handleNavigation("/", "faq")} className={linkBase}>{t('faq')}</button>
+      <button onClick={() => handleNavigation("/blog")} className={linkBase}>{t('blogNav')}</button>
+    </>
+  ) : (
+    <>
+      <button onClick={() => handleNavigation("/")} className={linkBase}>{t('home')}</button>
+      <button onClick={() => handleNavigation("/", "features")} className={linkBase}>{t('features')}</button>
+      <button onClick={() => handleNavigation("/", "pricing")} className={linkBase}>{t('pricing')}</button>
+      <button onClick={() => handleNavigation("/blog")} className={linkBase}>{t('blogNav')}</button>
+    </>
+  );
 
-  const renderMobileNavigationLinks = () => {
-    if (isHomePage) {
-      return (
-        <>
-          <button onClick={() => handleNavigation('/', 'features')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('features')}</button>
-          <button onClick={() => handleNavigation('/', 'how-it-works')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('howItWorks')}</button>
-          <button onClick={() => handleNavigation('/', 'faq')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('faq')}</button>
-          <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
-          <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
-          <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
-        </>
-      );
-    }
-    return (
-      <>
-        <button onClick={() => handleNavigation('/')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('home')}</button>
-        <button onClick={() => handleNavigation('/', 'pricing')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('pricing')}</button>
-        <button onClick={() => handleNavigation('/blog')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">{t('blogNav')}</button>
-        <button onClick={() => handleNavigation('/collaborate-with-us')} className="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium w-full text-left dark:text-gray-300 transition-colors duration-200">Partner with Us</button>
-      </>
-    );
-  };
+  const partnerLink = (
+    <button
+      onClick={() => handleNavigation("/collaborate-with-us")}
+      className={location.pathname === "/collaborate-with-us" ? linkActive : linkBase}
+    >
+      {t('site.nav.partner')}
+    </button>
+  );
+
+  const loginBtn = (
+    <a
+      href="https://ask.taxai.ae/"
+      className={
+        dark
+          ? "rounded-lg px-4 py-2 text-sm font-semibold text-slate-300 transition hover:text-white"
+          : "rounded-lg px-4 py-2 text-sm font-semibold text-slate-600 transition hover:text-navy-900"
+      }
+    >
+      {t('login')}
+    </a>
+  );
+
+  const ctaBtn = (
+    <button
+      onClick={() => handleNavigation("/agent/ask")}
+      className={
+        dark
+          ? "rounded-lg bg-white px-4 py-2 text-sm font-bold text-navy-900 shadow-sm transition hover:bg-slate-100"
+          : "rounded-lg bg-navy-900 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-navy-800"
+      }
+    >
+      {t('getStarted')}
+    </button>
+  );
+
+  const langSelect = (
+    <Select value={i18n.language.startsWith('ar') ? 'ar' : 'en'} onValueChange={changeLanguage}>
+      <SelectTrigger className={
+        dark
+          ? "h-9 w-[104px] border-white/15 bg-white/5 text-sm text-white"
+          : "h-9 w-[104px] border-slate-300 bg-white text-sm text-navy-900"
+      }>
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="en">🇺🇸 English</SelectItem>
+        <SelectItem value="ar">🇦🇪 العربية</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+
+  const headerCls = dark
+    ? `fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? "bg-navy-950/85 shadow-lg shadow-black/20 backdrop-blur-md" : ""}`
+    : "sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur";
 
   return (
-    <nav className="sticky top-0 z-50 glass-effect" dir={isRTL ? 'rtl' : 'ltr'}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 cursor-pointer flex items-center ${isRTL ? 'flex-row-reverse' : 'flex-row'}`} onClick={() => handleNavigation('/')}>
-              <img
-                src="/lovable-uploads/logo%20circle.png"
-                alt="TaxAI Logo"
-                className="h-14 w-auto sm:h-11 md:h-14 lg:h-17"
-              />
-              <h2 className={`text-2xl font-extrabold tracking-wider text-primary px-3 py-1 rounded-lg bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm hidden sm:block ${isRTL ? 'mr-3' : 'ml-3'}`}>
-                TaxAi
-              </h2>
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <div className={`${isRTL ? 'mr-10' : 'ml-10'} flex items-baseline ${isRTL ? 'space-x-reverse space-x-4' : 'space-x-4'}`}>
-              {renderNavigationLinks()}
-              <Select
-                value={i18n.language}
-                onValueChange={changeLanguage}
-              >
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder={i18n.language === 'ar' ? 'اللغة' : 'Language'} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">🇺🇸 English</SelectItem>
-                  <SelectItem value="ar">🇦🇪 العربية</SelectItem>
-                </SelectContent>
-              </Select>
-              <ThemeToggle />
-              <Button
-                onClick={() => { window.location.href = 'https://ask.taxai.ae/'; }}
-                variant="outline"
-                className={`${isRTL ? 'mr-4' : 'ml-4'} border-primary text-primary hover:bg-primary hover:text-white`}
-              >
-                {t('login')}
-              </Button>
-              <Button
-                onClick={() => handleNavigation("/agent/ask")}
-                className={`${isRTL ? 'mr-4' : 'ml-4'} bg-primary hover:bg-primary/90`}
-              >
-                {t('getStarted')}
-              </Button>
-            </div>
-          </div>
-          <div className={`${isRTL ? '-ml-2' : '-mr-2'} flex md:hidden items-center`}>
-            <Select
-              value={i18n.language}
-              onValueChange={changeLanguage}
-            >
-              <SelectTrigger className={`w-[120px] ${isRTL ? 'ml-2' : 'mr-2'}`}>
-                <SelectValue placeholder={i18n.language === 'ar' ? 'اللغة' : 'Language'} />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="en">🇺🇸 English</SelectItem>
-                <SelectItem value="ar">🇦🇪 العربية</SelectItem>
-              </SelectContent>
-            </Select>
-            <ThemeToggle />
-            <Button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              variant="ghost"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary"
-            >
-              <span className="sr-only">{i18n.language === 'ar' ? 'فتح القائمة الرئيسية' : 'Open main menu'}</span>
-              {isMenuOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </Button>
-          </div>
+    <header className={headerCls} dir={isRTL ? 'rtl' : 'ltr'}>
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6" aria-label="Main">
+        <button onClick={() => handleNavigation("/")} className="flex items-center gap-2.5" aria-label="TaxAI home">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-navy-900 text-sm font-extrabold text-white shadow-sm">T</span>
+          <span className={`text-lg font-extrabold tracking-tight ${dark ? "text-white" : "text-navy-900"}`}>TaxAI</span>
+        </button>
+
+        <div className="hidden items-center gap-7 lg:flex">
+          {links}
+          {partnerLink}
         </div>
-      </div>
+
+        <div className="hidden items-center gap-3 lg:flex">
+          {langSelect}
+          {loginBtn}
+          {ctaBtn}
+        </div>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          <div className="scale-90">{langSelect}</div>
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={isMenuOpen ? (i18n.language === 'ar' ? 'إغلاق القائمة' : 'Close menu') : (i18n.language === 'ar' ? 'فتح القائمة' : 'Open menu')}
+            className={`rounded-lg p-2 ${dark ? "text-white" : "text-navy-900"}`}
+          >
+            <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </nav>
 
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className={`px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-effect ${isRTL ? 'text-right' : 'text-left'}`}>
-            {renderMobileNavigationLinks()}
-            <div className={`flex items-center px-3 py-2 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-              <span className={`text-gray-600 dark:text-gray-300 ${isRTL ? 'ml-2' : 'mr-2'}`}>
-                {i18n.language === 'ar' ? 'المظهر:' : 'Theme:'}
-              </span>
-              <ThemeToggle />
+        <div
+          id="mobile-menu"
+          className={
+            dark
+              ? "border-t border-white/10 bg-navy-950/95 px-6 pb-6 pt-4 backdrop-blur lg:hidden"
+              : "border-t border-slate-200 bg-white px-6 pb-6 pt-4 lg:hidden"
+          }
+        >
+          <div className="flex flex-col gap-1">
+            {isHomePage ? (
+              <>
+                <button onClick={() => handleNavigation("/", "features")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('features')}</button>
+                <button onClick={() => handleNavigation("/", "demo")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('site.nav.assistant')}</button>
+                <button onClick={() => handleNavigation("/", "how-it-works")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('howItWorks')}</button>
+                <button onClick={() => handleNavigation("/", "pricing")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('pricing')}</button>
+                <button onClick={() => handleNavigation("/", "faq")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('faq')}</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => handleNavigation("/")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('home')}</button>
+                <button onClick={() => handleNavigation("/", "features")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('features')}</button>
+                <button onClick={() => handleNavigation("/", "pricing")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('pricing')}</button>
+              </>
+            )}
+            <button onClick={() => handleNavigation("/blog")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('blogNav')}</button>
+            <button onClick={() => handleNavigation("/collaborate-with-us")} className={`rounded-lg px-3 py-2.5 text-start text-sm font-semibold ${dark ? "text-slate-200 hover:bg-white/5" : "text-slate-700 hover:bg-slate-50"}`}>{t('site.nav.partner')}</button>
+            <div className={`mt-3 flex gap-3 border-t pt-4 ${dark ? "border-white/10" : "border-slate-200"}`}>
+              <a href="https://ask.taxai.ae/" className={`flex-1 rounded-lg border px-4 py-2.5 text-center text-sm font-semibold ${dark ? "border-white/15 text-white" : "border-slate-300 text-navy-900"}`}>{t('login')}</a>
+              <button onClick={() => handleNavigation("/agent/ask")} className={`flex-1 rounded-lg px-4 py-2.5 text-center text-sm font-bold ${dark ? "bg-white text-navy-900" : "bg-navy-900 text-white"}`}>{t('getStarted')}</button>
             </div>
-            <Button
-              onClick={() => { window.location.href = 'https://ask.taxai.ae/'; }}
-              variant="outline"
-              className="mt-2 w-full border-primary text-primary hover:bg-primary hover:text-white"
-            >
-              {t('login')}
-            </Button>
-            <Button
-              onClick={() => handleNavigation("/agent/ask")}
-              className="mt-2 w-full bg-primary hover:bg-primary/90"
-            >
-              {t('getStarted')}
-            </Button>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 

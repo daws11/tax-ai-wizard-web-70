@@ -1,152 +1,95 @@
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
+/** Single-open FAQ accordion built on native buttons with full aria wiring. */
 const FAQ = () => {
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguageDetection();
+  const triggersRef = useRef<Array<HTMLButtonElement | null>>([]);
 
   const faqs = [
-    {
-      question: t('faqQuestion1'),
-      answer: t('faqAnswer1'),
-    },
-    {
-      question: t('faqQuestion2'),
-      answer: t('faqAnswer2'),
-    },
-    {
-      question: t('faqQuestion3'),
-      answer: t('faqAnswer3'),
-    },
-    {
-      question: t('faqQuestion4'),
-      answer: t('faqAnswer4'),
-    },
-    {
-      question: t('faqQuestion5'),
-      answer: t('faqAnswer5'),
-    },
-    {
-      question: t('faqQuestion6'),
-      answer: t('faqAnswer6'),
-    },
-    {
-      question: t('faqQuestion7'),
-      answer: t('faqAnswer7'),
-    },
-    {
-      question: t('faqQuestion8'),
-      answer: t('faqAnswer8'),
-    },
-    {
-      question: t('faqQuestion9'),
-      answer: t('faqAnswer9'),
-    },
-    {
-      question: t('faqQuestion10'),
-      answer: t('faqAnswer10'),
-    },
-    {
-      question: t('faqQuestion11'),
-      answer: t('faqAnswer11'),
-    },
-    {
-      question: t('faqQuestion12'),
-      answer: t('faqAnswer12'),
-    },
-    {
-      question: t('faqQuestion13'),
-      answer: t('faqAnswer13'),
-    },
-    {
-      question: t('faqQuestion14'),
-      answer: t('faqAnswer14'),
-    },
-    {
-      question: t('faqQuestion15'),
-      answer: t('faqAnswer15'),
-    },
-    {
-      question: t('faqQuestion16'),
-      answer: t('faqAnswer16'),
-    },
-    {
-      question: t('faqQuestion17'),
-      answer: t('faqAnswer17'),
-    },
+    { q: t('faqQuestion1'), a: t('faqAnswer1') },
+    { q: t('faqQuestion2'), a: t('faqAnswer2') },
+    { q: t('faqQuestion4'), a: t('faqAnswer4') },
+    { q: t('site.faq.arabicQ'), a: t('site.faq.arabicA') },
+    { q: t('faqQuestion8'), a: t('faqAnswer8') },
+    { q: t('faqQuestion12'), a: t('faqAnswer12') },
+    { q: t('site.faq.trialEndQ'), a: t('site.faq.trialEndA') },
+    { q: t('faqQuestion9'), a: t('faqAnswer9') },
   ];
 
-  return (
-    <div 
-      id="faq" 
-      className="py-24 sm:py-32 bg-gradient-to-b from-gray-50/20 to-white/20 dark:from-gray-900/20 dark:to-gray-800/20 backdrop-blur-sm"
-      dir={isRTL ? 'rtl' : 'ltr'}
-    >
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className={`mx-auto max-w-4xl ${isRTL ? 'text-right' : 'text-left'}`}
-        >
-          <h2 className="text-3xl font-bold leading-10 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary sm:text-4xl">
-            {t('faqTitle')}
-          </h2>
-          <p className="mt-4 text-lg leading-7 text-gray-600 dark:text-gray-400">
-            {t('faqSubtitle')}
-          </p>
-        </motion.div>
+  const setPanel = (btn: HTMLButtonElement, open: boolean) => {
+    const panelId = btn.getAttribute('aria-controls');
+    const panel = panelId ? document.getElementById(panelId) : null;
+    if (!panel) return;
+    btn.setAttribute('aria-expanded', String(open));
+    panel.style.maxHeight = open ? `${panel.scrollHeight}px` : '0px';
+  };
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 mx-auto max-w-4xl"
-        >
-          <Card className="backdrop-blur-md bg-white/20 dark:bg-gray-800/20 border border-primary/20 dark:border-primary/10 shadow-lg">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`}
-                  className="border-b border-gray-200 dark:border-gray-700 last:border-0"
+  const onToggle = (index: number) => {
+    const btn = triggersRef.current[index];
+    if (!btn) return;
+    const willOpen = btn.getAttribute('aria-expanded') !== 'true';
+    triggersRef.current.forEach((other) => {
+      if (other && other !== btn) setPanel(other, false);
+    });
+    setPanel(btn, willOpen);
+  };
+
+  return (
+    <section id="faq" className="scroll-mt-20 border-t border-slate-200 bg-surface py-24" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_1.6fr]">
+        <div className="reveal">
+          <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">{t('faq')}</p>
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">{t('site.faq.title')}</h2>
+          <p className="mt-4 text-lg leading-relaxed text-slate-600">
+            {t('site.faq.subtitle')}{' '}
+            <a href="https://chat-taxai.onrender.com/" className="font-bold text-brand-600 underline decoration-brand-200 underline-offset-4 hover:text-brand-700">
+              {t('site.faq.askDirect')}
+            </a>.
+          </p>
+        </div>
+
+        <div className="reveal reveal-d1 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-card">
+          {faqs.map((item, i) => {
+            const panelId = `faq-panel-${i}`;
+            const open = i === 0;
+            return (
+              <div key={i}>
+                <h3>
+                  <button
+                    ref={(el) => { triggersRef.current[i] = el; }}
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    onClick={() => onToggle(i)}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-start"
+                  >
+                    <span className="text-[15px] font-bold text-navy-900">{item.q}</span>
+                    <ChevronDown className="accordion-icon h-5 w-5 shrink-0 text-slate-400" />
+                  </button>
+                </h3>
+                <div
+                  id={panelId}
+                  role="region"
+                  className="accordion-panel"
+                  style={{ maxHeight: open ? undefined : '0px' }}
+                  ref={(el) => {
+                    if (el && open && el.style.maxHeight === '') {
+                      el.style.maxHeight = `${el.scrollHeight}px`;
+                    }
+                  }}
                 >
-                  <AccordionTrigger 
-                    className={`text-lg font-semibold text-gray-900 dark:text-gray-100 px-6 py-4 hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                  >
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent 
-                    className={`text-base text-gray-600 dark:text-gray-400 px-6 pb-4 ${
-                      isRTL ? 'text-right' : 'text-left'
-                    }`}
-                  >
-                    <div className="prose dark:prose-invert max-w-none leading-relaxed">
-                      {faq.answer.split('\n').map((paragraph, i) => (
-                        <p key={i} className="mb-4 last:mb-0">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </Card>
-        </motion.div>
+                  <p className="whitespace-pre-line px-6 pb-5 text-[15px] leading-relaxed text-slate-600">{item.a}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

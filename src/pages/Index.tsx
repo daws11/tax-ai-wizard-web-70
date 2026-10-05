@@ -1,110 +1,59 @@
-import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-// import Features from "../components/Features";
-// import FeaturesOptimized from "../components/FeaturesOptimized";
-import FeaturesFixed from "../components/FeaturesFixed";
-import Process from "../components/Process";
-import AIChat from "../components/AIChat";
-import Pricing from "../components/Pricing";
-import Testimonials from "../components/Testimonials";
-import FAQ from "../components/FAQ";
-import CTA from "../components/CTA";
-import Footer from "../components/Footer";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import LogoWall from "@/components/LogoWall";
+import StatsBar from "@/components/StatsBar";
+import Features from "@/components/Features";
+import AIChat from "@/components/AIChat";
+import Process from "@/components/Process";
+import Pricing from "@/components/Pricing";
+import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
+import CTA from "@/components/CTA";
+import Footer from "@/components/Footer";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
 const Index = () => {
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          
-          if (entry.target.classList.contains('opacity-0')) {
-            entry.target.classList.add('fade-in');
-            entry.target.classList.remove('opacity-0');
-          }
-          
-          
-          if (entry.target.classList.contains('slide-up') ||
-              entry.target.classList.contains('fade-in-right') ||
-              entry.target.classList.contains('fade-in-left') ||
-              entry.target.classList.contains('scale-in')) {
-            entry.target.classList.add('animated');
-          }
-        }
-      });
-    }, { threshold: 0.1 });
-
-    // Observe all sections and elements with animation classes
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-    
-    const animatedElements = document.querySelectorAll('.slide-up, .fade-in-right, .fade-in-left, .scale-in');
-    animatedElements.forEach(element => {
-      observer.observe(element);
-    });
-
-    return () => {
-      sections.forEach(section => {
-        observer.unobserve(section);
-      });
-      animatedElements.forEach(element => {
-        observer.unobserve(element);
-      });
-    };
-  }, []);
+  const { t } = useTranslation();
+  const { isRTL } = useLanguageDetection();
+  useScrollReveal();
 
   return (
-    <div className="min-h-screen" dir={isRTL ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-white" dir={isRTL ? 'rtl' : 'ltr'}>
       <Navbar />
-      
-      <section className="opacity-0">
-        <Hero />
-      </section>
-      
-      <section className="opacity-0">
-        <FeaturesFixed />
-      </section>
-      
-      <section className="opacity-0 section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 slide-up">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">{t('aiDemoTitle')}</h2>
-            <p className="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-              {t('aiDemoSubtitle')}
-            </p>
+
+      <Hero />
+
+      {/* Social proof: logo wall + metrics */}
+      <section className="border-b border-slate-200 bg-surface pb-16 pt-40">
+        <div className="mx-auto max-w-7xl px-6">
+          <p className="reveal text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+            {t('site.logos.title')}
+          </p>
+          <div className="reveal reveal-d1">
+            <LogoWall />
           </div>
-          <div className="scale-in">
-            <AIChat />
-          </div>
+          <StatsBar />
         </div>
       </section>
-      
-      <section className="opacity-0">
-        <Process />
-      </section>
-      
-      <section className="opacity-0">
-        <Pricing />
+
+      <section id="features" className="scroll-mt-20 py-24">
+        <Features />
       </section>
 
-      <section className="opacity-0">
-        <CTA />
-      </section>
-      
-      {/* <section className="opacity-0">
-        <Testimonials />
-      </section> */}
-      
-      <section className="opacity-0">
-        <FAQ />
-      </section>
-              
+      <AIChat />
+
+      <Process />
+
+      <Pricing />
+
+      <Testimonials />
+
+      <FAQ />
+
+      <CTA />
+
       <Footer />
     </div>
   );

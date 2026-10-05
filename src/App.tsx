@@ -30,31 +30,29 @@ const App = () => (
       <Toaster />
       <Sonner />
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-        <div className="min-h-screen w-full flex justify-center bg-transparent">
-          <div className="w-full max-w-[1920px] px-4 sm:px-6 lg:px-8 relative">
-            <Router>
-              <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/agent" element={<AgentPage />} />
-                  <Route path="/agent/ask" element={<AskPage />} />
-                  <Route path="/agent/talk" element={<TalkPage />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/disclaimer" element={<Disclaimer />} />
-                  <Route path="/registration" element={<RegistrationFlow />} />
-                  <Route path="/register" element={<RegistrationFlow />} />
-                  <Route path="/verify-email" element={<EmailVerificationPage />} />
-                  <Route path="/collaborate-with-us" element={<CollaborateWithUs />} />
-                  <Route path="/blog" element={<BlogListPage />} />
-                  <Route path="/blog/:slug" element={<BlogDetailPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </Router>
-            {/* Language Debugger - Only in development */}
-            {/* <LanguageDebugger /> */}
-          </div>
+        <div className="min-h-screen w-full">
+          <Router>
+            <Suspense fallback={<div className="text-center py-10">Loading...</div>}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/agent" element={<AgentPage />} />
+                <Route path="/agent/ask" element={<AskPage />} />
+                <Route path="/agent/talk" element={<TalkPage />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/disclaimer" element={<Disclaimer />} />
+                <Route path="/registration" element={<RegistrationFlow />} />
+                <Route path="/register" element={<RegistrationFlow />} />
+                <Route path="/verify-email" element={<EmailVerificationPage />} />
+                <Route path="/collaborate-with-us" element={<CollaborateWithUs />} />
+                <Route path="/blog" element={<BlogListPage />} />
+                <Route path="/blog/:slug" element={<BlogDetailPage />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </Router>
+          {/* Language Debugger - Only in development */}
+          {/* <LanguageDebugger /> */}
         </div>
       </ThemeProvider>
     </TooltipProvider>

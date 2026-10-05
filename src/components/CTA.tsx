@@ -1,35 +1,44 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
+/** Final navy CTA band. */
 const CTA = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const isRTL = i18n.language === 'ar';
+  const { t } = useTranslation();
+  const { isRTL } = useLanguageDetection();
 
   return (
-    <div className="section-padding bg-primary backdrop-blur-sm" dir={isRTL ? 'rtl' : 'ltr'}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+    <section className="hero-backdrop py-24" dir={isRTL ? 'rtl' : 'ltr'}>
+      <div className="hero-grid" aria-hidden="true" />
+      <div
+        className="hero-glow"
+        aria-hidden="true"
+        style={{ top: '-180px', left: '50%', transform: 'translateX(-50%)', width: '680px', height: '460px', background: 'radial-gradient(closest-side, rgba(37,99,235,0.26), transparent)' }}
+      />
+      <div className="relative mx-auto max-w-3xl px-6 text-center">
+        <h2 className="reveal text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
           {t('ctaTitle')}
         </h2>
-        <p className="mt-4 text-xl text-white/90 max-w-2xl mx-auto">
+        <p className="reveal reveal-d1 mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-400">
           {t('ctaSubtitle')}
         </p>
-        <div className="mt-8 flex justify-center">
-          <Button 
-            size="lg"
-            className="bg-white text-primary hover:bg-gray-100 hover:text-primary/90 font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
+        <div className="reveal reveal-d2 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <button
             onClick={() => navigate("/agent/ask")}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-600/25 transition hover:bg-brand-500 sm:w-auto"
           >
-            {t('ctaButton')}
-          </Button>
+            {t('startFreeTrial')}
+          </button>
+          <button
+            onClick={() => navigate("/collaborate-with-us")}
+            className="inline-flex w-full items-center justify-center rounded-lg border border-white/15 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:w-auto"
+          >
+            {t('site.pricing.entCta')}
+          </button>
         </div>
-        <p className="mt-4 text-sm text-white/80">
-          {t('ctaNote')}
-        </p>
       </div>
-    </div>
+    </section>
   );
 };
 

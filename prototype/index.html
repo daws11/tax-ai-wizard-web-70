@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<!--
+  ══════════════════════════════════════════════════════════════════
+  TaxAI — Enterprise Landing Page PROTOTYPE
+  Static design mockup for review/iteration. NOT for production.
+  Implementation target: landing/src (Vite + React + Tailwind).
+  See README.md in this folder for tokens & implementation mapping.
+  ══════════════════════════════════════════════════════════════════
+-->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>TaxAI — The Enterprise AI Platform for UAE Tax</title>
+  <meta name="description" content="TaxAI unifies UAE Corporate Tax, VAT and compliance workflows into one AI-powered platform — built by a UAE-licensed tax agency." />
+
+  <!-- Typography: Plus Jakarta Sans (properly loaded, unlike current production) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind (Play CDN — prototype only; production uses the project's Tailwind build) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            navy: {
+              950: '#0A0F1E',
+              900: '#0F172A',
+              800: '#1E293B',
+              700: '#334155',
+            },
+            brand: {
+              50:  '#EFF6FF',
+              100: '#DBEAFE',
+              400: '#60A5FA',
+              500: '#3B82F6',
+              600: '#2563EB',
+              700: '#1D4ED8',
+              800: '#1E40AF',
+            },
+            surface: '#F8FAFC',
+            success: { DEFAULT: '#059669', 700: '#047857' },
+          },
+          boxShadow: {
+            card: '0 1px 2px rgba(15,23,42,0.04), 0 8px 24px -8px rgba(15,23,42,0.08)',
+            lift: '0 2px 4px rgba(15,23,42,0.05), 0 16px 40px -12px rgba(15,23,42,0.14)',
+            hero: '0 32px 90px -24px rgba(2,6,23,0.55)',
+            float: '0 12px 32px -8px rgba(2,6,23,0.35)',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* ── Hero backdrop: grid + radial glows on deep navy ─────────── */
+    .hero-backdrop {
+      background-color: #0A0F1E;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(148,163,184,0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148,163,184,0.08) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 100%);
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 100%);
+    }
+    .hero-glow-1 {
+      position: absolute; top: -220px; left: 50%; transform: translateX(-70%);
+      width: 720px; height: 520px; border-radius: 9999px;
+      background: radial-gradient(closest-side, rgba(37,99,235,0.28), transparent);
+      filter: blur(40px);
+    }
+    .hero-glow-2 {
+      position: absolute; top: -160px; left: 50%; transform: translateX(30%);
+      width: 640px; height: 480px; border-radius: 9999px;
+      background: radial-gradient(closest-side, rgba(3,105,161,0.22), transparent);
+      filter: blur(48px);
+    }
+
+    /* ── Scroll reveal ───────────────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.revealed { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .typing-dot { animation: none !important; }
+    }
+
+    /* ── Chat typing indicator ───────────────────────────────────── */
+    @keyframes typingPulse {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-3px); opacity: 1; }
+    }
+    .typing-dot { width: 6px; height: 6px; border-radius: 9999px; background: #94A3B8; animation: typingPulse 1.2s infinite; }
+    .typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.3s; }
+
+    /* ── Accordion ───────────────────────────────────────────────── */
+    .accordion-panel { overflow: hidden; transition: max-height 0.32s ease; }
+    .accordion-icon { transition: transform 0.25s ease; }
+    [aria-expanded="true"] .accordion-icon { transform: rotate(180deg); }
+
+    /* Focus visibility (accessibility) */
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 2px solid #3B82F6; outline-offset: 2px; border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body class="bg-white font-sans text-slate-900 antialiased selection:bg-brand-100 selection:text-navy-900">
+
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[100] focus:rounded-lg focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white">Skip to content</a>
+
+  <!-- ═══════════════ 1. NAVBAR ═══════════════ -->
+  <header id="site-nav" class="fixed inset-x-0 top-0 z-50 transition-all duration-300">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6" aria-label="Main">
+      <a href="#" class="flex items-center gap-2.5" aria-label="TaxAI home">
+        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-navy-900 text-sm font-extrabold text-white shadow-sm">T</span>
+        <span class="text-lg font-extrabold tracking-tight text-white">TaxAI</span>
+      </a>
+
+      <div class="hidden items-center gap-8 lg:flex" data-nav-light>
+        <a href="#features" class="text-sm font-semibold text-slate-300 transition hover:text-white">Features</a>
+        <a href="#demo" class="text-sm font-semibold text-slate-300 transition hover:text-white">ATTO Assistant</a>
+        <a href="#how-it-works" class="text-sm font-semibold text-slate-300 transition hover:text-white">How it works</a>
+        <a href="#pricing" class="text-sm font-semibold text-slate-300 transition hover:text-white">Pricing</a>
+        <a href="#faq" class="text-sm font-semibold text-slate-300 transition hover:text-white">FAQ</a>
+      </div>
+
+      <div class="hidden items-center gap-3 lg:flex" data-nav-light>
+        <a href="https://ask.taxai.ae/" class="rounded-lg px-4 py-2 text-sm font-semibold text-slate-300 transition hover:text-white">Log in</a>
+        <a href="/agent/ask" class="rounded-lg bg-white px-4 py-2 text-sm font-bold text-navy-900 shadow-sm transition hover:bg-slate-100">Get started</a>
+      </div>
+
+      <button id="menu-btn" class="rounded-lg p-2 text-white lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <i data-lucide="menu" class="h-6 w-6"></i>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden border-t border-white/10 bg-navy-950/95 px-6 pb-6 pt-4 backdrop-blur lg:hidden">
+      <div class="flex flex-col gap-1">
+        <a href="#features" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/5">Features</a>
+        <a href="#demo" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/5">ATTO Assistant</a>
+        <a href="#how-it-works" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/5">How it works</a>
+        <a href="#pricing" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/5">Pricing</a>
+        <a href="#faq" class="rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-200 hover:bg-white/5">FAQ</a>
+        <div class="mt-3 flex gap-3 border-t border-white/10 pt-4">
+          <a href="https://ask.taxai.ae/" class="flex-1 rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-semibold text-white">Log in</a>
+          <a href="/agent/ask" class="flex-1 rounded-lg bg-white px-4 py-2.5 text-center text-sm font-bold text-navy-900">Get started</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ═══════════════ 2. HERO (dark navy) ═══════════════ -->
+    <section class="hero-backdrop pt-32 lg:pt-40">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow-1" aria-hidden="true"></div>
+      <div class="hero-glow-2" aria-hidden="true"></div>
+
+      <div class="relative mx-auto max-w-7xl px-6">
+        <div class="mx-auto max-w-3xl text-center">
+          <div class="reveal">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 py-1.5 pe-4 ps-3 text-xs font-semibold text-slate-300">
+              <span class="relative flex h-2 w-2">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
+                <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+              </span>
+              Built by a UAE-licensed Tax Agency
+            </span>
+          </div>
+
+          <h1 class="reveal reveal-d1 mt-6 text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
+            The enterprise AI platform
+            <span class="block bg-gradient-to-r from-brand-400 via-sky-300 to-brand-500 bg-clip-text text-transparent">for UAE tax operations</span>
+          </h1>
+
+          <p class="reveal reveal-d2 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-400">
+            TaxAI unifies Corporate Tax, VAT and compliance workflows into one intelligent platform —
+            engineered for accuracy, audit-readiness and scale, with every answer grounded in FTA legislation.
+          </p>
+
+          <div class="reveal reveal-d3 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <a href="/agent/ask" class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-600/25 transition hover:bg-brand-500 sm:w-auto">
+              Start free trial
+              <i data-lucide="arrow-right" class="h-4 w-4 rtl:rotate-180"></i>
+            </a>
+            <a href="#demo" class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/5 px-6 py-3.5 text-base font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:w-auto">
+              See ATTO in action
+            </a>
+          </div>
+
+          <p class="reveal reveal-d3 mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-1 text-xs font-medium text-slate-500">
+            <span class="inline-flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i>14-day free trial</span>
+            <span class="inline-flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i>No credit card required</span>
+            <span class="inline-flex items-center gap-1.5"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-400"></i>FTA-aligned</span>
+          </p>
+        </div>
+
+        <!-- Product mockup (overlaps into the section below) -->
+        <div class="reveal relative z-10 mx-auto -mb-28 mt-16 max-w-5xl lg:mt-20" aria-hidden="true">
+          <!-- floating stat cards -->
+          <div class="absolute -right-6 -top-8 z-20 hidden rounded-xl border border-white/10 bg-navy-800/90 px-4 py-3 shadow-float backdrop-blur lg:block">
+            <div class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/15"><i data-lucide="check" class="h-4 w-4 text-emerald-400"></i></span>
+              <div>
+                <p class="text-xs font-semibold text-white">Reconciliation complete</p>
+                <p class="text-[11px] text-slate-400">99.7% of entries matched</p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -left-8 bottom-16 z-20 hidden rounded-xl border border-white/10 bg-navy-800/90 px-4 py-3 shadow-float backdrop-blur lg:block">
+            <div class="flex items-center gap-2.5">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500/15"><i data-lucide="file-text" class="h-4 w-4 text-brand-400"></i></span>
+              <div>
+                <p class="text-xs font-semibold text-white">VAT201 draft ready</p>
+                <p class="text-[11px] text-slate-400">Filing due in 12 days</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- app window -->
+          <div class="overflow-hidden rounded-2xl bg-white shadow-hero ring-1 ring-white/10">
+            <!-- window chrome -->
+            <div class="flex items-center gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3">
+              <div class="flex gap-1.5">
+                <span class="h-2.5 w-2.5 rounded-full bg-rose-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+              </div>
+              <div class="mx-auto flex items-center gap-1.5 rounded-md bg-white px-3 py-1 text-[11px] font-medium text-slate-500 ring-1 ring-slate-200">
+                <i data-lucide="lock" class="h-3 w-3 text-slate-400"></i> app.taxai.ae/atto
+              </div>
+              <div class="w-12"></div>
+            </div>
+
+            <div class="grid md:grid-cols-[200px_1fr]">
+              <!-- sidebar -->
+              <aside class="hidden border-e border-slate-100 bg-slate-50/70 p-3 md:block">
+                <div class="mb-3 flex items-center gap-2 rounded-lg bg-white px-2.5 py-2 ring-1 ring-slate-200">
+                  <span class="flex h-6 w-6 items-center justify-center rounded-md bg-navy-900 text-[10px] font-extrabold text-white">T</span>
+                  <span class="text-xs font-bold text-slate-800">TaxAI</span>
+                </div>
+                <nav class="space-y-0.5 text-xs font-semibold text-slate-500">
+                  <span class="flex items-center gap-2 rounded-lg bg-navy-900 px-2.5 py-2 text-white"><i data-lucide="message-square" class="h-3.5 w-3.5"></i>ATTO Chat</span>
+                  <span class="flex items-center gap-2 rounded-lg px-2.5 py-2"><i data-lucide="layout-dashboard" class="h-3.5 w-3.5"></i>Dashboard</span>
+                  <span class="flex items-center gap-2 rounded-lg px-2.5 py-2"><i data-lucide="file-text" class="h-3.5 w-3.5"></i>Filings</span>
+                  <span class="flex items-center gap-2 rounded-lg px-2.5 py-2"><i data-lucide="arrow-right-left" class="h-3.5 w-3.5"></i>Reconciliation</span>
+                  <span class="flex items-center gap-2 rounded-lg px-2.5 py-2"><i data-lucide="settings" class="h-3.5 w-3.5"></i>Settings</span>
+                </nav>
+                <div class="mt-6 rounded-lg border border-dashed border-slate-200 p-2.5">
+                  <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Plan</p>
+                  <p class="text-xs font-bold text-slate-700">Enterprise</p>
+                </div>
+              </aside>
+
+              <!-- chat -->
+              <div class="flex flex-col">
+                <div class="flex items-center gap-2.5 border-b border-slate-100 px-5 py-3">
+                  <span class="relative flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-navy-900">
+                    <i data-lucide="bot" class="h-4 w-4 text-white"></i>
+                    <span class="absolute -bottom-0.5 -end-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500"></span>
+                  </span>
+                  <div>
+                    <p class="text-sm font-bold text-slate-900">ATTO</p>
+                    <p class="text-[11px] font-medium text-emerald-600">Online · UAE Tax Assistant</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4 px-5 py-5">
+                  <!-- user message -->
+                  <div class="flex justify-end">
+                    <div class="max-w-[85%] rounded-2xl rounded-br-md bg-navy-900 px-4 py-3 text-[13px] leading-relaxed text-white">
+                      We imported machinery from Germany for AED 500,000. What's the recoverable input VAT, and where does it go in the VAT201 return?
+                    </div>
+                  </div>
+                  <!-- ATTO message -->
+                  <div class="flex gap-2.5">
+                    <span class="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-navy-900"><i data-lucide="bot" class="h-3.5 w-3.5 text-white"></i></span>
+                    <div class="max-w-[90%] space-y-3 rounded-2xl rounded-tl-md border border-slate-200 bg-slate-50 px-4 py-3.5">
+                      <p class="text-[13px] leading-relaxed text-slate-700">
+                        For machinery used entirely in making taxable supplies, input VAT is fully recoverable:
+                      </p>
+                      <div class="rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px]">
+                        <p class="font-bold text-slate-900">Recoverable input VAT <span class="text-emerald-700">AED 25,000</span></p>
+                        <p class="mt-0.5 text-[12px] text-slate-500">5% of AED 500,000 · report in <span class="font-semibold text-slate-700">Box 9</span> of your VAT201</p>
+                      </div>
+                      <div class="flex flex-wrap gap-1.5">
+                        <span class="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-3 w-3"></i>Federal Decree-Law No. 8 of 2017 · Art. 55</span>
+                        <span class="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-3 w-3"></i>FTA Guide · VATGITC1</span>
+                      </div>
+                      <div class="flex gap-2 border-t border-slate-200 pt-2.5">
+                        <span class="inline-flex items-center gap-1 rounded-md bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200"><i data-lucide="file-check-2" class="h-3 w-3"></i>Attach to filing</span>
+                        <span class="inline-flex items-center gap-1 rounded-md bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600 ring-1 ring-slate-200"><i data-lucide="check" class="h-3 w-3"></i>Save to memos</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- typing -->
+                  <div class="flex items-center gap-2 ps-10">
+                    <span class="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                      <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 3. LOGO WALL + 4. STATS ═══════════════ -->
+    <section class="border-b border-slate-200 bg-surface pb-16 pt-40">
+      <div class="mx-auto max-w-7xl px-6">
+        <p class="reveal text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
+          Trusted by leading organizations across the UAE
+        </p>
+        <ul class="reveal reveal-d1 mt-8 grid grid-cols-2 items-center justify-items-center gap-x-8 gap-y-6 text-slate-400 sm:grid-cols-3 lg:grid-cols-6" aria-label="Client organizations">
+          <li class="text-sm font-bold tracking-tight">ABU DHABI POLICE</li>
+          <li class="font-serif text-xl font-bold italic">ADCB</li>
+          <li class="text-[13px] font-semibold leading-tight">Environment Agency<br />Abu Dhabi</li>
+          <li class="text-base font-extrabold tracking-wide">AL HILAL BANK</li>
+          <li class="text-sm font-bold tracking-tight">SFC</li>
+          <li class="text-xl font-extrabold lowercase tracking-tight">stc</li>
+        </ul>
+
+        <dl class="mt-16 grid grid-cols-2 gap-y-10 border-t border-slate-200 pt-12 text-center lg:grid-cols-4">
+          <div class="reveal flex flex-col items-center">
+            <dd class="order-1 text-4xl font-extrabold tracking-tight text-navy-900">99.9%</dd>
+            <dt class="order-2 mt-1.5 max-w-[220px] text-sm font-medium text-slate-500">Answer accuracy on UAE tax queries</dt>
+          </div>
+          <div class="reveal reveal-d1 flex flex-col items-center">
+            <dd class="order-1 text-4xl font-extrabold tracking-tight text-navy-900">40+</dd>
+            <dt class="order-2 mt-1.5 max-w-[220px] text-sm font-medium text-slate-500">Hours saved per finance team, monthly</dt>
+          </div>
+          <div class="reveal reveal-d2 flex flex-col items-center">
+            <dd class="order-1 text-4xl font-extrabold tracking-tight text-navy-900">12k+</dd>
+            <dt class="order-2 mt-1.5 max-w-[220px] text-sm font-medium text-slate-500">Tax queries resolved to date</dt>
+          </div>
+          <div class="reveal reveal-d3 flex flex-col items-center">
+            <dd class="order-1 text-4xl font-extrabold tracking-tight text-navy-900">24/7</dd>
+            <dt class="order-2 mt-1.5 max-w-[220px] text-sm font-medium text-slate-500">Availability, with audit-ready history</dt>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 5. FEATURES (bento grid) ═══════════════ -->
+    <section id="features" class="scroll-mt-20 py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="reveal max-w-2xl">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">Platform capabilities</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">Built by certified UAE tax practitioners. Engineered by AI pioneers.</h2>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">Everything a large organization needs to manage taxation with confidence, clarity and control — in one platform.</p>
+        </div>
+
+        <div class="mt-14 grid gap-5 lg:grid-cols-3">
+          <!-- A: large cell -->
+          <article class="reveal group rounded-2xl border border-slate-200 bg-white p-8 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-lift lg:col-span-2">
+            <div class="grid items-center gap-8 sm:grid-cols-2">
+              <div>
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-navy-900 text-white shadow-sm"><i data-lucide="layout-dashboard" class="h-5 w-5"></i></span>
+                <h3 class="mt-5 text-xl font-extrabold tracking-tight text-navy-900">Smarter tax management at scale</h3>
+                <p class="mt-2.5 text-[15px] leading-relaxed text-slate-600">Manage Corporate Tax, VAT and Excise across entities and jurisdictions from a single command center — designed for group finance teams, not spreadsheets.</p>
+                <a href="#demo" class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600 transition group-hover:gap-2.5 hover:text-brand-700">Explore the platform <i data-lucide="arrow-right" class="h-4 w-4 rtl:rotate-180"></i></a>
+              </div>
+              <!-- mini dashboard visual -->
+              <div class="rounded-xl border border-slate-200 bg-surface p-5" aria-hidden="true">
+                <div class="flex items-center justify-between text-[11px] font-semibold text-slate-500">
+                  <span>Quarterly output tax</span><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-emerald-700">+18.2%</span>
+                </div>
+                <div class="mt-4 flex h-28 items-end gap-2" aria-hidden="true">
+                  <span class="w-full rounded-t-md bg-slate-200" style="height:34%"></span>
+                  <span class="w-full rounded-t-md bg-slate-200" style="height:52%"></span>
+                  <span class="w-full rounded-t-md bg-brand-600" style="height:44%"></span>
+                  <span class="w-full rounded-t-md bg-slate-200" style="height:66%"></span>
+                  <span class="w-full rounded-t-md bg-slate-200" style="height:58%"></span>
+                  <span class="w-full rounded-t-md bg-brand-600 shadow-sm" style="height:88%"></span>
+                  <span class="w-full rounded-t-md bg-slate-200" style="height:72%"></span>
+                </div>
+                <div class="mt-3 flex justify-between text-[10px] font-medium text-slate-400"><span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- B -->
+          <article class="reveal reveal-d1 rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100"><i data-lucide="bar-chart-3" class="h-5 w-5"></i></span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Clear tax insights</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Live position dashboards for every period — liabilities, recoverable input VAT and cash-flow impact before they surprise you.</p>
+            <div class="mt-5 flex items-center gap-4 rounded-xl border border-slate-200 bg-surface px-4 py-3" aria-hidden="true">
+              <span class="h-12 w-12 rounded-full" style="background:conic-gradient(#2563EB 0 68%, #E2E8F0 68% 100%)"></span>
+              <div class="text-xs">
+                <p class="font-bold text-navy-900">AED 1.24M</p>
+                <p class="font-medium text-slate-500">recoverable · Q3</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- C -->
+          <article class="reveal rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100"><i data-lucide="workflow" class="h-5 w-5"></i></span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Automated tax workflows</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">From transaction to journal entry — classification, coding and posting run on rules your team approves once.</p>
+            <div class="mt-5 space-y-2" aria-hidden="true">
+              <span class="flex items-center gap-2 rounded-lg bg-surface px-3 py-2 text-xs font-semibold text-slate-600 ring-1 ring-slate-200"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Detect taxable transaction</span>
+              <span class="ms-4 block h-3 w-px bg-slate-300"></span>
+              <span class="flex items-center gap-2 rounded-lg bg-surface px-3 py-2 text-xs font-semibold text-slate-600 ring-1 ring-slate-200"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Classify VAT treatment</span>
+              <span class="ms-4 block h-3 w-px bg-slate-300"></span>
+              <span class="flex items-center gap-2 rounded-lg bg-brand-50 px-3 py-2 text-xs font-bold text-brand-700 ring-1 ring-brand-100"><i data-lucide="zap" class="h-3.5 w-3.5"></i>Generate journal entry</span>
+            </div>
+          </article>
+
+          <!-- D -->
+          <article class="reveal reveal-d1 rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100"><i data-lucide="shield-check" class="h-5 w-5"></i></span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Proactive risk management</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Continuous monitoring flags mismatches, deadlines and exposure — before the FTA does.</p>
+            <div class="mt-5 space-y-2" aria-hidden="true">
+              <span class="flex items-center gap-2.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800"><i data-lucide="alert-triangle" class="h-3.5 w-3.5 shrink-0"></i>VAT201 due in 6 days</span>
+              <span class="flex items-center gap-2.5 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-800"><i data-lucide="alert-triangle" class="h-3.5 w-3.5 shrink-0"></i>Input VAT mismatch on 3 invoices</span>
+              <span class="flex items-center gap-2.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-800"><i data-lucide="check" class="h-3.5 w-3.5 shrink-0"></i>All other checks passed</span>
+            </div>
+          </article>
+
+          <!-- E -->
+          <article class="reveal reveal-d2 rounded-2xl border border-slate-200 bg-white p-7 shadow-card transition duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+            <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-5 w-5"></i></span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Instant tax law clarity</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Plain-language answers to technical questions — every response cited to the exact article and FTA guide.</p>
+            <div class="mt-5 rounded-xl border border-slate-200 bg-surface p-4" aria-hidden="true">
+              <p class="text-xs leading-relaxed text-slate-600">"Small Business Relief requires revenue below <b class="text-navy-900">AED 3M</b> per relevant period…"</p>
+              <span class="mt-3 inline-flex items-center gap-1 rounded-md bg-white px-2 py-1 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-3 w-3"></i>Cabinet Decision No. 55/2023</span>
+            </div>
+          </article>
+
+          <!-- F: wide cell -->
+          <article class="reveal reveal-d1 rounded-2xl border border-slate-200 bg-navy-900 p-8 shadow-card lg:col-span-3">
+            <div class="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr]">
+              <div>
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-white ring-1 ring-white/15"><i data-lucide="arrow-right-left" class="h-5 w-5"></i></span>
+                <h3 class="mt-5 text-xl font-extrabold tracking-tight text-white">Seamless tax reconciliation</h3>
+                <p class="mt-2.5 text-[15px] leading-relaxed text-slate-400">Bank feeds, ERP ledgers and VAT returns reconciled continuously — with a full audit trail your external auditors will love.</p>
+              </div>
+              <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3" aria-hidden="true">
+                <div class="space-y-2">
+                  <span class="block rounded-lg bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 ring-1 ring-white/10">ERP ledger · 1,204 lines</span>
+                  <span class="block rounded-lg bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 ring-1 ring-white/10">Bank statement · 986 lines</span>
+                </div>
+                <span class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/15 ring-1 ring-emerald-400/30"><i data-lucide="check" class="h-5 w-5 text-emerald-400"></i></span>
+                <div class="space-y-2">
+                  <span class="block rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-300 ring-1 ring-emerald-400/25">Matched 99.7%</span>
+                  <span class="block rounded-lg bg-white/5 px-3 py-2 text-xs font-semibold text-amber-300 ring-1 ring-amber-400/25">3 items flagged for review</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 6. ATTO DEMO ═══════════════ -->
+    <section id="demo" class="scroll-mt-20 border-y border-slate-200 bg-surface py-24">
+      <div class="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">Meet ATTO</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">Your AI tax assistant, available 24/7</h2>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">
+            ATTO answers UAE tax questions in plain language, in English or Arabic — grounded in legislation,
+            never guessing. When a matter needs a human, it escalates to our licensed practitioners.
+          </p>
+          <ul class="mt-7 space-y-4">
+            <li class="flex gap-3.5">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-700"></i></span>
+              <p class="text-[15px] leading-relaxed text-slate-700"><b class="font-bold text-navy-900">Grounded in UAE legislation</b> — Corporate Tax, VAT and Excise, kept current with FTA releases.</p>
+            </li>
+            <li class="flex gap-3.5">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-700"></i></span>
+              <p class="text-[15px] leading-relaxed text-slate-700"><b class="font-bold text-navy-900">Cites every source</b> — each answer links to the exact law, article and FTA guide.</p>
+            </li>
+            <li class="flex gap-3.5">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100"><i data-lucide="check" class="h-3.5 w-3.5 text-emerald-700"></i></span>
+              <p class="text-[15px] leading-relaxed text-slate-700"><b class="font-bold text-navy-900">Escalates to human experts</b> — licensed tax agency review when judgment matters.</p>
+            </li>
+          </ul>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="https://chat-taxai.onrender.com/" class="inline-flex items-center justify-center gap-2 rounded-lg bg-navy-900 px-6 py-3 text-base font-bold text-white transition hover:bg-navy-800">
+              <i data-lucide="bot" class="h-4.5 w-4.5"></i> Chat with ATTO
+            </a>
+            <a href="#pricing" class="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-base font-semibold text-navy-900 transition hover:bg-slate-50">View plans</a>
+          </div>
+        </div>
+
+        <!-- conversation card -->
+        <div class="reveal reveal-d1" aria-hidden="true">
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-lift sm:p-7">
+            <div class="flex items-center gap-2.5 border-b border-slate-100 pb-4">
+              <span class="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-navy-900"><i data-lucide="bot" class="h-4 w-4 text-white"></i><span class="absolute -bottom-0.5 -end-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500"></span></span>
+              <div>
+                <p class="text-sm font-bold text-navy-900">ATTO</p>
+                <p class="text-[11px] font-medium text-emerald-600">Online · answers in EN &amp; AR</p>
+              </div>
+            </div>
+            <div class="space-y-4 pt-5">
+              <div class="flex justify-end">
+                <div class="max-w-[85%] rounded-2xl rounded-br-md bg-navy-900 px-4 py-3 text-[13px] leading-relaxed text-white">
+                  Can a free zone entity with "qualifying income" still claim Small Business Relief?
+                </div>
+              </div>
+              <div class="flex gap-2.5">
+                <span class="mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-navy-900"><i data-lucide="bot" class="h-3.5 w-3.5 text-white"></i></span>
+                <div class="max-w-[90%] space-y-3 rounded-2xl rounded-tl-md border border-slate-200 bg-slate-50 px-4 py-3.5">
+                  <p class="text-[13px] leading-relaxed text-slate-700">
+                    <b class="text-navy-900">No — the two regimes can't be combined.</b> A Free Zone Person must apply the Qualifying Free Zone Person regime; Small Business Relief is not available alongside it for the same period.
+                  </p>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-3 w-3"></i>Corporate Tax Law · Art. 18</span>
+                    <span class="inline-flex items-center gap-1 rounded-md bg-brand-50 px-2 py-1 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-100"><i data-lucide="book-open" class="h-3 w-3"></i>Cabinet Decision No. 55/2023</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <div class="max-w-[85%] rounded-2xl rounded-br-md bg-navy-900 px-4 py-3 text-[13px] leading-relaxed text-white">
+                  شكراً — ما هو الحد الأقصى للإيرادات؟
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></span>
+                <span class="text-[11px] font-medium text-slate-400">ATTO is typing…</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-center text-[11px] font-medium text-slate-400">Demo conversation · illustrative content</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 7. HOW IT WORKS ═══════════════ -->
+    <section id="how-it-works" class="scroll-mt-20 py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">How it works</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">From sign-up to filing in four steps</h2>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">No migration project. No rip-and-replace. TaxAI works alongside the tools your team already uses.</p>
+        </div>
+
+        <ol class="relative mt-16 grid gap-10 lg:grid-cols-4 lg:gap-6">
+          <!-- connector line (desktop) -->
+          <div class="absolute inset-x-0 top-6 hidden border-t-2 border-dashed border-slate-200 lg:block" aria-hidden="true"></div>
+
+          <li class="reveal relative">
+            <span class="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900 text-base font-extrabold text-white shadow-card">1</span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Create your account</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Start with a 14-day trial. No credit card, no setup fee — invite your finance team in minutes.</p>
+          </li>
+          <li class="reveal reveal-d1 relative">
+            <span class="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900 text-base font-extrabold text-white shadow-card">2</span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Input your information</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Import transactions, invoices and ledgers — or connect your existing ERP and accounting stack.</p>
+          </li>
+          <li class="reveal reveal-d2 relative">
+            <span class="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-600 text-base font-extrabold text-white shadow-card">3</span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">AI analysis</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">ATTO classifies transactions, computes liabilities and flags risks — every output cited and reviewable.</p>
+          </li>
+          <li class="reveal reveal-d3 relative">
+            <span class="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900 text-base font-extrabold text-white shadow-card">4</span>
+            <h3 class="mt-5 text-lg font-extrabold tracking-tight text-navy-900">Review &amp; submit</h3>
+            <p class="mt-2 text-[15px] leading-relaxed text-slate-600">Approve the prepared returns with full audit trails, then file with confidence — deadlines tracked for you.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 8. PRICING ═══════════════ -->
+    <section id="pricing" class="scroll-mt-20 border-y border-slate-200 bg-surface py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">Pricing</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">Simple plans that scale with your team</h2>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">Every plan starts with a 14-day free trial. Prices in USD — AED billing available at checkout.</p>
+        </div>
+
+        <div class="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <!-- Free trial -->
+          <article class="reveal flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <h3 class="text-base font-extrabold text-navy-900">Free Trial</h3>
+            <p class="mt-1 text-[13px] font-medium text-slate-500">Evaluate the platform</p>
+            <p class="mt-5"><span class="text-4xl font-extrabold tracking-tight text-navy-900">$0</span></p>
+            <p class="mt-1 text-xs font-medium text-slate-500">14 days · no credit card</p>
+            <ul class="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>10 ATTO messages</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Full platform access</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>1 user seat</li>
+            </ul>
+            <a href="/registration" class="mt-7 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-navy-900 transition hover:bg-slate-50">Start free trial</a>
+          </article>
+
+          <!-- Monthly -->
+          <article class="reveal reveal-d1 flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <h3 class="text-base font-extrabold text-navy-900">Monthly</h3>
+            <p class="mt-1 text-[13px] font-medium text-slate-500">For growing teams</p>
+            <p class="mt-5"><span class="text-4xl font-extrabold tracking-tight text-navy-900">$99</span><span class="text-sm font-semibold text-slate-500"> /mo</span></p>
+            <p class="mt-1 text-xs font-medium text-slate-500">≈ AED 365 / month</p>
+            <ul class="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>100 messages / month</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Corporate Tax &amp; VAT modules</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Standard support</li>
+            </ul>
+            <a href="/registration" class="mt-7 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-navy-900 transition hover:bg-slate-50">Choose Monthly</a>
+          </article>
+
+          <!-- Quarterly — most popular -->
+          <article class="reveal reveal-d2 relative flex flex-col rounded-2xl border-2 border-brand-600 bg-white p-7 shadow-lift">
+            <span class="absolute -top-3.5 start-1/2 -translate-x-1/2 rounded-full bg-brand-600 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-sm rtl:translate-x-1/2">Most popular</span>
+            <h3 class="text-base font-extrabold text-navy-900">Quarterly</h3>
+            <p class="mt-1 text-[13px] font-medium text-slate-500">Best value per message</p>
+            <p class="mt-5"><span class="text-4xl font-extrabold tracking-tight text-navy-900">$250</span><span class="text-sm font-semibold text-slate-500"> /qtr</span></p>
+            <p class="mt-1 text-xs font-medium text-slate-500">≈ AED 915 · saves 16% vs monthly</p>
+            <ul class="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>300 messages / quarter</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Everything in Monthly</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Priority support</li>
+            </ul>
+            <a href="/registration" class="mt-7 inline-flex items-center justify-center rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-brand-500">Choose Quarterly</a>
+          </article>
+
+          <!-- Yearly -->
+          <article class="reveal reveal-d3 flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <h3 class="text-base font-extrabold text-navy-900">Yearly</h3>
+            <p class="mt-1 text-[13px] font-medium text-slate-500">For established teams</p>
+            <p class="mt-5"><span class="text-4xl font-extrabold tracking-tight text-navy-900">$899</span><span class="text-sm font-semibold text-slate-500"> /yr</span></p>
+            <p class="mt-1 text-xs font-medium text-slate-500">≈ AED 3,300 · saves 24% vs monthly</p>
+            <ul class="mt-6 flex-1 space-y-3 text-sm text-slate-600">
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>1,200 messages / year</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>2 user seats included</li>
+              <li class="flex gap-2.5"><i data-lucide="check" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>Priority support</li>
+            </ul>
+            <a href="/registration" class="mt-7 inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-navy-900 transition hover:bg-slate-50">Choose Yearly</a>
+          </article>
+        </div>
+
+        <!-- Enterprise band -->
+        <article class="reveal mt-6 overflow-hidden rounded-2xl bg-navy-950">
+          <div class="relative grid items-center gap-8 p-8 sm:p-10 lg:grid-cols-[1fr_auto]">
+            <div class="hero-glow-2 !top-auto !h-40 opacity-60" aria-hidden="true"></div>
+            <div class="relative">
+              <h3 class="text-xl font-extrabold tracking-tight text-white sm:text-2xl">Enterprise</h3>
+              <p class="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-slate-400">
+                For 3+ users: dedicated success manager, custom compliance modules, SSO &amp; role-based access,
+                and a contractual SLA. Pricing tailored to your group structure.
+              </p>
+            </div>
+            <div class="relative flex flex-col gap-2 sm:flex-row lg:flex-col xl:flex-row">
+              <!-- FIX: production routes this to /collaborate-with-us (current /contact 404s) -->
+              <a href="/collaborate-with-us" class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-bold text-navy-900 transition hover:bg-slate-100">Talk to sales <i data-lucide="arrow-right" class="h-4 w-4 rtl:rotate-180"></i></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 9. TESTIMONIALS ═══════════════ -->
+    <section class="py-24">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="reveal mx-auto max-w-2xl text-center">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">Customer stories</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">Finance teams that made tax stress-free</h2>
+        </div>
+
+        <div class="mt-14 grid gap-5 lg:grid-cols-3">
+          <figure class="reveal flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <div class="flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+              <i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i>
+            </div>
+            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate-700">
+              "Quarter-end used to mean three weeks of reconciliation spreadsheets. With TaxAI our VAT201 was drafted, reviewed and filed in two days — with a cleaner audit trail than we've ever had."
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-navy-900 text-xs font-extrabold text-white">MA</span>
+              <div>
+                <p class="text-sm font-bold text-navy-900">M. Al-Mansoori</p>
+                <p class="text-xs font-medium text-slate-500">Group Finance Director · Real Estate Group, Dubai</p>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal reveal-d1 flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <div class="flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+              <i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i>
+            </div>
+            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate-700">
+              "The citations are what sold us. Every ATTO answer points to the exact article of the law, so our tax team can verify in seconds instead of escalating everything to external advisors."
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-600 text-xs font-extrabold text-white">SK</span>
+              <div>
+                <p class="text-sm font-bold text-navy-900">S. Khan</p>
+                <p class="text-xs font-medium text-slate-500">Head of Tax · Free Zone Holding Company, Abu Dhabi</p>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="reveal reveal-d2 flex flex-col rounded-2xl border border-slate-200 bg-white p-7 shadow-card">
+            <div class="flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
+              <i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i><i data-lucide="star" class="h-4 w-4 fill-current"></i>
+            </div>
+            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-slate-700">
+              "We onboarded a nine-entity group without a single data migration project. The risk alerts alone caught an input VAT mismatch that would have cost us a penalty."
+            </blockquote>
+            <figcaption class="mt-6 flex items-center gap-3 border-t border-slate-100 pt-5">
+              <span class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-700 text-xs font-extrabold text-white">RA</span>
+              <div>
+                <p class="text-sm font-bold text-navy-900">R. Al-Ameri</p>
+                <p class="text-xs font-medium text-slate-500">CFO · Industrial Group, Sharjah</p>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 10. FAQ ═══════════════ -->
+    <section id="faq" class="scroll-mt-20 border-t border-slate-200 bg-surface py-24">
+      <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_1.6fr]">
+        <div class="reveal">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-brand-600">FAQ</p>
+          <h2 class="mt-3 text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">Frequently asked questions</h2>
+          <p class="mt-4 text-lg leading-relaxed text-slate-600">Can't find what you're looking for? <a href="https://chat-taxai.onrender.com/" class="font-bold text-brand-600 underline decoration-brand-200 underline-offset-4 hover:text-brand-700">Ask ATTO directly</a>.</p>
+        </div>
+
+        <div class="reveal reveal-d1 divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white shadow-card" data-accordion>
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="true" aria-controls="faq-p1" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">What is TaxAI?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p1" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">TaxAI is an AI-powered tax platform for UAE organizations. It combines an intelligent tax assistant (ATTO) with automated workflows for Corporate Tax, VAT and Excise — built and supervised by a UAE-licensed tax agency, so every output is grounded in current FTA legislation.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p2" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Which taxes does TaxAI cover?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p2" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">UAE Corporate Tax, Value Added Tax (VAT) and Excise Tax — including free zone regimes, cross-border scenarios and FTA filing workflows. Coverage is continuously updated as the Ministry of Finance and FTA publish new guidance.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p3" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Is TaxAI aligned with FTA regulations?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p3" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">Yes. TaxAI is built by a UAE-licensed tax agency. Every AI answer is cited to the specific law, article or FTA guide it derives from, and outputs that require professional judgment are escalated to licensed practitioners.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p4" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Is my data secure and compliant?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p4" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">Your data is encrypted in transit and at rest, access is role-based, and the platform is designed around ADGM data-protection standards and GDPR principles. Your information is never used to train models for other customers.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p5" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Does ATTO support Arabic?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p5" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">Yes — ATTO converses fluently in both English and Arabic, and the entire platform interface supports right-to-left layouts. Language is detected automatically from your browser.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p6" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Can I upgrade or downgrade my plan later?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p6" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">Anytime. Upgrades take effect immediately with pro-rated billing; downgrades apply at the start of your next billing cycle. Unused messages don't roll over between cycles.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p7" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">What happens after my free trial ends?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p7" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">You choose a plan before the 14 days are up — nothing is charged automatically. If the trial expires, your data and conversation history are kept safe for 30 days while you decide.</p>
+            </div>
+          </div>
+
+          <div data-accordion-item>
+            <h3>
+              <button type="button" data-accordion-trigger aria-expanded="false" aria-controls="faq-p8" class="flex w-full items-center justify-between gap-4 px-6 py-5 text-start">
+                <span class="text-[15px] font-bold text-navy-900">Do you offer on-premise or custom deployments?</span>
+                <i data-lucide="chevron-down" class="accordion-icon h-5 w-5 shrink-0 text-slate-400"></i>
+              </button>
+            </h3>
+            <div id="faq-p8" data-accordion-panel class="accordion-panel" role="region">
+              <p class="px-6 pb-5 text-[15px] leading-relaxed text-slate-600">Enterprise customers can request custom modules, dedicated environments and bespoke SLAs. <a href="/collaborate-with-us" class="font-semibold text-brand-600 hover:text-brand-700">Talk to our team</a> about your group's requirements.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ 11. FINAL CTA ═══════════════ -->
+    <section class="hero-backdrop py-24">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-glow-1" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-3xl px-6 text-center">
+        <h2 class="reveal text-3xl font-extrabold tracking-tight text-balance text-white sm:text-4xl lg:text-5xl">Ready to make taxes stress-free?</h2>
+        <p class="reveal reveal-d1 mx-auto mt-4 max-w-xl text-lg leading-relaxed text-slate-400">Join the UAE finance teams running their tax operations on TaxAI. Start free — upgrade when you're ready.</p>
+        <div class="reveal reveal-d2 mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="/agent/ask" class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-600/25 transition hover:bg-brand-500 sm:w-auto">Start your free trial</a>
+          <a href="/collaborate-with-us" class="inline-flex w-full items-center justify-center rounded-lg border border-white/15 bg-white/5 px-7 py-3.5 text-base font-semibold text-white backdrop-blur transition hover:bg-white/10 sm:w-auto">Talk to sales</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════ 12. FOOTER ═══════════════ -->
+  <footer class="border-t border-white/10 bg-navy-950 text-slate-400">
+    <div class="mx-auto max-w-7xl px-6 py-16">
+      <div class="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
+        <div>
+          <a href="#" class="flex items-center gap-2.5" aria-label="TaxAI home">
+            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-white/10 text-sm font-extrabold text-white">T</span>
+            <span class="text-lg font-extrabold tracking-tight text-white">TaxAI</span>
+          </a>
+          <p class="mt-4 max-w-xs text-sm leading-relaxed">
+            The enterprise AI platform for UAE tax operations. Built by <span class="font-semibold text-slate-300">DataU3</span> and the <span class="font-semibold text-slate-300">Atto Group</span>.
+          </p>
+          <div class="mt-5 flex gap-2">
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition hover:bg-white/5 hover:text-white" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition hover:bg-white/5 hover:text-white" aria-label="X (Twitter)">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.4l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.3 17.4z"/></svg>
+            </a>
+            <a href="#" class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition hover:bg-white/5 hover:text-white" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Product">
+          <h3 class="text-xs font-bold uppercase tracking-[0.14em] text-white">Product</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="#features" class="transition hover:text-white">Features</a></li>
+            <li><a href="#demo" class="transition hover:text-white">ATTO Assistant</a></li>
+            <li><a href="#how-it-works" class="transition hover:text-white">How it works</a></li>
+            <li><a href="#pricing" class="transition hover:text-white">Pricing</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Company">
+          <h3 class="text-xs font-bold uppercase tracking-[0.14em] text-white">Company</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="/blog" class="transition hover:text-white">Blog</a></li>
+            <li><a href="/collaborate-with-us" class="transition hover:text-white">Partner with us</a></li>
+            <li><a href="#" class="transition hover:text-white">About</a></li>
+            <li><a href="#" class="transition hover:text-white">Careers</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Legal">
+          <h3 class="text-xs font-bold uppercase tracking-[0.14em] text-white">Legal</h3>
+          <ul class="mt-4 space-y-3 text-sm">
+            <li><a href="/privacy-policy" class="transition hover:text-white">Privacy Policy</a></li>
+            <li><a href="/disclaimer" class="transition hover:text-white">Disclaimer</a></li>
+            <li><a href="#" class="transition hover:text-white">Terms of Service</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-[0.14em] text-white">Compliance</h3>
+          <ul class="mt-4 space-y-2.5 text-xs font-semibold">
+            <li class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2"><i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>FTA-aligned · Licensed Tax Agency</li>
+            <li><span class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2"><i data-lucide="lock" class="h-3.5 w-3.5 text-emerald-400"></i>ADGM data-protection standards</span></li>
+            <li><span class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2"><i data-lucide="globe" class="h-3.5 w-3.5 text-emerald-400"></i>GDPR principles</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs sm:flex-row">
+        <p>© 2026 DataU3 and Atto group. All rights reserved.</p>
+        <p class="text-slate-500">TaxAI provides AI-assisted guidance and does not replace licensed professional advice.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Icons: Lucide -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* Icons */
+      if (window.lucide) lucide.createIcons();
+
+      /* Navbar: solid on scroll */
+      var nav = document.getElementById('site-nav');
+      function onScroll() {
+        nav.classList.toggle('bg-navy-950/85', window.scrollY > 12);
+        nav.classList.toggle('backdrop-blur-md', window.scrollY > 12);
+        nav.classList.toggle('shadow-lg', window.scrollY > 12);
+        nav.classList.toggle('shadow-black/20', window.scrollY > 12);
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+
+      /* Mobile menu */
+      var menuBtn = document.getElementById('menu-btn');
+      var mobileMenu = document.getElementById('mobile-menu');
+      menuBtn.addEventListener('click', function () {
+        var open = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!open));
+        mobileMenu.classList.toggle('hidden', open);
+        menuBtn.innerHTML = open
+          ? '<i data-lucide="menu" class="h-6 w-6"></i>'
+          : '<i data-lucide="x" class="h-6 w-6"></i>';
+        if (window.lucide) lucide.createIcons();
+      });
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          menuBtn.setAttribute('aria-expanded', 'false');
+          mobileMenu.classList.add('hidden');
+          menuBtn.innerHTML = '<i data-lucide="menu" class="h-6 w-6"></i>';
+          if (window.lucide) lucide.createIcons();
+        });
+      });
+
+      /* Scroll reveal (respects prefers-reduced-motion) */
+      var revealEls = document.querySelectorAll('.reveal');
+      if (reducedMotion || !('IntersectionObserver' in window)) {
+        revealEls.forEach(function (el) { el.classList.add('revealed'); });
+      } else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(function (el) { io.observe(el); });
+      }
+
+      /* FAQ accordion: single-open group */
+      var triggers = document.querySelectorAll('[data-accordion-trigger]');
+      function setPanel(btn, open) {
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', String(open));
+        panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+      }
+      triggers.forEach(function (btn) {
+        setPanel(btn, btn.getAttribute('aria-expanded') === 'true');
+        btn.addEventListener('click', function () {
+          var willOpen = btn.getAttribute('aria-expanded') !== 'true';
+          triggers.forEach(function (other) { if (other !== btn) setPanel(other, false); });
+          setPanel(btn, willOpen);
+        });
+      });
+      window.addEventListener('resize', function () {
+        triggers.forEach(function (btn) {
+          if (btn.getAttribute('aria-expanded') === 'true') setPanel(btn, true);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
