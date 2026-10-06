@@ -126,7 +126,11 @@ const Navbar = () => {
     <header className={headerCls} dir={isRTL ? 'rtl' : 'ltr'}>
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6" aria-label="Main">
         <button onClick={() => handleNavigation("/")} className="flex items-center gap-2.5" aria-label="TaxAI home">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-navy-900 text-sm font-extrabold text-white shadow-sm">T</span>
+          <img
+            src={dark ? "/lovable-uploads/logo%20dark.png" : "/lovable-uploads/light%20logo.png"}
+            alt="TaxAI logo"
+            className="h-9 w-auto"
+          />
           <span className={`text-lg font-extrabold tracking-tight ${dark ? "text-white" : "text-navy-900"}`}>TaxAI</span>
         </button>
 

@@ -63,7 +63,7 @@ const Footer = () => {
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           <div>
             <Link to="/" className="flex items-center gap-2.5" aria-label="TaxAI home">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 to-white/10 text-sm font-extrabold text-white">T</span>
+              <img src="/lovable-uploads/logo%20dark.png" alt="TaxAI logo" className="h-9 w-auto" />
               <span className="text-lg font-extrabold tracking-tight text-white">TaxAI</span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed">{t('site.footer.tagline')}</p>

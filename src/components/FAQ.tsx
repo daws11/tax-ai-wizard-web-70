@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import { useLanguageDetection } from "@/hooks/useLanguageDetection";
@@ -37,6 +37,17 @@ const FAQ = () => {
     });
     setPanel(btn, willOpen);
   };
+
+  // Keep the open panel's max-height in sync when content re-wraps on resize.
+  useEffect(() => {
+    const onResize = () => {
+      triggersRef.current.forEach((btn) => {
+        if (btn && btn.getAttribute('aria-expanded') === 'true') setPanel(btn, true);
+      });
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   return (
     <section id="faq" className="scroll-mt-20 border-t border-slate-200 bg-surface py-24" dir={isRTL ? 'rtl' : 'ltr'}>
