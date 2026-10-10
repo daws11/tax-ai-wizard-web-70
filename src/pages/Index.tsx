@@ -1,7 +1,5 @@
-import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import LogoWall from "@/components/LogoWall";
 import StatsBar from "@/components/StatsBar";
 import Features from "@/components/Features";
 import AIChat from "@/components/AIChat";
@@ -15,7 +13,6 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useLanguageDetection } from "@/hooks/useLanguageDetection";
 
 const Index = () => {
-  const { t } = useTranslation();
   const { isRTL } = useLanguageDetection();
   useScrollReveal();
 
@@ -25,15 +22,9 @@ const Index = () => {
 
       <Hero />
 
-      {/* Social proof: logo wall + metrics */}
+      {/* Social proof: metrics */}
       <section className="border-b border-slate-200 bg-surface pb-16 pt-40">
         <div className="mx-auto max-w-7xl px-6">
-          <p className="reveal text-center text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
-            {t('site.logos.title')}
-          </p>
-          <div className="reveal reveal-d1">
-            <LogoWall />
-          </div>
           <StatsBar />
         </div>
       </section>
