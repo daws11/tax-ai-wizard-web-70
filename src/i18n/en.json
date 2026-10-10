@@ -124,11 +124,6 @@
   "faqAnswer10": "Yes. We offer demo access to explore how the AI Assistant works with sample queries across VAT, Excise, and Corporate Tax.",
   "faqQuestion11": "How often is the AI Assistant Agent updated?",
   "faqAnswer11": "Updates are pushed weekly or in real-time when:\n- The FTA issues new guides or clarifications\n- New Cabinet Decisions or Ministerial Decisions are released\n- Legislative changes are officially published",
-  "testimonialsTitle": "What Our Users Say",
-  "testimonialsSubtitle": "Trusted by thousands of users worldwide",
-  "testimonial1": "This AI tax assistant has revolutionized how I handle my taxes. Highly recommended!",
-  "testimonial2": "The automated calculations save me hours of work. Incredible tool!",
-  "testimonial3": "Best tax software I've ever used. The AI support is exceptional.",
   "ctaTitle": "Ready to make taxes stress-free?",
   "ctaSubtitle": "Join thousands who are simplifying their taxes with AI assistance. Get started today.",
   "ctaButton": "Start Free Trial",
@@ -157,7 +152,6 @@
   "help": "Help",
   "privacy": "Privacy",
   "terms": "Terms",
-  "copyright": "Copyright © 2025 DataU3 and Atto group. All rights reserved.",
   "chatPlaceholder": "Type your tax question here...",
   "send": "Send",
   "clear": "Clear Chat",
@@ -396,7 +390,7 @@
       "badge": "Built by a UAE-licensed Tax Agency",
       "title1": "The enterprise AI platform",
       "title2": "for UAE tax operations",
-      "subtitle": "TaxAI unifies Corporate Tax, VAT and compliance workflows into one intelligent platform — engineered for accuracy, audit-readiness and scale, with every answer grounded in FTA legislation.",
+      "subtitle": "TaxAI unifies Corporate Tax and compliance workflows into one intelligent platform — engineered for accuracy, audit-readiness and scale, with every answer grounded in FTA legislation.",
       "cta2": "See ATTO in action",
       "trialDays": "14-day free trial",
       "ftaAligned": "FTA-aligned"
@@ -513,20 +507,6 @@
       "entDesc": "For 3+ users: dedicated success manager, custom compliance modules, SSO & role-based access, and a contractual SLA. Pricing tailored to your group structure.",
       "entCta": "Talk to sales"
     },
-    "testimonials": {
-      "eyebrow": "Customer stories",
-      "title": "Finance teams that made tax stress-free",
-      "t1Quote": "Quarter-end used to mean three weeks of reconciliation spreadsheets. With TaxAI our VAT201 was drafted, reviewed and filed in two days — with a cleaner audit trail than we've ever had.",
-      "t1Name": "M. Al-Mansoori",
-      "t1Role": "Group Finance Director · Real Estate Group, Dubai",
-      "t2Quote": "The citations are what sold us. Every ATTO answer points to the exact article of the law, so our tax team can verify in seconds instead of escalating everything to external advisors.",
-      "t2Name": "S. Khan",
-      "t2Role": "Head of Tax · Free Zone Holding Company, Abu Dhabi",
-      "t3Quote": "We onboarded a nine-entity group without a single data migration project. The risk alerts alone caught an input VAT mismatch that would have cost us a penalty.",
-      "t3Name": "R. Al-Ameri",
-      "t3Role": "CFO · Industrial Group, Sharjah",
-      "starsLabel": "5 out of 5 stars"
-    },
     "faq": {
       "title": "Frequently asked questions",
       "subtitle": "Can't find what you're looking for?",
@@ -539,11 +519,11 @@
     "footer": {
       "product": "Product",
       "compliance": "Compliance",
-      "tagline": "The enterprise AI platform for UAE tax operations. Built by DataU3 and the Atto Group.",
+      "tagline": "The enterprise AI platform for UAE tax operations.",
       "ftaBadge": "FTA-aligned · Licensed Tax Agency",
       "adgmBadge": "ADGM data-protection standards",
       "gdprBadge": "GDPR principles",
-      "copyright": "© {{year}} DataU3 and Atto group. All rights reserved.",
+      "copyright": "© {{year}}. All rights reserved.",
       "note": "TaxAI provides AI-assisted guidance and does not replace licensed professional advice."
     },
     "legal": {

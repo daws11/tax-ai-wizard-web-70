@@ -5,7 +5,6 @@ import Features from "@/components/Features";
 import AIChat from "@/components/AIChat";
 import Process from "@/components/Process";
 import Pricing from "@/components/Pricing";
-import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
@@ -38,8 +37,6 @@ const Index = () => {
       <Process />
 
       <Pricing />
-
-      <Testimonials />
 
       <FAQ />
 
